@@ -1,0 +1,49 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Network of Innovators</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/about">About</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-search fa-3x"></i><span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/search">Find Experts</a></li>
+            <li><a href="/match">Find People like me</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            {% if session %}
+            <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/>
+            {% else %}
+            <i class="fa fa-street-view fa-3x"></i></span>
+            {% endif %}
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            {% if session %}
+            <li><a href="/me">My Contact Info</a></li>
+            <li><a href="/my-expertise">My Expertise</a></li>
+            <li><a href="/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/login">Login</a></li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

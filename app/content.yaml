@@ -1,0 +1,69 @@
+areas:
+  - name: Open Data
+    fa-icon: folder-open
+    topics:
+      - topic: Open Data Strategy and Policy
+        questions:
+          - question: How to identify what data will help my organization achieve its core mission
+            label: core mission
+          - question: How to distinguish between potentially sensitive data and non-sensitive data
+            label: sensitive data
+          - question: How to craft a clear policy explaining what data to open and how
+            label: write a policy
+          - question: How to do public consultation on an open data policy
+            label: consultation
+          - question: How to get organizational approval for opening data
+            label: buy in
+      - topic: Implementing Open Data
+        questions:
+          - question: How I scrape data from my domain
+            label: scrape data
+          - question: How I make data machine-readable
+            label: machine-readable
+          - question: what data standards to publish data
+            label: license
+          - question: how to use the right infrastructure for making data available
+            label: infrastructure
+          - question: good management for an open data project
+            label: management
+          - question: how to determine how often these datasets should be released
+            label: freshness
+          - question: how to ensure continued data quality and integrity
+            label: data quality
+      - topic: Accelerating use
+        questions:
+          - question: how to create incentives for users or the public to make productive use of the data
+            label: engagement
+          - question: how to identity and combine other sources of open data to achieve a goal
+            label: combining data
+          - question: how to design a data-collaborative
+            label: data-collaborative
+          - question: how to express the value proposition of the open data datasets
+            label: value proposition
+      - topic: Measuring Impact
+        questions:
+          - question: how to monitor how my data is being used
+            label: monitoring
+          - question: how to measure the economic and/or social impact of opening up data
+            label: impact
+  - name: Prizes
+    fa-icon: money
+    topics:
+      - topic: Topic 1
+        questions:
+          - question: Topic 1 / Question 1
+            label: T1Q1
+          - question: Topic 1 / Question 2
+            label: T1Q2
+          - question: Topic 1 / Question 3
+            label: T1Q3
+      - topic: Topic 2
+        questions:
+          - question: Topic 2 / Question 1
+            label: T2Q1
+          - question: Topic 2 / Question 2
+            label: T2Q2
+          - question: Topic 2 / Question 3
+            label: T2Q3
+  - name: Crowdsourcing
+    fa-icon: group

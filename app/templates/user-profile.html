@@ -1,0 +1,112 @@
+{% extends "__base__.html" %}
+
+{% block title %}{{user.fname}} {{user.lname}}'s Profile{% endblock %}
+{% block page_style_post %}
+<style>
+.profile-img { width: 80px; height: 80px; border-radius: 40px;}
+.debug { border-style: none; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+	<div class="row">
+		<div class="debug col-md-4"></div>
+		<div class="debug col-md-4"><center><img class="profile-img" src="{{user|avatar}}"/><center></div>
+		<div class="debug col-md-4"></div>
+	</div>
+<div class="row">
+	<div class="debug col-md-12 text-center">
+		<h2>{{user.fname}} {{user.lname}}</h2>
+	</div>
+	<div class="debug col-md-12 text-center">
+		{{user.org}} | {{user.location}}
+	</div>
+</div>
+<div class="row">
+	<div class="debug col-xs-2 col-md-2 text-center"></div>
+	<div class="debug col-xs-2 col-md-2 text-center">
+		<i class="fa fa-star-o fa-1x"></i> 95%
+	</div>
+	<div class="debug col-xs-2 col-md-2 text-center">
+		<a href="mailto:info@thegovlab.org?subject=Contact+request+via+Network+Of+Innovators&body=Dear+{{user.fname}}"><i class="fa fa-at fa-1x"></i> E-Mail</a>
+	</div>
+	<div class="debug col-xs-2 col-md-2 text-center">
+		<i class="fa fa-phone-square fa-1x"></i> Phone
+	</div>
+	<div class="debug col-xs-2 col-md-2 text-center">
+		<i class="fa fa-cart-plus fa-1x"></i> Add
+	</div>
+		<div class="debug col-xs-2 col-md-2 text-center"></div>
+</div>
+<br/>
+
+<pre>{{user}}</pre>
+
+<div class="row">
+	<div class="col-xs-12 col-md-4 text-center">
+		<h3>Open Data Skills</h3>
+		<canvas id="canvas-opendata" height="300" width="300"></canvas>
+	</div>
+
+	<div class="col-xs-12 col-md-4 text-center">
+		<h3>Prizes Skills</h3>
+		<canvas id="canvas-prizes" height="300" width="300"></canvas>
+	</div>
+
+	<div class="col-xs-12 col-md-4 text-center">
+		<h3>Crowdsourcing Skills</h3>
+		<canvas id="canvas-crowdsourcing" height="300" width="300"></canvas>
+	</div>
+
+</div>
+
+{% endblock %}
+
+{% block page_script %}
+<script src="/static/chart.js"></script>
+<script>
+	var all_skills = {{ SKILLS|tojson }};
+  var user_skills = {{user.skills|tojson}};
+
+  var labels = [];
+  var data = [];
+  for(var key in all_skills['opendata'].sort()) {
+  	labels.push(all_skills['opendata'][key]);
+  	if (all_skills['opendata'][key] in user_skills['opendata']) {
+  		data.push(user_skills['opendata'][all_skills['opendata'][key]]);
+  	} else {
+  		data.push(0);
+  	};
+  }
+
+
+	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+	var randomColorFactor = function(){ return Math.round(Math.random()*255)};
+	var radarChartData = {
+		labels: labels.slice(0,12),
+		datasets: [
+			{
+				label: "My Second dataset",
+				fillColor: "rgba(151,187,205,0.2)",
+				strokeColor: "rgba(151,187,205,1)",
+				pointColor: "rgba(151,187,205,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,187,205,1)",
+				data : data.slice(0,12),
+			}
+		]
+	};
+	
+	var myRadarOpendata = new Chart(document.getElementById("canvas-opendata").getContext("2d")).Radar(radarChartData, {
+			responsive: false
+		});
+	var myRadarPrizes = new Chart(document.getElementById("canvas-prizes").getContext("2d")).Radar(radarChartData, {
+			responsive: false
+		});
+	var myRadarCrowdsourcing = new Chart(document.getElementById("canvas-crowdsourcing").getContext("2d")).Radar(radarChartData, {
+			responsive: false
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends '__base__.html' %}
+
+
+{% block content %}
+<div class="alert alert-success" role="alert">This is an experiment.</div>
+		<div class="alert alert-info" role="alert">The data might be inacurrate.</div>
+		<div class="alert alert-warning" role="alert">Another warning here.</div>
+		<div class="alert alert-danger" role="alert">Please share your feedback about the tool.</div>
+
+<div class="im-centered">
+		<div class="row">
+  		<div class="col-xs-6 col-md-6">
+    		<a href="/me" class="btn btn-primary" role="button">Fill your profile</a>
+    	</div>
+    	<div class="col-xs-6 col-md-6">
+    		<a href="/" class="btn btn-primary" role="button">Search for expertise</a>
+    	</div>
+	  </div>
+</div>
+{% endblock %}
+
+
+{% block page_script %}
+<script>
+// The user asked to be logged out; we log him/her out.
+var idp = $.querystring(window.location.search)['logout'];
+if (idp) {
+    hello.logout(idp);
+    console.log('Logged out from ' + idp);    
+}
+</script>
+{% endblock %}

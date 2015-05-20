@@ -1,0 +1,56 @@
+{% extends '__base__.html' %}
+
+{% block title %}Login Page{% endblock %}
+
+
+
+{% block content %}
+
+<h1>Please login using your favorite social network.</h1>
+
+<div class="row im-centered">
+	{% for item in [ 'facebook', 'google', 'instagram', 'linkedin', 'twitter', 'windows'] %}
+  		<div class="col-xs-2 col-md-2" data-login="{{item}}"><i class="fa fa-{{item}} fa-4x"></i></div>
+	{% endfor %}
+	</div>
+
+{% endblock %}
+
+
+{% block page_script %}
+
+	<script>
+	// TODO: FIX WHEN WE DEPLOY
+	var MAIN_PAGE = 'http://localhost/';
+
+	hello.init({'facebook': '428426510668680',
+							'google': '873276900396-ji0fg53so0ef21fekmf89sgqthii4fqe.apps.googleusercontent.com',
+							'twitter': '5HkInUY29QwZpGiakpkmliMuV',
+							'linkedin': '771v6fab8f1cvg',
+							'windows': '000000004414E1C0',
+							'instagram': '1ac7d9c698e44cb29f644cde32e5fd33'
+	 },
+	 // TODO: FIX WHEN WE DEPLOY
+	 {redirect_uri: 'http://localhost/login'});
+
+	{% if LOGOUT %}
+	hello.logout('{{LOGOUT}}');
+	{% endif %}
+
+
+// When the user clicks the icons (<div> with @data-login) for Google, Facebook, etc., it triggers authentication.
+$('div[data-login]').click(function() {
+	var idp = $(this).attr('data-login');  // We get the network name from the attribute.
+	hello().login(idp).then(function() {
+		hello(idp).api('/me').then(function(r) {
+			console.log(r);
+			user = {'idp': idp, 'userid': idp + ':' + r['id'], 'first_name': r.first_name, 'last_name': r.last_name, 'picture': r.thumbnail};
+			$.ajax({'type': 'POST', 'url': '/login', 'data': {'social-login': JSON.stringify(user)},
+	  	'success': function() { window.location.href=MAIN_PAGE; } });
+		});
+	});
+});
+
+	</script>
+
+{% endblock %}

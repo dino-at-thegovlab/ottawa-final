@@ -1,0 +1,41 @@
+{% extends "__base__.html" %}
+
+{% block page_style_post %}
+	<style>
+	.icon-div { right-margin: 50px; }
+	.icon { border-radius: 25px;}
+	#new-search { float: right; margin-right: 100px;}
+	li.noi { margin-top: 10px;}
+	</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="new-search">
+<a href="/search" class="btn btn-primary" role="button">New search</a>
+</div>
+
+<h1>{{title}}</h1>
+
+	<h2>We found {{results|length}} result(s)
+		{% if title=='Expertise search' %}<br/>for your query: {{query}}{% endif %}
+	</h2>
+
+<div id="result-set">
+<ol>
+	{% for r in results %}
+	
+	<li class="noi">
+		<img class="icon" src="{{r|avatar}}">
+		<a href="user/{{r.userid}}">{{r.first_name}} {{r.last_name}}</a> (score:{{r.score}})<br/>
+		working as {{r.title}} for {{r.org}}</br>
+		from {{r.city}}, {{r.country}}<br/>
+		speaking {{r.langs}}.
+
+	</li>
+	{% endfor %}
+</orgl>
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "__base__.html" %}
+
+{% block content %}
+<h1 class="text-center">Real-time Dashboard</h1>
+
+<p>This is where we show who is using the platform doing what, via Firebase.</p>
+
+<h2>Top countries by number of registered attendees</h2>
+<pre>
+{% for c in top_countries -%}
+{{c[0]}} ==> {{c[1]}}<br/>
+{%- endfor %}
+</pre>
+
+{% endblock %}
