@@ -21,7 +21,7 @@
 
 	<script>
 	// TODO: FIX WHEN WE DEPLOY
-	var MAIN_PAGE = 'http://localhost/';
+	var MAIN_PAGE = 'http://noi.thegovlab.org/';
 
 	hello.init({'facebook': '428426510668680',
 							'google': '873276900396-ji0fg53so0ef21fekmf89sgqthii4fqe.apps.googleusercontent.com',
@@ -31,7 +31,7 @@
 							'instagram': '1ac7d9c698e44cb29f644cde32e5fd33'
 	 },
 	 // TODO: FIX WHEN WE DEPLOY
-	 {redirect_uri: 'http://localhost/login'});
+	 {redirect_uri: 'http://noi.thegovlab.org/login'});
 
 	{% if LOGOUT %}
 	hello.logout('{{LOGOUT}}');
