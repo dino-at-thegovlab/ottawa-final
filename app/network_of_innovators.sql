@@ -14,6 +14,7 @@ CREATE TABLE  users ( userid varchar(50) PRIMARY KEY,
 
 CREATE OR REPLACE FUNCTION plv8_score(skills json, tags text[])
 RETURNS integer AS $$
+plv8.elog(NOTICE, JSON.stringify(skills));
 var count = 0;
 try {
 	var skill_keys = Object.keys(skills);
@@ -25,7 +26,22 @@ try {
 			}
 		}
 	}
-	} catch(err) {
+} catch(err) {
+}
+return count;
+$$ LANGUAGE plv8 IMMUTABLE STRICT;
+
+CREATE OR REPLACE FUNCTION plv8_match(my_skills json, their_skills json)
+RETURNS integer AS $$
+	if ((my_skills == null) || (their_skills == null)){
+		return 0;
 	}
-	return count;
+	var count = 0;
+	var skills = Object.keys(their_skills);
+	for (var i = 0; i < skills.length; i++) {
+		if ((skills[i] in my_skills) && (parseInt(their_skills[skills[i]]) == -1)) {
+			count = count + 1;
+		}
+	}
+return count;
 $$ LANGUAGE plv8 IMMUTABLE STRICT;

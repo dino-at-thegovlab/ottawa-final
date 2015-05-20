@@ -29,6 +29,21 @@ def runQuery(sql, data):
     cursor.close()
     return records
 
+
+def findMatchAsJSON(my_skills):
+    cursor = getCursor()
+    SQL = """SELECT row_to_json(T1) FROM
+                (SELECT *, plv8_match(%s, skills::json) AS score
+                FROM users) AS T1
+            ORDER BY score DESC LIMIT 10;"""
+    data = (Json(my_skills), )
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    records = cursor.fetchall()
+    cursor.close()
+    return map(lambda x:x[0], records)
+
+
 def findExpertsAsJSON(location, langs, skills, fulltext):
     cursor = getCursor()
     if fulltext != "":
@@ -80,6 +95,14 @@ def updateExpertise(userid, expertise):
     cursor.close()
     return
 
+
+def createNewUser(userid, first_name='', last_name=''):
+    cursor = getCursor()
+    SQL = """INSERT INTO users(userid, first_name, last_name) VALUES (%s, %s, %s)"""
+    data ( userid, first_name, last_name)
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    cursor.connection.commit()
 
 def updateCoreProfile(user):
     cursor = getCursor()

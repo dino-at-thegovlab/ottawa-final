@@ -76,6 +76,14 @@ def login():
     if request.method == 'POST':
         social_login = json.loads(request.form.get('social-login'))
         session['social-login'] = social_login
+        userid = social_login['userid']
+        userProfile = db.getUser(userid)
+        if userProfile:
+            session['user-profile'] = userProfile
+        else:
+            db.createNewUser(userid)
+            userProfile = db.getUser(userid)
+            session['user-profile'] = userProfile
         flash('You are authenticated using your %s Credentials.' % social_login['idp'])
         return jsonify({'result': 0})
 
@@ -109,6 +117,7 @@ def my_expertise():
         userid = social_login['userid']
         if request.method == 'GET':
             userProfile = db.getUser(userid)
+            print userProfile
             userExpertise = userProfile['skills']
             return render_template('my-expertise.html', **{ 'AREAS': CONTENT['areas'],
                 'userExpertise': userExpertise})
@@ -153,8 +162,11 @@ def search():
 
 @app.route('/match')
 def match():
+    print session
     query = {'location': '', 'langs': [], 'skills': [], 'fulltext': 'NYU'}
-    experts = db.findExpertsAsJSON(**query)
+    if 'user-expertise' not in session:
+        session['user-expertise'] = {}
+    experts = db.findMatchAsJSON(session['user-expertise'])
     return render_template('search-results.html', **{'title': 'Matching search', 'results': experts, 'query': query})
 
 
