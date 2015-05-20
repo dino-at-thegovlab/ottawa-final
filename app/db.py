@@ -96,10 +96,10 @@ def updateExpertise(userid, expertise):
     return
 
 
-def createNewUser(userid, first_name='', last_name=''):
+def createNewUser(userid, first_name='', last_name='', picture=''):
     cursor = getCursor()
-    SQL = """INSERT INTO users(userid, first_name, last_name) VALUES (%s, %s, %s)"""
-    data ( userid, first_name, last_name)
+    SQL = """INSERT INTO users(userid, first_name, last_name, picture) VALUES (%s, %s, %s, %s)"""
+    data = ( userid, first_name, last_name, picture)
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)
     cursor.connection.commit()

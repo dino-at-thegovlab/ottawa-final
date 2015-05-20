@@ -61,12 +61,16 @@ div.btn-group {
 
     <div class="accordion" id="accordion-{{area['name']|slug}}">
 
+      <!-- Area description -->
+    <div>{{area['description']}}</div>
+
   {% for topic in area['topics'] %}
 
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area['name']|slug}}" href="#collapse-{{topic['topic']|slug}}">
-            <h3>{{topic['topic']}} ({{topic['questions']|length}})</h3></a>
+          <h3>{{topic['topic']}} ({{topic['questions']|length}})</h3></a>
+          <div style="margin-bottom: 20px;">{{topic['description']}}</div>
         </div>
 
         <div id="collapse-{{topic['topic']|slug}}" class="accordion-body collapse">

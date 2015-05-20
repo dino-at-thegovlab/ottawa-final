@@ -81,7 +81,7 @@ def login():
         if userProfile:
             session['user-profile'] = userProfile
         else:
-            db.createNewUser(userid)
+            db.createNewUser(userid, social_login['first_name'], social_login['last_name'], social_login['picture'])
             userProfile = db.getUser(userid)
             session['user-profile'] = userProfile
         flash('You are authenticated using your %s Credentials.' % social_login['idp'])

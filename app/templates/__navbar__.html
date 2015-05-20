@@ -27,14 +27,14 @@
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            {% if session %}
+            {% if 'social-login' in session %}
             <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/>
             {% else %}
             <i class="fa fa-street-view fa-3x"></i></span>
             {% endif %}
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            {% if session %}
+            {% if 'social-login' in session %}
             <li><a href="/me">My Contact Info</a></li>
             <li><a href="/my-expertise">My Expertise</a></li>
             <li><a href="/logout">Logout</a></li>
