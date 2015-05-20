@@ -94,13 +94,13 @@ def my_profile():
         print "Looking up %s" % social_login['userid']
         userProfile = db.getUser(social_login['userid'])  # We get some stuff from the DB.
         print userProfile
-        return render_template('my-profile.html', **{'userProfile': userProfile, 'LANGS': LANGS})
+        return render_template('my-profile.html', **{'userProfile': userProfile, 'COUNTRIES': COUNTRIES, 'LANGS': LANGS})
     if request.method == 'POST':
         userProfile = json.loads(request.form.get('me'))
         session['user-profile'] = userProfile
         db.updateCoreProfile(userProfile)
         flash('Your profile has been saved.')
-        return render_template('my-profile.html', **{'userProfile': userProfile, 'LANGS': LANGS})
+        return render_template('my-profile.html', **{'userProfile': userProfile, 'COUNTRIES': COUNTRIES, 'LANGS': LANGS})
 
 
 @app.route('/my-expertise', methods=['GET', 'POST'])

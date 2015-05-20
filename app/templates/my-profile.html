@@ -95,7 +95,15 @@ ul li {
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Location (Country)</label>  
   <div class="col-md-4">
-  <input id="q-country" name="country" type="text" placeholder="placeholder" class="form-control input-md">
+  <div class="selector">
+      <select id="q-country" name="country" data-placeholder="Choose a Country..." class="chosen-select" style="width:350px;" tabindex="2">
+        <option value=""></option>
+        {% for country in COUNTRIES %}
+        <option value="{{country}}">{{country}}</option>
+        {% endfor %}
+      </select>
+    </div>
+<!--   <input id="q-country" name="country" type="text" placeholder="placeholder" class="form-control input-md"> -->
   <span class="help-block">help</span>  
   </div>
 </div>
@@ -179,6 +187,17 @@ if (userProfile == null) {
   }
   });
   $('#q-langs').trigger("chosen:updated");  // We need to update the UI.
+
+$('select[id="q-country"]').children('option').map(function() {
+    if ($(this).attr('value') == userProfile.country) {
+      console.log('Match for ' + $(this).attr('value'));
+      $(this).attr('selected', '');
+  } else {
+    $(this).removeAttr('selected');
+  }
+  });
+  $('#q-country').trigger("chosen:updated");  // We need to update the UI.
+
 }
 
 $('#save-profile').click(function() {
@@ -197,6 +216,7 @@ $('#save-profile').click(function() {
   
   // langs
   profileData['langs'] = $('select[id="q-langs"]').children(':checked').toArray().map(function(v, i) { return v['value']; });
+  profileData['country'] = $('select[id="q-country"]').children(':checked').val();
   // DOES NOT WORK!: TypeError: Converting circular structure to JSON
   // profileData['langs'] = $('select[id="q-langs"]').children(':checked').map(function(i, v) { return $(v).val() });  
 
