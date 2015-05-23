@@ -134,6 +134,11 @@ def dashboard():
     top_countries = db.top_countries()
     return render_template('dashboard.html', **{'top_countries': top_countries})
 
+@app.route('/dashboard-2')
+def dashboard2():
+    top_countries = db.top_countries()
+    return render_template('dashboard-2.html', **{'top_countries': top_countries})
+
 
 @app.route('/user/<userid>')
 def get_user(userid):
@@ -177,4 +182,4 @@ if __name__ == "__main__":
         context = ('server.crt', 'server.key')
         app.run(host='0.0.0.0', port=443, ssl_context=context)
     else:
-        app.run(host='0.0.0.0', port=80)
+        app.run(host='0.0.0.0', port=8080)
