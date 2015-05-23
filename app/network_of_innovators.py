@@ -27,6 +27,9 @@ def avatar(user):
     else:
         return "/static/icons/%s.gif" % ('%03d' % (int(user['userid']) % 361))
 
+def email_recipients(users):
+    return [user['email'] for user in users if user['email'] != None]
+
 import json
 
 COUNTRIES = "Afghanistan,Algeria,Argentina,Australia,Austria,Bahamas,Bangladesh,Belgium,Belize,Benin,Bhutan,Brazil,Bulgaria,Burkina Faso,Burundi,Cambodia,Cameroon,Canada,Central African Rep,Chad,Chile,China,Colombia,Congo,Congo, The Democratic Rep,Connected!,Connecting to database,Costa Rica,Cuba,Czech Republic,Denmark,Djibouti,Dominican Republic,Ecuador,Egypt,El Salvador,Ethiopia,Fiji,Finland,France,Gambia,Georgia,Germany,Ghana,Guatemala,Guinea,Haiti,Hungary,India,Indonesia,Iran,Iraq,Ireland,Italy,Ivory Coast (Cote D'Ivoire),Jamaica,Japan,Jordan,Kenya,Korea, Republic Of,Kyrgyzstan,Lebanon,Liberia,Lithuania,Macedonia (Republic of),Madagascar,Malawi,Malaysia,Mali,Mauritania,Mexico,Moldova, Rep,Mongolia,Montenegro,Namibia,Nepal,Netherlands,New Zealand,Niger,Nigeria,Pakistan,Panama,Papua New Guinea,Paraguay,Peru,Philippines,Romania,Russian Federation,Rwanda,Samoa,Senegal,Serbia,Slovakia (Slovak Rep),Somalia,South Africa,Spain,Sri Lanka,Sudan,Sweden,Switzerland,Taiwan,Tajikistan,Tanzania,Thailand,Togo,Tonga,Trinidad & Tobago,Tunisia,Turkey,Uganda,Ukraine,United Kingdom,United States,Uruguay,Viet Nam,Yemen,Zambia".split(',')
@@ -38,6 +41,7 @@ CONTENT = yaml.load(open('content.yaml'))
 app = Flask(__name__)
 app.jinja_env.filters['slug'] = noi_slug
 app.jinja_env.filters['avatar'] = avatar
+app.jinja_env.filters['email_recipients'] = email_recipients
 app.debug = True
 app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
 SSL = False
@@ -168,6 +172,16 @@ def match():
         session['user-expertise'] = {}
     experts = db.findMatchAsJSON(session['user-expertise'])
     return render_template('search-results.html', **{'title': 'Matching search', 'results': experts, 'query': query})
+
+
+@app.route('/match-test')
+def match_test():
+    print session
+    query = {'location': '', 'langs': [], 'skills': [], 'fulltext': 'NYU'}
+    if 'user-expertise' not in session:
+        session['user-expertise'] = {}
+    experts = db.findMatchAsJSON(session['user-expertise'])
+    return render_template('test.html', **{'title': 'Matching search', 'results': experts, 'query': query})
 
 
 #################### MAIN ####################

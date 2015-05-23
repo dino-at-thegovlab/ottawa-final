@@ -6,4 +6,9 @@ Just a test.
 
 {{'Arnaud is great'|slug}}
 
+{% set the_results = results|email_recipients -%}
+
+{{ the_results }}
+
+
 {% endblock %}

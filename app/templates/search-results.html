@@ -22,6 +22,11 @@
 		{% if title=='Expertise search' %}<br/>for your query: {{query}}{% endif %}
 	</h2>
 
+
+<center>
+<button><a href="mailto:{{results|email_recipients|join(',')}}?subject=Contact+request+from+the+Network+of+Innovators">Contact all these people</a></button>
+</center>
+
 <div id="result-set">
 <ol>
 	{% for r in results %}
