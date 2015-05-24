@@ -15,6 +15,13 @@ div.btn-group {
 }
 .btn { font-size: 12px;
 			opacity:0.6; }
+
+.noi-expertise-icon { height: 50px; }
+.noi-expertise-not-yet {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* msie */
+}
+
 </style>
 {% endblock %}
 
@@ -23,18 +30,20 @@ div.btn-group {
 
 {# We define a macro for buttons; buttons are prefixed by the question name. #}
 {% macro noi_buttons(question_tag) -%}
+  <span class="noi-and-i-can">and</span> 
 	<div class="btn-group-wrap">
 		<div id="q-{{question_tag|slug}}" class="text-center btn-group" data-toggle="buttons-radio">
-		  <button type="button" class="q btn btn-primary" data-value="0">I can explain it</button>
-	  	<button type="button" class="q btn btn-success" data-value="1">I can do it</button>
-	  	<button type="button" class="q btn btn-warning" data-value="2">I can refer someone</button>
-	  	<button type="button" class="q btn btn-info"    data-value="-1">I want to learn more</button>
+		  <button type="button" class="q btn btn-primary noi-btn-can-explain" data-value="0">I can explain it</button>
+	  	<button type="button" class="q btn btn-success noi-btn-can-do-it" data-value="1">I can do it</button>
+	  	<button type="button" class="q btn btn-warning noi-btn-can-refer" data-value="2">I can refer someone</button>
+	  	<button type="button" class="q btn btn-info noi-btn-learn-more"    data-value="-1">I want to learn more</button>
 		</div>
 	</div>
 {%- endmacro %}
 
 {% macro noi_question(tag, phrasing) -%}
 <li class="list-group-item">
+    <div class="noi-i-know">I know</div>
 		<div style="font-size: 2em;" class="alert alert-success" role="alert">
 		{{phrasing}}
 		</div>
@@ -44,10 +53,13 @@ div.btn-group {
 {%- endmacro %}
 
 
+<h1>My expertise</h1>
+
 <ul class="nav nav-tabs nav-justified" id="expertise-tab">
   {% for area in AREAS %}
-    <li role="presentation"><a href="#{{area['name']|slug}}-tab">{{area['name']}}
-      <i class="fa fa-{{area['fa-icon']}} fa-3x"></i></a>
+    <li role="presentation" class="{{'noi-expertise-not-yet' if not area['topics']}}"><a href="#{{area['name']|slug}}-tab">
+      <img alt="Open Data" class="noi-expertise-icon" src="/static/img/expertise-icons/{{area['icon']}}">
+      <br/>{{area['name']}}</a>
     </li>
   {% endfor %} 
 </ul>
@@ -62,7 +74,7 @@ div.btn-group {
     <div class="accordion" id="accordion-{{area['name']|slug}}">
 
       <!-- Area description -->
-    <div>{{area['description']}}</div>
+    <div class="noi-area-description">{{area['description']}}</div>
 
   {% for topic in area['topics'] %}
 
@@ -70,7 +82,7 @@ div.btn-group {
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area['name']|slug}}" href="#collapse-{{topic['topic']|slug}}">
           <h3>{{topic['topic']}} ({{topic['questions']|length}})</h3></a>
-          <div style="margin-bottom: 20px;">{{topic['description']}}</div>
+          <div style="margin-bottom: 20px;">What you can share about {{topic['description']}}.</div>
         </div>
 
         <div id="collapse-{{topic['topic']|slug}}" class="accordion-body collapse">
