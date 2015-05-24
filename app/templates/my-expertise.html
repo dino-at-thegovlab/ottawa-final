@@ -22,6 +22,8 @@ div.btn-group {
     filter: alpha(opacity=40); /* msie */
 }
 
+.noi-expertise-progress { font-size: 10px ;}
+
 </style>
 {% endblock %}
 
@@ -56,10 +58,12 @@ div.btn-group {
 <h1>My expertise</h1>
 
 <ul class="nav nav-tabs nav-justified" id="expertise-tab">
+
   {% for area in AREAS %}
-    <li role="presentation" class="{{'noi-expertise-not-yet' if not area['topics']}}"><a href="#{{area['name']|slug}}-tab">
-      <img alt="Open Data" class="noi-expertise-icon" src="/static/img/expertise-icons/{{area['icon']}}">
-      <br/>{{area['name']}}</a>
+    <li role="presentation" class="{{'noi-expertise-not-yet' if not area.topics}}"><a href="#{{area.id}}-tab">
+      <img alt="{{area.name}}" class="noi-expertise-icon" src="/static/img/expertise-icons/{{area.icon}}">
+      <br/>{{area['name']}}
+      <br/><span id="{{area.id}}" class="noi-expertise-progress"></span></a>
     </li>
   {% endfor %} 
 </ul>
@@ -69,9 +73,9 @@ div.btn-group {
 
 {% for area in AREAS %}
 
-  <div class="tab-pane fade {{'active in' if loop.index == 1}}" id="{{area['name']|slug}}-tab">
+  <div class="tab-pane fade {{'active in' if loop.index == 1}}" id="{{area.id}}-tab">
 
-    <div class="accordion" id="accordion-{{area['name']|slug}}">
+    <div class="accordion" id="accordion-{{area.id}}">
 
       <!-- Area description -->
     <div class="noi-area-description">{{area['description']}}</div>
@@ -80,12 +84,12 @@ div.btn-group {
 
     <div class="accordion-group">
       <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area['name']|slug}}" href="#collapse-{{topic['topic']|slug}}">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area.id}}" href="#collapse-{{topic.topic|slug}}">
           <h3>{{topic['topic']}} ({{topic['questions']|length}})</h3></a>
           <div style="margin-bottom: 20px;">What you can share about {{topic['description']}}.</div>
         </div>
 
-        <div id="collapse-{{topic['topic']|slug}}" class="accordion-body collapse">
+        <div id="collapse-{{topic.topic|slug}}" class="accordion-body collapse">
           <div class="accordion-inner">
             <ul class="list-group">
             {% for question in topic['questions'] %}
@@ -123,6 +127,19 @@ div.btn-group {
 {% block page_script %}
 <script>
 
+// For each tab, computes #(questions answered) / #(total questions)
+function computeExpertiseProgress() {
+  $('span.noi-expertise-progress').map(function(i, v) {
+    var span = $(v);
+    var id = span.attr('id');
+    var tab = $('#' + id + '-tab');
+    var answers = tab.find('.q[checked="checked"]').length;
+    var all_questions = tab.find('.q').length / 4;
+    span.text(answers + " / " + all_questions);
+  })
+}
+
+
 // Essential to make the tab work.
 $('#expertise-tab a').click(function (e) {
   e.preventDefault();
@@ -142,6 +159,8 @@ $('.q').click(function() {
 	$(this).css('text-decoration', 'underline').attr('checked', true);
 	$(this).css('opacity', '1.0');
 	};
+  // TODO: recompute only for this area.
+  computeExpertiseProgress();
 });
 
 function getExpertise() {
@@ -188,6 +207,7 @@ function setExpertise(userExpertise) {
     button.css('text-decoration', 'underline').attr('checked', true);
     button.css('opacity', '1.0');
   }
+  computeExpertiseProgress();
 }
 
 </script>
