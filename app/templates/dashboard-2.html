@@ -1,8 +1,11 @@
 <html>
 <head>
+    {% block head %}
+
 <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,700' rel='stylesheet' type='text/css'></link>
-<link rel="stylesheet" type="text/css" href="/styles/normalize.css">
-<link rel="stylesheet" type="text/css" href="/styles/main.css">
+
+<link rel="stylesheet" type="text/css" href="/static/normalize.css">
+<link rel="stylesheet" type="text/css" href="/static/main.css">
 <script src="/static/plugins.js"></script>
 <script src="/static/main.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -10,19 +13,16 @@
     google.load('visualization', '1', { 'packages': ['map'] });
     google.setOnLoadCallback(drawMap);
 
+
     function drawMap() {
       var data = google.visualization.arrayToDataTable([
         ['Country', 'Participants'],
-        ['China', 'China: 13'],
-        ['India', 'India: 42'],
-        ['US', 'US: 317'],
-        ['Indonesia', 'Indonesia: 24'],
-        ['Brazil', 'Brazil: 201'],
-        ['Pakistan', 'Pakistan: 1'],
-        ['Nigeria', 'Nigeria: 17'],
-        ['Bangladesh', 'Bangladesh: 15'],
-        ['Russia', 'Russia: 146'],
-        ['Canada', 'Canada: 1270']
+        {% for c in top_countries -%}
+        {% if loop.index <= 15 %}
+        ['{{c[0]}}', '{{c[0]}}: {{c[1]}}'],
+        {% endif %}
+        {%- endfor %}
+        
       ]);
 
     var options = { showTip: true };
@@ -32,15 +32,39 @@
     map.draw(data, options);
   };
   </script>
+  {% block page_style_pre %}{% endblock %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+    .profile-img { width: 80px; height: 80px; border-radius: 40px;}
+    .profile-img-nav { width: 40px; height: 40px; border-radius: 20px;}
+    .navbar { font-size: 30px;}
+    </style>
+    {% block page_style_post %}{% endblock %}
+  {% endblock %}
 </head>
 <body>
-  
+        <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5LR5G6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5LR5G6');</script>
+<!-- End Google Tag Manager -->
+
+   {% if SKIP_NAV_BAR %}
+    {% else %}
+    {% include "__navbar__.html" %}
+    {% endif %}
 <!-- <canvas id="clients" width="500" height="350"></canvas> -->
 
 <div class="wrapper">
 <header>
     <div class="container clearfix">
-        <h1>Dashboard</h1>
+        <h1>Real-Time Dashboard</h1>
     </div>
 </header>
 <!-- first chart -->
@@ -158,8 +182,12 @@ new Chart(ctx).Radar(data);
 
 </script>
 <div class="push"></div>
+    <div class="container clearfix widget">
+        <h3>Top countries at the conference</h3>
+        <div id="chart_div"></div>
+    </div>
 </div>
-<div id="chart_div"></div>
+
 
 
 
