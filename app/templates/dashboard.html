@@ -1,15 +1,35 @@
 {% extends "__base__.html" %}
 
+
 {% block content %}
-<h1 class="text-center">Real-time Dashboard</h1>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('visualization', '1', { 'packages': ['map'] });
+    google.setOnLoadCallback(drawMap);
+
+
+    function drawMap() {
+      var data = google.visualization.arrayToDataTable([
+        ['Country', 'Participants'],
+        {% for c in top_countries -%}
+        {% if loop.index <= 15 %}
+        ['{{c[0]}}', '{{c[0]}}: {{c[1]}}'],
+        {% endif %}
+        {%- endfor %}
+        
+      ]);
+
+    var options = { showTip: true };
+
+    var map = new google.visualization.Map(document.getElementById('chart_div'));
+
+    map.draw(data, options);
+  };
+  </script>
 
 <p>This is where we show who is using the platform doing what, via Firebase.</p>
 
 <h2>Top countries by number of registered attendees</h2>
-<pre>
-{% for c in top_countries -%}
-{{c[0]}} ==> {{c[1]}}<br/>
-{%- endfor %}
-</pre>
+<div id="chart_div"></div>
 
 {% endblock %}
