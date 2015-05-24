@@ -19,35 +19,13 @@
 
 <h1>{{title}}</h1>
 
-<<<<<<< HEAD
-	<h2>We found {{results|length}} result(s)
-		{% if title=='Expertise search' %}<br/>for your query: {{query}}{% endif %}
-	</h2>
-
-
 <center>
 <button><a href="mailto:{{results|email_recipients|join(',')}}?subject=Contact+request+from+the+Network+of+Innovators">Contact all these people</a></button>
 </center>
 
-<div id="result-set">
-<ol>
-	{% for r in results %}
-	
-	<li class="noi">
-		<img class="icon" src="{{r|avatar}}">
-		<a href="user/{{r.userid}}">{{r.first_name}} {{r.last_name}}</a> (score:{{r.score}})<br/>
-		working as {{r.title}} for {{r.org}}</br>
-		from {{r.city}}, {{r.country}}<br/>
-		speaking {{r.langs}}.
-
-	</li>
-	{% endfor %}
-</orgl>
-=======
 <div class="b-results">
 	<div class="b-content-header">
 		<h1>{{title}} | {{results|length}}</h1>
-		<h2>{% if title=='Expertise search' %} {{query}}{% endif %}</h2>
 	</div>
 	<div id="result-set" class="b-results-container">
 		<ol>
@@ -59,7 +37,7 @@
 					<a class="e-name" href="user/{{r.userid}}">{{r.first_name}} {{r.last_name}}</a>
 					<div class="e-job">{{r.title}}, {{r.org}}</div>
 					<div class="e-place">{{r.city}}, {{r.country}}</div>
-					<a class="e-name" href="edit/{{r.userid}}">edit</a>
+{#					<a class="e-name" href="edit/{{r.userid}}">edit</a> #}
 					<div class="e-bottom-info">
 						<div class="e-score">
 							<i class="fa fa-star"></i>{{r.score}}%
@@ -72,7 +50,6 @@
 			{% endfor %}
 		</ol>
 	</div>
->>>>>>> 4e618d926c19e0cab241396d8e8c0d462ed37eee
 </div>
 
 
