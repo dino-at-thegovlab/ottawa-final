@@ -1,148 +1,176 @@
 areas:
+
   - name: Open Data
-    fa-icon: folder-open
-    description: ''
+    id: opendata
+    icon: opendata.svg
+    description: > 
+     There is no single, universally accepted definition of open data. 
+     Generally speaking, open data is publicly available data structured for usability and computability 
+     that can be universally and readily accessed, used, and redistributed free of charge. 
+     What makes open data a powerful tool for governing better is that the ability of people inside and 
+     outside of institutions to use the same data to create useful policies, tools, visualizations, maps, 
+     and apps. Open data can provide the raw material to convene informed conversations about what’s broken 
+     and the empirical foundation for developing solutions.  
     topics:
-      - topic: Open Data Strategy and Policy
-        description: How to formulate an open data program and develop a plan for navigating potential challenges.
+
+      - topic: Open Data Policy
+        description: creating an open data plan and strategy to achieve key goals
         questions:
           - question: How to identify what data will help my organization achieve its core mission
             label: core mission
           - question: How to distinguish between potentially sensitive data and non-sensitive data
-            label: sensitive data
+            label: sensitive vs non-sensitive
           - question: How to craft a clear policy explaining what data to open and how
-            label: write a policy
+            label: crafting an open data policy
           - question: How to do public consultation on an open data policy
-            label: consultation
+            label: getting public input
           - question: How to get organizational approval for opening data
-            label: buy in
-      - topic: Implementing Open Data
-        description: How to launch and maintain an open data program – including building a data infrastructure, processing and standard development.
+            label: getting org approval
+
+      - topic: Implementing an open data program
+        description: operationalizing an open data program in practice
         questions:
-          - question: How I scrape data from my domain
-            label: scrape data
-          - question: How I make data machine-readable
-            label: machine-readable
-          - question: what data standards to publish data
-            label: license
+          - question: How to scrape data from my domain
+            label: scraping open data
+          - question: How to make data machine-readable
+            label: making machine-readable
+          - question: what formats to publish data in
+            label: open data formats
+          - question: how to license my data
+            label: open data license
+          - question: what data standards to publish data in
+            label: open data standards
           - question: how to use the right infrastructure for making data available
             label: infrastructure
           - question: good management for an open data project
-            label: management
-          - question: how to determine how often these datasets should be released
-            label: freshness
+            label: managing open data
+          - question: how to determine how often datasets should be released and updated
+            label: frequency of release
           - question: how to ensure continued data quality and integrity
-            label: data quality
+            label: data quality and integrity
+
       - topic: Accelerating use
-        description: How to ensure open data is driving real world use – including incentivizing users, monitoring use and communicating a value proposition.
+        description: responding to what users need and want
         questions:
           - question: how to create incentives for users or the public to make productive use of the data
-            label: engagement
+            label: incentives
           - question: how to identity and combine other sources of open data to achieve a goal
-            label: combining data
-          - question: how to design a data-collaborative
-            label: data-collaborative
-          - question: how to express the value proposition of the open data datasets
+            label: mashing-up open data
+          - question: how to design a data collaborative
+            label: data collaborative
+          - question: how to express the value proposition of the open data datasets, including what problems can be solved with this data
             label: value proposition
+
       - topic: Measuring Impact
-        description: How to capture the real-world impacts and value of an open data program.
+        description: assessing effectiveness
         questions:
           - question: how to monitor how my data is being used
-            label: monitoring
+            label: measuring open data use
           - question: how to measure the economic and/or social impact of opening up data
-            label: impact
+            label: measuring open data impact
+
   - name: Prizes
-    fa-icon: money
+    id: prizes
+    icon: prizes.svg
+    description: >
+     Governments — and other entities — are increasing seeking to solve big 
+     problems using new technologies and innovative approaches. One of the most 
+     common approaches involves prize-backed contests as well as challenges and 
+     grand challenges. These competitions offer a range of advantages for 
+     government agencies, especially in an era of tightening budgets. 
+     These twenty questions help you identify what you know and can share 
+     about prize-backed challenges and what you want to learn from others.
     topics:
+
       - topic: Scoping the Problem
+        description: defining the problem
         questions:
           - question: how to define and express the problem addressed by the prize.
             label: problem definition
-          - question: how to identify whom to engage to help test assumptions
-            label: partnerships
-          - question: how to organize events for refining the problem definition
-            label: problem refinement
-          - question: how to do rapid research to understand the context for my prize
-            label: prize research
+          - question: how to do rapid research to test the assumptions behing my problem definition
+            label: research
           - question: how to develop metrics to use to measure progress
             label: progress metrics
+
       - topic: Designing for a Successful Prize
+        description: deciding if a prize is the right tool
         questions:
           - question: how to decide when to use a prize-backed challenge rather than other options like conventional crowdsourcing
-            label: prize backed challenges
-          - question: how to develop a process for answering when to use a prize
-            label: when to use
+            label: when-to-use-a-prize
+          - question: how to determine whether a prize or a grand challenge is optimal
+            label: grand challenge
+          - question: how to decide whether to use financial or non-financial incentives
+            label: incentives
+          - question: how to set the value of a prize
+            label: prize amount
+
       - topic: Identifying the Right Audience
+        description: targeting the right participants
         questions:
           - question: how to identify would-be participating innovators
             label: audience
           - question: how to assess the the potential costs involved for them in participating
             label: costs
-      - topic: Defining the Right Incentives
-        questions:
-          - question: how to decide whether to use financial or non-financial incentives
-            label: financial or not
-          - question: how to set the financial value of a prize.
-            label: financial value
-          - question: how to decide between non-financial options
-            label: non financial options
+
       - topic: Mechanics
+        description: rinning a prize-backed challenge
         questions:
-          - question: how to determine who has authority to conduct a prize or challenge
-            label: legal authority
-          - question: how to fund a prized-backed challenge
-            label: how to fund
+          - question: how to fund a prize-backed challenge
+            label: funding
           - question: how to create a plan for running the prize with defined milestones
-            label: plan and milestones
-          - question: how to determine who and how many from my organization should run the prize
-            label: running the prize
-          - question: how to train them
-            label: training
-          - question: how to access outside contractors to support the design and implementation of prizeshow to train them
-            label: contractors
-          - question: how to form an advisory or steering committee
-            label: steering committee
-          - question: how to decide how long the prize should run
-            label: how long
-          - question: how to determine if people should participate as individuals or teams
-            label: individuals vs teams
-          - question: how to get public comment on a prize concept or rules
-            label: public comment
-          - question: how to develop a communications strategy to get out the word
-            label: outreach
-          - question: how to decide what kind of support and staging to offer innovators during the competition
-            label: support for innovators
-          - question: how to choose from the tools available to run a prize-backed challenge
-            label: tools available
-          - question: how to identify collaborators and form partnerships
+            label: mechanics
+          - question: how to access outside contractors to support the design and implementation of the prizes
             label: partnerships
+          - question: how to decide how long the prize should run
+            label: timing
+          - question: how to develop a communication strategy to get the word out
+            label: communication
+          - question: how to choose from the tools available to run a prize-backed challenge
+            label: platforms
+
       - topic: Judging
+        description: judging a prize
         questions:
           - question: how to design assessment criteria
             label: judging criteria
           - question: how to select judges
-            label: judge selection
+            label: choosing judges
+
       - topic: Legal Concerns
+        description: overcoming legal concerns
         questions:
-          - question: how to ensure submissions do not infringe on any intellectual property
-            label: intellectual property
           - question: how to determine ownership and copyright
             label: ownership and copyright
-          - question: how to navigate governmental endorsement concerns
-            label: endorsement concerns
-          - question: how to mitigate privacy concerns
-            label: privacy concerns
-      - topic: Grand Challenges
-        questions:
-          - question: how to determine whether a prize or a grand challenge is optimal
-            label: grand challenges prize
-          - question: how to draft grand challenge language
-            label: grand challenge language
-      - topic: Impact
+          - question: how to navigate governmental endorsement and privacy concerns
+            label: legal and privacy concerns
+
+      - topic: Implementation
+        description: what to do after a challenge
         questions:
           - question: how to translate winning entries into well-developed solutions
-            label: well developped solutions      
+            label: after the challenge
+
   - name: Crowdsourcing
-    fa-icon: group
+    id: crowdsourcing
+    icon: crowdsourcing.svg
     description: Coming soon
 
+  - name: Agile
+    id: agile
+    icon: agile.svg
+    description: Coming soon
+
+  - name: Citizen Science
+    id: citizenscience
+    icon: citizenscience.svg
+    description: Coming soon
+
+  - name: Nudges
+    id: nudges
+    icon: nudges.svg
+    description: Coming soon
+
+  - name: Partnerships
+    id: partnerships
+    icon: partnerships.svg
+    description: Coming soon
