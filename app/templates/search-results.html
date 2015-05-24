@@ -6,6 +6,7 @@
 	.icon { width: 50px; height: 50px; border-radius: 25px;}
 	#new-search { float: right; margin-right: 100px;}
 	li.noi { margin-top: 10px;}
+	.noi-index { float:right; font-size: 10px; margin-right: 0px; margin-top:-10px; }
 	</style>
 {% endblock %}
 
@@ -18,24 +19,38 @@
 
 <h1>{{title}}</h1>
 
-	<h2>We found {{results|length}} result(s)
-		{% if title=='Expertise search' %}<br/>for your query: {{query}}{% endif %}
-	</h2>
+<center>
+<button><a href="mailto:{{results|email_recipients|join(',')}}?subject=Contact+request+from+the+Network+of+Innovators">Contact all these people</a></button>
+</center>
 
-<div id="result-set">
-<ol>
-	{% for r in results %}
-	
-	<li class="noi">
-		<img class="icon" src="{{r|avatar}}">
-		<a href="user/{{r.userid}}">{{r.first_name}} {{r.last_name}}</a> (score:{{r.score}})<br/>
-		working as {{r.title}} for {{r.org}}</br>
-		from {{r.city}}, {{r.country}}<br/>
-		speaking {{r.langs}}.
-
-	</li>
-	{% endfor %}
-</orgl>
+<div class="b-results">
+	<div class="b-content-header">
+		<h1>{{title}} | {{results|length}}</h1>
+	</div>
+	<div id="result-set" class="b-results-container">
+		<ol>
+			{% for r in results %}
+			<li class="noi b-result-item">
+				<div style="" class="noi-index">{{loop.index}}</div>
+				<img class="icon" src="{{r|avatar}}">
+				<div class="e-info">
+					<a class="e-name" href="user/{{r.userid}}">{{r.first_name}} {{r.last_name}}</a>
+					<div class="e-job">{{r.title}}, {{r.org}}</div>
+					<div class="e-place">{{r.city}}, {{r.country}}</div>
+{#					<a class="e-name" href="edit/{{r.userid}}">edit</a> #}
+					<div class="e-bottom-info">
+						<div class="e-score">
+							<i class="fa fa-star"></i>{{r.score}}%
+						</div>
+						<div class="e-lang">{{r.lang}}</div>
+					</div>
+				</div>
+				
+			</li>
+			{% endfor %}
+		</ol>
+	</div>
 </div>
+
 
 {% endblock %}
