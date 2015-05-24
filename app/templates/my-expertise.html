@@ -219,6 +219,7 @@ if (userExpertise) {
 
 function setExpertise(userExpertise) {
   var keys = Object.keys(userExpertise);
+  $('.q').css('opacity', '0.6');
   for(var i in keys)
   {
     var key = keys[i];
