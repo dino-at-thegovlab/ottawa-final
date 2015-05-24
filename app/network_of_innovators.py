@@ -104,6 +104,18 @@ def logout():
     return redirect(url_for('main_page', **{'logout': idp}))
 
 
+@app.route('/edit/<userid>', methods=['GET', 'POST'])
+def edit_user(userid):
+    if request.method == 'GET':
+        userProfile = db.getUser(userid)  # We get some stuff from the DB.
+        return render_template('my-profile.html', **{'userProfile': userProfile })
+    if request.method == 'POST':
+        userProfile = json.loads(request.form.get('me'))
+        session['user-profile'] = userProfile
+        db.updateCoreProfile(userProfile)
+        flash('Your profile has been saved.')
+        return render_template('my-profile.html', **{'userProfile': userProfile})
+
 @app.route('/me', methods=['GET', 'POST'])
 def my_profile():
     if request.method == 'GET':

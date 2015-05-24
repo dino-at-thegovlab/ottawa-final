@@ -13,8 +13,8 @@ div.btn-group {
 .btn-group-wrap {
     text-align: center;
 }
-.btn { font-size: 12px;
-			opacity:0.6; }
+.btn { font-size: 12px; opacity:0.6; }
+.q { margin-left: 20px;}
 
 .noi-expertise-icon { height: 50px; }
 .noi-expertise-not-yet {
@@ -23,6 +23,13 @@ div.btn-group {
 }
 
 .noi-expertise-progress { font-size: 10px ;}
+.noi-expertise-progress-topic { font-size: 10px ;}
+
+.noi-i-know { text-align: center; font-size: 20px; text-transform: uppercase;}
+.noi-and-i-can { font-size: 20px;}
+.noi-question { margin: 10px;}
+.noi-q-even { background-color: #CCFF33;}
+.noi-q-odd { background-color: #FFCCFF;}
 
 </style>
 {% endblock %}
@@ -31,23 +38,24 @@ div.btn-group {
 
 
 {# We define a macro for buttons; buttons are prefixed by the question name. #}
-{% macro noi_buttons(question_tag) -%}
-  <span class="noi-and-i-can">and</span> 
-	<div class="btn-group-wrap">
+{% macro noi_buttons(question_tag, index) -%}
+	<div class="btn-group-wrap b-question-answers">
 		<div id="q-{{question_tag|slug}}" class="text-center btn-group" data-toggle="buttons-radio">
-		  <button type="button" class="q btn btn-primary noi-btn-can-explain" data-value="0">I can explain it</button>
-	  	<button type="button" class="q btn btn-success noi-btn-can-do-it" data-value="1">I can do it</button>
-	  	<button type="button" class="q btn btn-warning noi-btn-can-refer" data-value="2">I can refer someone</button>
-	  	<button type="button" class="q btn btn-info noi-btn-learn-more"    data-value="-1">I want to learn more</button>
+      <span class="noi-and-i-can">and</span> 
+		  <button type="button" class="q e-answer noi-btn-can-explain" data-value="0">I can explain it</button>
+	  	<button type="button" class="q e-answer noi-btn-can-do-it" data-value="1">I can do it</button>
+	  	<button type="button" class="q e-answer noi-btn-can-refer" data-value="2">I can refer someone</button>
+      <span style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	  	<button type="button" class="q e-answer noi-btn-learn-more"    data-value="-1">I want to learn more</button>
+    </div>
 		</div>
-	</div>
 {%- endmacro %}
 
-{% macro noi_question(tag, phrasing) -%}
-<li class="list-group-item">
+{% macro noi_question(tag, phrasing, index) -%}
+<li class="list-group-item {{'noi-q-even' if (index % 2) else 'noi-q-odd'}}">
     <div class="noi-i-know">I know</div>
-		<div style="font-size: 2em;" class="alert alert-success" role="alert">
-		{{phrasing}}
+		<div style="font-size: 1.5em;" class="noi-question">
+		&laquo; {{phrasing}} &raquo;
 		</div>
 		{{ noi_buttons(tag) }}
     <br/>
@@ -85,7 +93,7 @@ div.btn-group {
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area.id}}" href="#collapse-{{topic.topic|slug}}">
-          <h3>{{topic['topic']}} ({{topic['questions']|length}})</h3></a>
+          <h3>{{topic['topic']}}&nbsp;<span class="noi-expertise-progress-topic" id="{{topic.topic|slug}}">TBD</span></h3></a>
           <div style="margin-bottom: 20px;">What you can share about {{topic['description']}}.</div>
         </div>
 
@@ -93,7 +101,7 @@ div.btn-group {
           <div class="accordion-inner">
             <ul class="list-group">
             {% for question in topic['questions'] %}
-              {{ noi_question(question['label'], question['question']) }}
+              {{ noi_question(question['label'], question['question'], loop.index) }}
            {% endfor %}
             </ul>
           </div>
@@ -132,7 +140,19 @@ function computeExpertiseProgress() {
   $('span.noi-expertise-progress').map(function(i, v) {
     var span = $(v);
     var id = span.attr('id');
+    console.log("compute progress for " + id);
     var tab = $('#' + id + '-tab');
+    var answers = tab.find('.q[checked="checked"]').length;
+    var all_questions = tab.find('.q').length / 4;
+    span.text(answers + " / " + all_questions);
+  })
+}
+
+function computeExpertiseProgressByTopic() {
+  $('span.noi-expertise-progress-topic').map(function(i, v) {
+    var span = $(v);
+    var id = span.attr('id');
+    var tab = $('#collapse-' + id);
     var answers = tab.find('.q[checked="checked"]').length;
     var all_questions = tab.find('.q').length / 4;
     span.text(answers + " / " + all_questions);
@@ -151,16 +171,17 @@ $('#expertise-tab a').click(function (e) {
 $('.q').click(function() {
 	if ($(this).attr('checked') == 'checked') {
 		// We click on an option that is already checked; ==> uncheck.
-		$(this).parent().find('.btn').css('text-decoration', '').attr('checked', false);
-		$(this).parent().find('.btn').css('opacity', '0.6');
+		$(this).parent().find('.q').css('text-decoration', '').attr('checked', false);
+		$(this).parent().find('.q').css('opacity', '0.6');
 	} else {
-	$(this).parent().find('.btn').css('text-decoration', '').attr('checked', false);
-	$(this).parent().find('.btn').css('opacity', '0.6');
+	$(this).parent().find('.q').css('text-decoration', '').attr('checked', false);
+	$(this).parent().find('.q').css('opacity', '0.6');
 	$(this).css('text-decoration', 'underline').attr('checked', true);
 	$(this).css('opacity', '1.0');
 	};
   // TODO: recompute only for this area.
   computeExpertiseProgress();
+  computeExpertiseProgressByTopic();
 });
 
 function getExpertise() {
@@ -208,6 +229,8 @@ function setExpertise(userExpertise) {
     button.css('opacity', '1.0');
   }
   computeExpertiseProgress();
+  computeExpertiseProgressByTopic();
+
 }
 
 </script>
