@@ -31,13 +31,13 @@
 {% block content %}
 
 	<div class="row">
-	<div class="debug col-md-4">
+	<div class="debug col-xs-4 col-md-4">
 			<center><span class="flag-icon flag-icon-squared flag-icon-{{user['country_code']|lower}}"></center>
 		</div>
-		<div class="debug col-md-4">
+		<div class="debug col-xs-4 col-md-4">
 			<center><img class="profile-img" src="{{user|avatar}}"/><center>
 			</div>
-		<div class="debug col-md-4">
+		<div class="debug col-xs-4 col-md-4">
 			<center>
 			<img class="profile-map" src="https://maps.googleapis.com/maps/api/staticmap?center={{user['latlng']}}&size=300x100&zoom=5&markers=color:blue%7Clabel:%7C{{user['latlng']}}" alt="location">
 		</center>
