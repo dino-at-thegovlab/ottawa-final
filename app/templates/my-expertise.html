@@ -30,6 +30,8 @@ div.btn-group {
 .noi-question { margin: 10px;}
 .noi-q-even { background-color: #CCFF33;}
 .noi-q-odd { background-color: #FFCCFF;}
+span.noi-expertise-icon-name { font-size: 10px;}
+.noi-topic-name { font-size: 24px;}
 
 </style>
 {% endblock %}
@@ -70,7 +72,7 @@ div.btn-group {
   {% for area in AREAS %}
     <li role="presentation" class="{{'noi-expertise-not-yet' if not area.topics}}"><a href="#{{area.id}}-tab">
       <img alt="{{area.name}}" class="noi-expertise-icon" src="/static/img/expertise-icons/{{area.icon}}">
-      <br/>{{area['name']}}
+      <br/><span class="noi-expertise-icon-name">{{area['name']}}</span>
       <br/><span id="{{area.id}}" class="noi-expertise-progress"></span></a>
     </li>
   {% endfor %} 
@@ -93,7 +95,7 @@ div.btn-group {
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area.id}}" href="#collapse-{{topic.topic|slug}}">
-          <h3>{{topic['topic']}}&nbsp;<span class="noi-expertise-progress-topic" id="{{topic.topic|slug}}">TBD</span></h3></a>
+          <span class="noi-topic-name">{{topic['topic']}}</span></a>&nbsp;<span class="noi-expertise-progress-topic" id="{{topic.topic|slug}}">TBD</span>
           <div style="margin-bottom: 20px;">What you can share about {{topic['description']}}.</div>
         </div>
 
