@@ -16,12 +16,6 @@ div.btn-group {
 .btn { font-size: 12px; opacity:0.6; }
 .q { margin-left: 20px;}
 
-.noi-expertise-icon { height: 50px; }
-.noi-expertise-not-yet {
-    opacity: 0.4;
-    filter: alpha(opacity=40); /* msie */
-}
-
 .noi-expertise-progress { font-size: 10px ;}
 .noi-expertise-progress-topic { font-size: 10px ;}
 
@@ -40,9 +34,9 @@ span.noi-expertise-icon-name { font-size: 10px;}
 
 
 {# We define a macro for buttons; buttons are prefixed by the question name. #}
-{% macro noi_buttons(question_tag, index) -%}
+{% macro noi_buttons(question, area, topic, index) -%}
 	<div class="btn-group-wrap b-question-answers">
-		<div id="q-{{question_tag|slug}}" class="text-center btn-group" data-toggle="buttons-radio">
+		<div id="q-{{question|make_question(area, topic)}}" class="text-center btn-group" data-toggle="buttons-radio">
       <span class="noi-and-i-can">and</span> 
 		  <button type="button" class="q e-answer noi-btn-can-explain" data-value="0">I can explain it</button>
 	  	<button type="button" class="q e-answer noi-btn-can-do-it" data-value="1">I can do it</button>
@@ -53,13 +47,13 @@ span.noi-expertise-icon-name { font-size: 10px;}
 		</div>
 {%- endmacro %}
 
-{% macro noi_question(tag, phrasing, index) -%}
+{% macro noi_question(question, area, topic, index) -%}
 <li class="list-group-item {{'noi-q-even' if (index % 2) else 'noi-q-odd'}}">
     <div class="noi-i-know">I know</div>
 		<div style="font-size: 1.5em;" class="noi-question">
-		&laquo; {{phrasing}} &raquo;
+		&laquo; {{question['question']}} &raquo;
 		</div>
-		{{ noi_buttons(tag) }}
+		{{ noi_buttons(question, area, topic) }}
     <br/>
 			</li>
 {%- endmacro %}
@@ -103,7 +97,7 @@ span.noi-expertise-icon-name { font-size: 10px;}
           <div class="accordion-inner">
             <ul class="list-group">
             {% for question in topic['questions'] %}
-              {{ noi_question(question['label'], question['question'], loop.index) }}
+              {{ noi_question(question, area, topic, loop.index) }}
            {% endfor %}
             </ul>
           </div>

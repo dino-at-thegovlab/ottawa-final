@@ -41,7 +41,8 @@ def makeRandomSkills():
                 all_skills[x] = random.randint(0, len(LEVELS)-1)
     return all_skills
 
-#print makeRandomSkills()
+print makeRandomSkills()
+sys.exit(-1)
 
 def insertUser(cursor, user):
     try:

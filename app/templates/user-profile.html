@@ -1,15 +1,26 @@
 {% extends "__base__.html" %}
 
-{% block title %}{{user.fname}} {{user.lname}}'s Profile{% endblock %}
+{% block title %}{{user['first_name']}} {{user['last_name']}}'s Profile{% endblock %}
 {% block page_style_post %}
 <style>
 .profile-img { width: 100px; height: 100px; border-radius: 50px;}
 .profile-map { width: 300px; height: 100px; border-radius: 5px;}
 
 .debug { border-style: none; }
-.flag-icon { font-size: 100px; text-align: center; vertical-align: middle; } 
+.flag-icon { font-size: 100px; text-align: center; vertical-align: middle; border-radius: 50px;} 
 
 .row { margin-bottom: 20px;}
+
+.noi-expertise-tag-profile { border: solid black 1px; padding:
+	2px; border-radius: 5px;
+	background-color: linen;
+	list-style-type: none;
+}
+
+.noi-expertise-list-profile {
+	line-height: 2em;
+	list-style-type: none;
+}
 
 </style>
 
@@ -21,7 +32,7 @@
 
 	<div class="row">
 	<div class="debug col-md-4">
-			<center><span class="flag-icon flag-icon-{{user['country_code']|lower}}"></center>
+			<center><span class="flag-icon flag-icon-squared flag-icon-{{user['country_code']|lower}}"></center>
 		</div>
 		<div class="debug col-md-4">
 			<center><img class="profile-img" src="{{user|avatar}}"/><center>
@@ -44,7 +55,7 @@
 <div class="row">
 	<div class="debug col-xs-2 col-md-2 text-center"></div>
 	<div class="debug col-xs-2 col-md-2 text-center">
-		<i class="fa fa-star-o fa-2x"></i> 95%
+		<i class="fa fa-star-o fa-2x"></i>
 	</div>
 	<div class="debug col-xs-2 col-md-2 text-center">
 		<a href="mailto:info@thegovlab.org?subject=Contact+request+via+Network+Of+Innovators&body=Dear+{{user['first_name']}}"><i class="fa fa-at fa-2x"></i> E-Mail</a>
@@ -61,25 +72,66 @@
 </div>
 <br/>
 
-<pre>{{user}}</pre>
+<div class="row">
+	<div class="col-xs-12 col-md-6">
+		<h3>Languages:</h3>
+		{% if user['langs'] %}
+		<ul>
+			{% for lang in user['langs'] %}
+			<li>{{lang}}</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		No language information available.
+		{% endif %}
+	</div>
+	<div class="col-xs-12 col-md-6">
+		<h3>Domain(s) of expertise:</h3>
+		{{user['domain_expertise']}}
+	</div>
+</div>
 
+<div class="row">
+	<div class="col-xs-12 col-md-6">
+	<h3>Expertise</h3>
+	{% if 'skills' not in user %}
+	No expertise information available.
+	{% endif %}
+</div>
+</div>
+
+<div class="row">
+{% if user['skills'] %}
+{% for area in CONTENT['areas'] %}
+	<div class="col-md-2 text-center {{'noi-expertise-not-yet' if not area.topics}}">
+<img class="noi-expertise-icon" src="/static/img/expertise-icons/{{area['icon']}}"><br/>{{area['name']}}
+</div>
+<div class="col-md-4">
+<ul class="noi-expertise-list-profile">
+{% for skill in user['skills']|skills_by_area(area) %}
+<li><span class="noi-expertise-level-profile">{{user['skills'][skill]|expertise_level_icon|safe}}</span> <span class="noi-expertise-tag-profile">{{skill.split('/')[-1]}}</span>
+</li>
+{% endfor %}
+</ul>
+</div>
+{% if loop.index % 2 == 0 %}
+	</div>
+	<div class="row">
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+</div>
+
+{#
 <div class="row">
 	<div class="col-xs-12 col-md-4 text-center">
 		<h3>Open Data Skills</h3>
 		<canvas id="canvas-opendata" height="300" width="300"></canvas>
 	</div>
-
-	<div class="col-xs-12 col-md-4 text-center">
-		<h3>Prizes Skills</h3>
-		<canvas id="canvas-prizes" height="300" width="300"></canvas>
-	</div>
-
-	<div class="col-xs-12 col-md-4 text-center">
-		<h3>Crowdsourcing Skills</h3>
-		<canvas id="canvas-crowdsourcing" height="300" width="300"></canvas>
-	</div>
-
 </div>
+#}
 
 {% endblock %}
 

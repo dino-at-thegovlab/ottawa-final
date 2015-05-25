@@ -14,14 +14,11 @@
 {% block content %}
 
 <div id="new-search">
-<a href="/search" class="btn btn-primary" role="button">New search</a>
+<a target="__email__" role="button" class="btn btn-primary" href="mailto:{{results|email_recipients|join(',')}}?subject=Contact+request+from+the+Network+of+Innovators">Contact all these people</a>
 </div>
 
 <h1>{{title}}</h1>
 
-<center>
-<button><a href="mailto:{{results|email_recipients|join(',')}}?subject=Contact+request+from+the+Network+of+Innovators">Contact all these people</a></button>
-</center>
 
 <div class="b-results">
 	<div class="b-content-header">
@@ -37,10 +34,10 @@
 					<a class="e-name" href="user/{{r.userid}}">{{r.first_name}} {{r.last_name}}</a>
 					<div class="e-job">{{r.title}}, {{r.org}}</div>
 					<div class="e-place">{{r.city}}, {{r.country}}</div>
-{#					<a class="e-name" href="edit/{{r.userid}}">edit</a> #}
+					<a class="e-name" href="edit/{{r.userid}}">edit</a>
 					<div class="e-bottom-info">
 						<div class="e-score">
-							<i class="fa fa-star"></i>{{r.score}}%
+							<i class="fa fa-star"></i>{{r.score}}
 						</div>
 						<div class="e-lang">{{r.lang}}</div>
 					</div>

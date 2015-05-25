@@ -26,14 +26,41 @@ from slugify import slugify
 
 noi_slug = lambda x: slugify(x, to_lower=True)
 
+
 def avatar(user):
     if user['picture']:
         return user['picture']
     else:
         return "/static/icons/%s.gif" % ('%03d' % (int(user['userid']) % 361))
 
+
 def email_recipients(users):
-    return [user['email'] for user in users if user['email'] != None]
+    return [user['email'] for user in users if user['email'] is not None]
+
+
+def make_question(question, area, topic):
+    return "%s/%s/%s" % (area['id'], noi_slug(topic['topic']), noi_slug(question['label']))
+
+
+def skills_by_area(skills, area):
+    return [i for i in skills.keys() if i.startswith(area['id'])]
+
+
+LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 0, 'icon': '<i class="fa fa-graduation-cap"></i>'},
+          'LEVEL_I_CAN_DO_IT': {'score': 1, 'icon': '<i class="fa fa-cubes"></i>'},
+          'LEVEL_I_CAN_REFER': {'score': 2, 'icon': '<i class="fa fa-user-plus"></i>'},
+          'LEVEL_I_WANT_TO_LEARN': {'score': -1, 'icon': '<i class="fa fa-heart"></i>'}}
+# ASSERT THAT all scores are different.
+
+
+def expertise_level_icon(level_score):
+    print type(level_score)
+    level = [l for l in LEVELS.keys() if LEVELS[l]['score'] == int(level_score)]
+    print level
+    if level:
+        return LEVELS[level[0]]['icon']
+    else:
+        ''
 
 import json
 
@@ -57,6 +84,10 @@ app = Flask(__name__)
 app.jinja_env.filters['slug'] = noi_slug
 app.jinja_env.filters['avatar'] = avatar
 app.jinja_env.filters['email_recipients'] = email_recipients
+app.jinja_env.filters['make_question'] = make_question
+app.jinja_env.filters['skills_by_area'] = skills_by_area
+app.jinja_env.filters['expertise_level_icon'] = expertise_level_icon
+
 
 # Constant that should be available for all templates.
 app.jinja_env.globals['ORG_TYPES'] = ORG_TYPES

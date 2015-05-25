@@ -62,7 +62,7 @@ ul li {
 		  		<optgroup label="{{area['name']}}">
 		  			{% for topic in area['topics'] %}
 		  				{% for question in topic['questions'] %}
-					  		<option value="{{question['label']|slug}}">{{question['label']}}</option>
+					  		<option value="{{question|make_question(area,topic)}}">{{question['label']}}</option>
 							{% endfor %}
 						{% endfor %}
 					</optgroup>
