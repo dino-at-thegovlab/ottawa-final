@@ -17,6 +17,7 @@ from flask import g
 
 import yaml
 import db
+import platform
 
 from slugify import slugify
 
@@ -43,8 +44,11 @@ CONTENT = yaml.load(open('content.yaml'))
 NOI_COLORS =  'red,blue,green,orange,purple,yellow,gray'.split(',')
 
 #REDIRECT_PAGE = 'http://noi.thegovlab.org/'
-HOST = 'localhost'
-
+if platform.linux_distribution()[0] == 'Ubuntu':
+    HOST = 'noi.thegovlab.org'
+else:
+    HOST = 'localhost'
+print "Running service on %s." % HOST
 
 app = Flask(__name__)
 app.jinja_env.filters['slug'] = noi_slug
