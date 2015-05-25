@@ -35,10 +35,11 @@ import json
 COUNTRIES = "Afghanistan,Algeria,Argentina,Australia,Austria,Bahamas,Bangladesh,Belgium,Belize,Benin,Bhutan,Brazil,Bulgaria,Burkina Faso,Burundi,Cambodia,Cameroon,Canada,Central African Rep,Chad,Chile,China,Colombia,Congo,Congo, The Democratic Rep,Connected!,Connecting to database,Costa Rica,Cuba,Czech Republic,Denmark,Djibouti,Dominican Republic,Ecuador,Egypt,El Salvador,Ethiopia,Fiji,Finland,France,Gambia,Georgia,Germany,Ghana,Guatemala,Guinea,Haiti,Hungary,India,Indonesia,Iran,Iraq,Ireland,Italy,Ivory Coast (Cote D'Ivoire),Jamaica,Japan,Jordan,Kenya,Korea, Republic Of,Kyrgyzstan,Lebanon,Liberia,Lithuania,Macedonia (Republic of),Madagascar,Malawi,Malaysia,Mali,Mauritania,Mexico,Moldova, Rep,Mongolia,Montenegro,Namibia,Nepal,Netherlands,New Zealand,Niger,Nigeria,Pakistan,Panama,Papua New Guinea,Paraguay,Peru,Philippines,Romania,Russian Federation,Rwanda,Samoa,Senegal,Serbia,Slovakia (Slovak Rep),Somalia,South Africa,Spain,Sri Lanka,Sudan,Sweden,Switzerland,Taiwan,Tajikistan,Tanzania,Thailand,Togo,Tonga,Trinidad & Tobago,Tunisia,Turkey,Uganda,Ukraine,United Kingdom,United States,Uruguay,Viet Nam,Yemen,Zambia".split(',')
 LANGS = 'Afrikanns|Albanian|Arabic|Armenian|Basque|Bengali|Bulgarian|Catalan|Cambodian|Chinese (Mandarin)|Croation|Czech|Danish|Dutch|English|Estonian|Fiji|Finnish|French|Georgian|German|Greek|Gujarati|Hebrew|Hindi|Hungarian|Icelandic|Indonesian|Irish|Italian|Japanese|Javanese|Korean|Latin|Latvian|Lithuanian|Macedonian|Malay|Malayalam|Maltese|Maori|Marathi|Mongolian|Nepali|Norwegian|Persian|Polish|Portuguese|Punjabi|Quechua|Romanian|Russian|Samoan|Serbian|Slovak|Slovenian|Spanish|Swahili|Swedish |Tamil|Tatar|Telugu|Thai|Tibetan|Tonga|Turkish|Ukranian|Urdu|Uzbek|Vietnamese|Welsh|Xhosa'.split('|')
 
-ORG_TYPES = { 'edu': 'Academia', 'com': 'Private Sector', 'org': 'Non Profit', 'gov': 'Government' }
+ORG_TYPES = { 'edu': 'Academia', 'com': 'Private Sector', 'org': 'Non Profit', 'gov': 'Government', 'other': 'Other' }
 
 CONTENT = yaml.load(open('content.yaml'))
 
+NOI_COLORS =  'red,blue,green,orange,purple,yellow,gray'.split(',')
 
 app = Flask(__name__)
 app.jinja_env.filters['slug'] = noi_slug
@@ -50,6 +51,7 @@ app.jinja_env.globals['ORG_TYPES'] = ORG_TYPES
 app.jinja_env.globals['CONTENT'] = CONTENT
 app.jinja_env.globals['COUNTRIES'] = COUNTRIES
 app.jinja_env.globals['LANGS'] = LANGS
+app.jinja_env.globals['NOI_COLORS'] = NOI_COLORS
 
 app.debug = True
 app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
@@ -157,7 +159,10 @@ def my_expertise():
 @app.route('/dashboard')
 def dashboard():
     top_countries = db.top_countries()
-    return render_template('dashboard.html', **{'top_countries': top_countries})
+    ALL_USERS = db.getAllUsers()
+    OCCUPATIONS = db.getUserOccupations()
+    return render_template('dashboard.html', **{'top_countries': top_countries,
+                                                'ALL_USERS': ALL_USERS, 'OCCUPATIONS': OCCUPATIONS})
 
 @app.route('/dashboard-2')
 def dashboard2():

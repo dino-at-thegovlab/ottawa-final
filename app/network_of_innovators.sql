@@ -6,18 +6,22 @@ CREATE TABLE  users ( userid varchar(50) PRIMARY KEY,
   email text,
   country text,
   city text,
-  geo text,
+  latlng text,
   org text,
   org_type text,
   picture text,
   title text,
   langs json,
   skills json,
-  domain_expertise text );
+  domain_expertise text,
+  timestamp timestamp default current_timestamp,
+  account_type smallint  );
 
 ALTER TABLE users ADD COLUMN org_type text;
-ALTER TABLE users ADD COLUMN geo text;
+ALTER TABLE users ADD COLUMN latlng text;
 ALTER TABLE users ADD COLUMN domain text;
+ALTER TABLE users ADD COLUMN timestamp timestamp default current_timestamp;
+ALTER TABLE users ADD COLUMN account_type smallint default 0;
 
 CREATE OR REPLACE FUNCTION plv8_score(skills json, tags text[])
 RETURNS integer AS $$

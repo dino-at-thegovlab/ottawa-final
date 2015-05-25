@@ -30,6 +30,36 @@ def runQuery(sql, data):
     return records
 
 
+def getUserOccupations():
+    cursor = getCursor()
+    SQL = """SELECT row_to_json(T) FROM
+            ( SELECT COUNT(*) AS cnt, org_type
+              FROM users WHERE org_type != '' GROUP BY org_type
+            ) AS T"""
+    data = ()
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    records = cursor.fetchall()
+    cursor.close()
+    return map(lambda x: x[0], records)
+
+
+def getAllUsers():
+    cursor = getCursor()
+    SQL = """SELECT row_to_json(T) FROM
+                (SELECT userid AS userid,
+                    first_name AS first_name,
+                     last_name AS last_name,
+                        latlng AS latlng FROM users WHERE latlng != ''
+                ) AS T"""
+    data = ()
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    records = cursor.fetchall()
+    cursor.close()
+    return map(lambda x: x[0], records)
+
+
 def findMatchAsJSON(my_skills):
     cursor = getCursor()
     SQL = """SELECT row_to_json(T1) FROM
