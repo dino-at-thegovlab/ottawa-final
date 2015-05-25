@@ -264,7 +264,7 @@ if (userProfile == null) {
   $('select[id="q-org_type"]').children('option').map(function() {
     if ($(this).attr('value') == userProfile.org_type) {
       console.log('Match for ' + $(this).attr('value'));
-      $(this).attr('selected', '');
+      $(this).prop('selected', 'true');
   } else {
     $(this).removeAttr('selected');
   }
@@ -274,7 +274,7 @@ if (userProfile == null) {
   $('select[id="q-langs"]').children('option').map(function() {
     if ($.inArray($(this).attr('value'), userProfile.langs) > -1) {
       console.log('Match for ' + $(this).attr('value'));
-      $(this).attr('selected', '');
+      $(this).prop('selected', 'true');
   } else {
     $(this).removeAttr('selected');
   }
