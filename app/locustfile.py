@@ -30,6 +30,10 @@ class UserBehavior(TaskSet):
         fulltext = random.choice('NYU|CTO|CIO|Government'.split('|'))
         self.client.post("/search", {'fulltext': fulltext})
 
+    @task(5)
+    def dashboard(self):
+        """We test the /dashboard page (dynamic). Triggers multiple queries."""
+        self.client.get("/dashboard")
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior

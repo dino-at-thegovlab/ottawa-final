@@ -137,11 +137,11 @@ def createNewUser(userid, first_name='', last_name='', picture=''):
 def updateCoreProfile(user):
     cursor = getCursor()
     data = (user['first_name'], user['last_name'], user['email'], user['picture'],
-        user['country'], user['city'],
+        user['country'], user['country_code'], user['city'],
         user['org'], user['title'], Json(user['langs']), user['latlng'], user['org_type'], user['domain_expertise'], user['userid'])
     try:
-        SQL = """INSERT INTO users(first_name, last_name, email, picture, country, city, org, title, langs, latlng, org_type, domain_expertise, userid)
-                        VALUES    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        SQL = """INSERT INTO users(first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domain_expertise, userid)
+                        VALUES    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         print cursor.mogrify(SQL, data)
         cursor.execute(SQL, data)
         cursor.connection.commit()
@@ -149,8 +149,8 @@ def updateCoreProfile(user):
     except Exception, e:
         print e
         cursor.connection.rollback()
-    SQL = """UPDATE users SET (first_name, last_name, email, picture, country, city, org, title, langs, latlng, org_type, domain_expertise) =
-    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) WHERE userid = %s"""
+    SQL = """UPDATE users SET (first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domain_expertise) =
+    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) WHERE userid = %s"""
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)
     cursor.connection.commit()

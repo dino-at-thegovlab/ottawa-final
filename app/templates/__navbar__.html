@@ -24,8 +24,11 @@
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             {% if 'social-login' in session %}
-            <li><a href="/me">My Contact Info</a></li>
-            <li><a href="/my-expertise">My Expertise</a></li>
+            <li><a href="/me">Edit My Profile</a></li>
+            <li><a href="/my-expertise">Edit My Expertise</a></li>
+            {% if session['social-login'] %}
+              <li><a href="/user/{{session['social-login']['userid']}}">See My Public Profile</a></li>
+            {% endif %}
             <li><a href="/logout">Logout</a></li>
             {% else %}
             <li><a href="/login">Login</a></li>

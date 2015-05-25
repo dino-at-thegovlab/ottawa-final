@@ -112,6 +112,7 @@ ul li {
   <label class="col-md-4 control-label" for="textinput">Country</label>  
   <div class="col-md-4">
   <input id="q-country" name="country" type="text" placeholder="placeholder" disabled class="form-control input-md">
+  <input id="q-country_code" name="country_code" type="hidden">
   </div>
 </div>
 
@@ -194,6 +195,7 @@ function fillInAddress() {
   console.log(place);
   // We get the lat/lng of the place.
   document.getElementById('q-latlng').value = place.geometry.location.toString();
+  document.getElementById('q-city').value = '';  // a country result does not update a city.
   // We get the city and country.
   for (var i = 0; i < place.address_components.length; i++) {
     var addressType = place.address_components[i].types[0];
@@ -203,6 +205,11 @@ function fillInAddress() {
       console.log(formId);
       var val = place.address_components[i][attributeId];
       document.getElementById(formId).value = val;
+
+      // We store the country code.
+      if (addressType == 'country') {
+        document.getElementById('q-country_code').value = place.address_components[i].short_name;
+      }
     }
   }
 }

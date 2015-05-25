@@ -3,39 +3,59 @@
 {% block title %}{{user.fname}} {{user.lname}}'s Profile{% endblock %}
 {% block page_style_post %}
 <style>
-.profile-img { width: 80px; height: 80px; border-radius: 40px;}
+.profile-img { width: 100px; height: 100px; border-radius: 50px;}
+.profile-map { width: 300px; height: 100px; border-radius: 5px;}
+
 .debug { border-style: none; }
+.flag-icon { font-size: 100px; text-align: center; vertical-align: middle; } 
+
+.row { margin-bottom: 20px;}
+
 </style>
+
+<link href="/static/styles/flag-icon.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
 
 	<div class="row">
-		<div class="debug col-md-4"></div>
-		<div class="debug col-md-4"><center><img class="profile-img" src="{{user|avatar}}"/><center></div>
-		<div class="debug col-md-4"></div>
+	<div class="debug col-md-4">
+			<center><span class="flag-icon flag-icon-{{user['country_code']|lower}}"></center>
+		</div>
+		<div class="debug col-md-4">
+			<center><img class="profile-img" src="{{user|avatar}}"/><center>
+			</div>
+		<div class="debug col-md-4">
+			<center>
+			<img class="profile-map" src="https://maps.googleapis.com/maps/api/staticmap?center={{user['latlng']}}&size=300x100&zoom=5&markers=color:blue%7Clabel:%7C{{user['latlng']}}" alt="location">
+		</center>
+		</div>
 	</div>
 <div class="row">
 	<div class="debug col-md-12 text-center">
 		<h2>{{user['first_name']}} {{user['last_name']}}</h2>
 	</div>
 	<div class="debug col-md-12 text-center">
-		{{user['org']}} | {{user['country']}}
+		{{user['org']}} | {{user['title']}}
 	</div>
 </div>
+
 <div class="row">
 	<div class="debug col-xs-2 col-md-2 text-center"></div>
 	<div class="debug col-xs-2 col-md-2 text-center">
-		<i class="fa fa-star-o fa-1x"></i> 95%
+		<i class="fa fa-star-o fa-2x"></i> 95%
 	</div>
 	<div class="debug col-xs-2 col-md-2 text-center">
-		<a href="mailto:info@thegovlab.org?subject=Contact+request+via+Network+Of+Innovators&body=Dear+{{user['first_name']}}"><i class="fa fa-at fa-1x"></i> E-Mail</a>
+		<a href="mailto:info@thegovlab.org?subject=Contact+request+via+Network+Of+Innovators&body=Dear+{{user['first_name']}}"><i class="fa fa-at fa-2x"></i> E-Mail</a>
 	</div>
 	<div class="debug col-xs-2 col-md-2 text-center">
-		<i class="fa fa-phone-square fa-1x"></i> Phone
+		<i class="fa fa-phone-square fa-2x"></i> Phone
 	</div>
 	<div class="debug col-xs-2 col-md-2 text-center">
-		<i class="fa fa-cart-plus fa-1x"></i> Add
+		<a href="/vcard/{{userid}}">
+			<i class="fa fa-download fa-2x"></i></i> vCard
+		</a>
 	</div>
 		<div class="debug col-xs-2 col-md-2 text-center"></div>
 </div>

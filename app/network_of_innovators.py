@@ -7,6 +7,7 @@ sys.setdefaultencoding("utf-8")
 from flask import Flask
 from flask import abort
 from flask import request
+from flask import Response
 from flask import flash
 from flask import redirect
 from flask import url_for
@@ -18,6 +19,8 @@ from flask import g
 import yaml
 import db
 import platform
+
+from vcard import make_vCard
 
 from slugify import slugify
 
@@ -185,13 +188,23 @@ def dashboard2():
     top_countries = db.top_countries()
     return render_template('dashboard-2.html', **{'top_countries': top_countries})
 
+@app.route('/vcard/<userid>')
+def vcard(userid):
+    user = db.getUser(userid)
+    if user:
+        card = make_vCard(user['first_name'], user['last_name'], user['org'], user['title'], user['email'], user['city'], user['country'])
+        return Response(card, mimetype='text/vcard')
+    else:
+        flash('This is does not correspond to a valid user.')
+        return redirect(url_for('main'))
+
 
 @app.route('/user/<userid>')
 def get_user(userid):
     user = db.getUser(userid)
     print user
     if user:
-        return render_template('user-profile.html', **{'user': user, 'SKILLS': []})
+        return render_template('user-profile.html', **{'user': user, 'userid': userid, 'SKILLS': []})
     else:
         flash('This is does not correspond to a valid user.')
         return redirect(url_for('search'))
