@@ -57,7 +57,7 @@
         <div class="noi-onboarding col-md-offset-3 col-md-6">
             <div class="noi-achievement-unlocked"><i class="fa {{ 'fa-check-circle-o noi-green' if session['social-login'] else 'fa-circle-o noi-red'}}"></i></div>
             <div class="numberCircle center-block">1</div>
-            <div class="noi-oboarding-call-to-action">Sign-up using your favorite service</div>
+            <div class="noi-oboarding-call-to-action">Sign-up using your favorite service <i class="fa fa-street-view"></i></div>
         </div>
     </div>
 
@@ -65,7 +65,11 @@
         <div class="noi-onboarding col-md-offset-3 col-md-6">
             <div class="noi-achievement-unlocked"><i class="fa {{ 'fa-check-circle-o noi-green' if session['has_created_profile'] else 'fa-circle-o noi-red'}}"></i></div>
             <div class="numberCircle center-block">2</div>
-            <div class="noi-oboarding-call-to-action">Create your profile</div>
+            <div class="noi-oboarding-call-to-action">Create your profile<br/>
+            {% if session['social-login'] %}
+            <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + Contact Info
+            {% endif %}
+            </div>
         </div>
     </div>
 
@@ -73,7 +77,11 @@
         <div class="noi-onboarding col-md-offset-3 col-md-6">
             <div class="noi-achievement-unlocked"><i class="fa {{ 'fa-check-circle-o noi-green' if session['has_filled_expertise'] else 'fa-circle-o noi-red'}}"></i></div>
             <div class="numberCircle center-block">3</div>
-            <div class="noi-oboarding-call-to-action">Tell us what you know</div>
+            <div class="noi-oboarding-call-to-action">Tell us what you know<br/>
+            {% if session['social-login'] %}
+            <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + My Expertise
+            {% endif %}
+            </div>
 
         </div>
     </div>
