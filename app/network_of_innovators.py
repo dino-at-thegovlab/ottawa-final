@@ -13,6 +13,7 @@ from flask import url_for
 from flask import render_template
 from flask import session
 from flask import jsonify
+from flask import g
 
 import yaml
 import db
@@ -41,6 +42,10 @@ CONTENT = yaml.load(open('content.yaml'))
 
 NOI_COLORS =  'red,blue,green,orange,purple,yellow,gray'.split(',')
 
+#REDIRECT_PAGE = 'http://noi.thegovlab.org/'
+HOST = 'localhost'
+
+
 app = Flask(__name__)
 app.jinja_env.filters['slug'] = noi_slug
 app.jinja_env.filters['avatar'] = avatar
@@ -52,6 +57,8 @@ app.jinja_env.globals['CONTENT'] = CONTENT
 app.jinja_env.globals['COUNTRIES'] = COUNTRIES
 app.jinja_env.globals['LANGS'] = LANGS
 app.jinja_env.globals['NOI_COLORS'] = NOI_COLORS
+app.jinja_env.globals['HOST'] = HOST
+
 
 app.debug = True
 app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
@@ -65,6 +72,8 @@ def test():
 
 @app.route('/')
 def main_page():
+    print session
+
     return render_template('main.html', **{'SKIP_NAV_BAR': False})
 
 
@@ -100,6 +109,7 @@ def login():
             userProfile = db.getUser(userid)
             session['user-profile'] = userProfile
         flash('You are authenticated using your %s Credentials.' % social_login['idp'])
+        g.is_logged_in = True
         return jsonify({'result': 0})
 
 
@@ -135,6 +145,7 @@ def my_profile():
         session['user-profile'] = userProfile
         db.updateCoreProfile(userProfile)
         flash('Your profile has been saved.')
+        session['has_created_profile'] = True
         return render_template('my-profile.html', **{'userProfile': userProfile})
 
 
@@ -153,6 +164,7 @@ def my_expertise():
             session['user-expertise'] = userExpertise
             db.updateExpertise(userid, userExpertise)
             flash('Your expertise has been saved.')
+            session['has_filled_expertise'] = True
             return render_template('my-expertise.html', **{'userExpertise': userExpertise, 'AREAS': CONTENT['areas']})
  
 
@@ -193,6 +205,7 @@ def search():
         query = {'location': country, 'langs': langs, 'skills': skills, 'fulltext': fulltext}
         print query
         experts = db.findExpertsAsJSON(**query)
+        session['has_done_search'] = True
         return render_template('search-results.html', **{'title': 'Expertise search', 'results': experts, 'query': query})
 
 @app.route('/match')
@@ -202,6 +215,7 @@ def match():
     if 'user-expertise' not in session:
         session['user-expertise'] = {}
     experts = db.findMatchAsJSON(session['user-expertise'])
+    session['has_done_search'] = True
     return render_template('search-results.html', **{'title': 'Matching search', 'results': experts, 'query': query})
 
 
@@ -222,4 +236,4 @@ if __name__ == "__main__":
         context = ('server.crt', 'server.key')
         app.run(host='0.0.0.0', port=443, ssl_context=context)
     else:
-        app.run(host='0.0.0.0', port=8080)
+        app.run(host='0.0.0.0', port=80)

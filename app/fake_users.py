@@ -72,7 +72,7 @@ def mapSector(s):
 
 cursor = db.getCursor()
 #geolocator = Nominatim()
-geolocator = GoogleV3(api_key='AIzaSyCjJduX95CXz3LtiX5sfw19GhqcicVYs6c')
+geolocator = GoogleV3(api_key='AIzaSyCjJduX95CXz3LtiX5sfw19GhqcicVYs6c', timeout=5)
 
 GEOCODE = True
 DRYRUN = False

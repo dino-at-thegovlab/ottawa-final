@@ -21,7 +21,9 @@
 
 	<script>
 	// TODO: FIX WHEN WE DEPLOY
-	var MAIN_PAGE = 'http://noi.thegovlab.org/';
+
+	var CALLBACK_PAGE = 'http://{{HOST}}/login';
+	var REDIRECT_PAGE = 'http://{{HOST}}/';
 
 	hello.init({'facebook': '428426510668680',
 							'google': '873276900396-ji0fg53so0ef21fekmf89sgqthii4fqe.apps.googleusercontent.com',
@@ -30,8 +32,8 @@
 							'windows': '000000004414E1C0',
 							'instagram': '1ac7d9c698e44cb29f644cde32e5fd33'
 	 },
-	 // TODO: FIX WHEN WE DEPLOY
-	 {redirect_uri: 'http://noi.thegovlab.org/login'});
+	 {redirect_uri: CALLBACK_PAGE}
+);
 
 	{% if LOGOUT %}
 	hello.logout('{{LOGOUT}}');
@@ -46,7 +48,7 @@ $('div[data-login]').click(function() {
 			console.log(r);
 			user = {'idp': idp, 'userid': idp + ':' + r['id'], 'first_name': r.first_name, 'last_name': r.last_name, 'picture': r.thumbnail};
 			$.ajax({'type': 'POST', 'url': '/login', 'data': {'social-login': JSON.stringify(user)},
-	  	'success': function() { window.location.href=MAIN_PAGE; } });
+	  	'success': function() { window.location.href=REDIRECT_PAGE; } });
 		});
 	});
 });

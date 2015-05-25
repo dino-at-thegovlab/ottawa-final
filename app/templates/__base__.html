@@ -9,8 +9,18 @@
     <title>{% block title %}{% endblock %}</title>
     <style>
     .profile-img { width: 80px; height: 80px; border-radius: 40px;}
-    .profile-img-nav { width: 40px; height: 40px; border-radius: 20px;}
-    .navbar { font-size: 30px;}
+    .profile-img-nav { width: 40px; height: 40px; border-radius: 20px; vertical-align: initial;}
+    .navbar2 { border2: solid 1px black; font-size: 30px; line-height: 25px; vertical-align: top;}
+
+   .navbar-brand { padding: 15px 15px; line-height: 1em; border2: solid 1px black;}
+   .noi-brand { font-size: 30px;
+                vertical-align: bottom;
+                text-align: center;
+                margin-top: 15px;
+                margin-left: 10px;
+                float: right;
+                }
+
     </style>
     {% block page_style_post %}{% endblock %}
     {% endblock %}

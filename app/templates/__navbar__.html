@@ -8,28 +8,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Network of Innovators</a>
+      <a class="navbar-brand" href="/"><i class="fa fa-lightbulb-o fa-3x"></i>&nbsp;<div class="noi-brand">Network of Innovators beta</div></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="/about">About</a></li>
-        <li><a href="/dashboard">Dashboard</a></li>
-      </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" style="margin-right: 2px; margin-top: 7px; font-size: 30px;" aria-expanded="false">Match Me&nbsp;<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/search">Search for Innovators</a></li>
-            <li><a href="/match">Those who know what I do not</a></li>
-            <li><a href="/match">Those most like me</a></li>
-          </ul>
-        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             {% if 'social-login' in session %}
-            <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/>
+            <img class="profile-img-nav fa-3x" src="{{session['social-login']['picture']}}"/>
             {% else %}
             <i class="fa fa-street-view fa-3x"></i>
             {% endif %}
@@ -44,6 +32,17 @@
             {% endif %}
           </ul>
         </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-exchange fa-3x"></i>
+&nbsp;<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/search">Search for Innovators</a></li>
+            <li><a href="/match">Those who know what I do not</a></li>
+            <li><a href="/match">Those most like me</a></li>
+          </ul>
+        </li>
+        <li><a href="/dashboard"><i class="fa fa-line-chart fa-3x"></i></a></li>
+        <li><a href="/about"><i class="fa fa-info-circle fa-3x"></i></a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
