@@ -4,3 +4,8 @@ app/ottawa-list.csv
 gunicorn*
 \._*
 .DS_Store
+app/static/styles/sass/*
+ottawa2/*
+govlab-academy.pem
+app/static/styles/.sass-cache/*
+app/static/styles/styles.css.map
