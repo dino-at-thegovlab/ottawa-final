@@ -60,18 +60,32 @@ def getAllUsers():
     return map(lambda x: x[0], records)
 
 
-def findMatchAsJSON(my_skills):
+def findMatchAsJSON(my_needs):
     cursor = getCursor()
     SQL = """SELECT row_to_json(T1) FROM
-                (SELECT *, plv8_match(%s, skills::json) AS score
-                FROM users) AS T1
+                (SELECT *, plv8_match_my_needs(%s, skills::json) AS score
+                FROM users WHERE skills IS NOT NULL) AS T1
             ORDER BY score DESC LIMIT 10;"""
+    data = (my_needs, )
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    records = cursor.fetchall()
+    cursor.close()
+    return map(lambda x: x[0], records)
+
+
+def findMatchKnnAsJSON(my_skills):
+    cursor = getCursor()
+    SQL = """SELECT row_to_json(T1) FROM
+                (SELECT *, plv8_knn_skills(%s, skills::json) AS score
+                FROM users WHERE skills IS NOT NULL) AS T1
+            ORDER BY score ASC LIMIT 10;"""
     data = (Json(my_skills), )
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)
     records = cursor.fetchall()
     cursor.close()
-    return map(lambda x:x[0], records)
+    return map(lambda x: x[0], records)
 
 
 def findExpertsAsJSON(location, langs, skills, fulltext):

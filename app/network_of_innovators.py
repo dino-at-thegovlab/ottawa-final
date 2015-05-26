@@ -46,21 +46,21 @@ def skills_by_area(skills, area):
     return [i for i in skills.keys() if i.startswith(area['id'])]
 
 
-LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 0, 'icon': '<i class="fa fa-graduation-cap"></i>'},
-          'LEVEL_I_CAN_DO_IT': {'score': 1, 'icon': '<i class="fa fa-cubes"></i>'},
-          'LEVEL_I_CAN_REFER': {'score': 2, 'icon': '<i class="fa fa-user-plus"></i>'},
+LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa fa-graduation-cap"></i>'},
+          'LEVEL_I_CAN_DO_IT': {'score': 5, 'icon': '<i class="fa fa-cubes"></i>'},
+          'LEVEL_I_CAN_REFER': {'score': 1, 'icon': '<i class="fa fa-user-plus"></i>'},
           'LEVEL_I_WANT_TO_LEARN': {'score': -1, 'icon': '<i class="fa fa-heart"></i>'}}
 # ASSERT THAT all scores are different.
 
+CONSTANTS = {}
+CONSTANTS['EMAIL_FEEDBACK'] ='noi-app-feedback@thegovlab.org'
 
 def expertise_level_icon(level_score):
-    print type(level_score)
     level = [l for l in LEVELS.keys() if LEVELS[l]['score'] == int(level_score)]
-    print level
     if level:
         return LEVELS[level[0]]['icon']
     else:
-        ''
+        return '<i class="fa fa-question"></i>'
 
 import json
 
@@ -96,6 +96,10 @@ app.jinja_env.globals['COUNTRIES'] = COUNTRIES
 app.jinja_env.globals['LANGS'] = LANGS
 app.jinja_env.globals['NOI_COLORS'] = NOI_COLORS
 app.jinja_env.globals['HOST'] = HOST
+app.jinja_env.globals['CONSTANTS'] = CONSTANTS
+app.jinja_env.globals['LEVELS'] = LEVELS
+app.jinja_env.globals['DEBUG'] = True
+
 
 
 app.debug = True
@@ -258,13 +262,34 @@ def search():
 
 @app.route('/match')
 def match():
-    print session
-    query = {'location': '', 'langs': [], 'skills': [], 'fulltext': 'NYU'}
-    if 'user-expertise' not in session:
-        session['user-expertise'] = {}
-    experts = db.findMatchAsJSON(session['user-expertise'])
+    social_login = session['social-login']
+    userid = social_login['userid']
+    query = {'location': '', 'langs': [], 'skills': [], 'fulltext': ''}
+    if 'skills' not in session['user-expertise']:
+        userProfile = db.getUser(userid)
+        userExpertise = userProfile['skills']
+        session['user-expertise'] = userExpertise
+    print "user expertise: ", json.dumps(session['user-expertise'])
+    skills = session['user-expertise']
+    my_needs = [k for k,v in skills.iteritems() if int(v) == -1]
+    print my_needs
+    experts = db.findMatchAsJSON(my_needs)
     session['has_done_search'] = True
-    return render_template('search-results.html', **{'title': 'Matching search', 'results': experts, 'query': query})
+    return render_template('search-results.html', **{'title': 'People Who Know what I do not', 'results': experts, 'query': query})
+
+
+@app.route('/match-knn')
+def knn():
+    query = {}
+    if 'user-expertise' not in session:
+        print "User expertise not in session"
+        my_needs = []
+    else:
+        skills = session['user-expertise']
+    print skills
+    experts = db.findMatchKnnAsJSON(skills)
+    session['has_done_search'] = True
+    return render_template('search-results.html', **{'title': 'People most like me', 'results': experts, 'query': query})
 
 
 @app.route('/match-test')

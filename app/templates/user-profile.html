@@ -72,6 +72,10 @@
 </div>
 <br/>
 
+{% if DEBUG %}
+<pre>{{user}}</pre>
+{% endif %}
+
 <div class="row">
 	<div class="col-xs-12 col-md-6">
 		<h3>Languages:</h3>
@@ -109,7 +113,7 @@
 <div class="col-md-4">
 <ul class="noi-expertise-list-profile">
 {% for skill in user['skills']|skills_by_area(area) %}
-<li><span class="noi-expertise-level-profile">{{user['skills'][skill]|expertise_level_icon|safe}}</span> <span class="noi-expertise-tag-profile">{{skill.split('/')[-1]}}</span>
+<li><span class="noi-expertise-level-profile">{{user['skills'][skill]|expertise_level_icon|safe}}</span>&nbsp;&nbsp;<span class="noi-expertise-tag-profile">{{skill.split('/')[-1]}}</span>
 </li>
 {% endfor %}
 </ul>

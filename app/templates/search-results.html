@@ -7,6 +7,10 @@
 	#new-search { float: right; margin-right: 100px;}
 	li.noi { margin-top: 10px;}
 	.noi-index { float:right; font-size: 10px; margin-right: 0px; margin-top:-10px; }
+
+/* @Claudio */
+.b-result-item .e-info { margin-left: 75px;}
+
 	</style>
 {% endblock %}
 
@@ -17,9 +21,6 @@
 <a target="__email__" role="button" class="btn btn-primary" href="mailto:{{results|email_recipients|join(',')}}?subject=Contact+request+from+the+Network+of+Innovators">Contact all these people</a>
 </div>
 
-<h1>{{title}}</h1>
-
-
 <div class="b-results">
 	<div class="b-content-header">
 		<h1>{{title}} | {{results|length}}</h1>
@@ -28,13 +29,13 @@
 		<ol>
 			{% for r in results %}
 			<li class="noi b-result-item">
-				<div style="" class="noi-index">{{loop.index}}</div>
+				<div style="" class="noi-index">{{loop.index}}
+					{% if DEBUG %}<br/><a href="edit/{{r.userid}}">edit</a>{% endif %}</div>
 				<img class="icon" src="{{r|avatar}}">
 				<div class="e-info">
-					<a class="e-name" href="user/{{r.userid}}">{{r.first_name}} {{r.last_name}}</a>
+					<a class="e-name" href="user/{{r.userid}}">{{r.first_name|title}} {{r.last_name|title}}</a>
 					<div class="e-job">{{r.title}}, {{r.org}}</div>
-					<div class="e-place">{{r.city}}, {{r.country}}</div>
-					<a class="e-name" href="edit/{{r.userid}}">edit</a>
+					<div class="e-place">{% if r.city != ''%}{{r.city}}, {% endif %}{{r.country}}</div>
 					<div class="e-bottom-info">
 						<div class="e-score">
 							<i class="fa fa-star"></i>{{r.score}}

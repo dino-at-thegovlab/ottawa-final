@@ -25,36 +25,54 @@ ALTER TABLE users ADD COLUMN timestamp timestamp default current_timestamp;
 ALTER TABLE users ADD COLUMN account_type smallint default 0;
 ALTER TABLE users ADD COLUMN country_code text;
 
+
 CREATE OR REPLACE FUNCTION plv8_score(skills json, tags text[])
 RETURNS integer AS $$
-plv8.elog(NOTICE, JSON.stringify(skills));
-var count = 0;
-try {
-	var skill_keys = Object.keys(skills);
+	var count = 0;
 	for (var i = 0; i < tags.length; i++) {
-		for (var j in skill_keys) {
-			var skill_key = skill_keys[j];
-			if (tags[i] in skills[skill_key]) {
-				count = count + skills[skill_key][tags[i]];
-			}
+		if (tags[i] in skills) {
+			count = count + Math.max(skills[tags[i]], 0);
 		}
 	}
-} catch(err) {
-}
-return count;
+	return count;
+$$ LANGUAGE plv8 IMMUTABLE STRICT;
+/* We intersect the two sets and only count positive expertise. */
+
+
+CREATE OR REPLACE FUNCTION plv8_match_my_needs(my_needs text[], their_skills json)
+RETURNS integer AS $$
+	var count = 0;
+	for (var i = 0; i < my_needs.length; i++) {
+		if (my_needs[i] in their_skills) {
+			count = count + Math.max(their_skills[my_needs[i]], 0);
+		}
+	}
+	return count;
 $$ LANGUAGE plv8 IMMUTABLE STRICT;
 
-CREATE OR REPLACE FUNCTION plv8_match(my_skills json, their_skills json)
-RETURNS integer AS $$
-	if ((my_skills == null) || (their_skills == null)){
-		return 0;
-	}
-	var count = 0;
-	var skills = Object.keys(their_skills);
+
+CREATE OR REPLACE FUNCTION plv8_knn_skills(my_skills json, their_skills json)
+RETURNS float AS $$
+	// plv8.elog(NOTICE, JSON.stringify(my_skills), JSON.stringify(their_skills));
+	var skills = Object.keys(my_skills);
+	var scores = [1];
 	for (var i = 0; i < skills.length; i++) {
-		if ((skills[i] in my_skills) && (parseInt(their_skills[skills[i]]) == -1)) {
-			count = count + 1;
+		if (skills[i] in their_skills) {
+			var diff = parseInt(their_skills[skills[i]]) - parseInt(my_skills[skills[i]]);
+			scores.push(diff * diff);
+		}
+		else {
+			scores.push(50);
 		}
 	}
-return count;
+	scores = scores.sort().reverse().slice(0,10);
+	var scores_length = scores.length;
+	var count = 0.0;
+	for (var j = 0; j < scores_length; j++) {
+		count = count + scores[j];
+	}
+	var result = count / (1.0 * scores.length);
+	return result;
 $$ LANGUAGE plv8 IMMUTABLE STRICT;
+
+/* We intersect the two sets and only count positive expertise. */
