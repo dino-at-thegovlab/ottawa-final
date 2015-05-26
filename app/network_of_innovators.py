@@ -98,7 +98,7 @@ app.jinja_env.globals['NOI_COLORS'] = NOI_COLORS
 app.jinja_env.globals['HOST'] = HOST
 app.jinja_env.globals['CONSTANTS'] = CONSTANTS
 app.jinja_env.globals['LEVELS'] = LEVELS
-app.jinja_env.globals['DEBUG'] = True
+app.jinja_env.globals['DEBUG'] = False
 
 
 

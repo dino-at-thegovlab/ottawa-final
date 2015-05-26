@@ -38,18 +38,15 @@ def makeRandomSkills():
             how_many_items = int(random.gauss(len(SKILLS[s]), 1)) % len(SKILLS[s])
             skills = random.sample(SKILLS[s], how_many_items)
             for x in skills:
-                all_skills[x] = random.randint(0, len(LEVELS)-1)
+                all_skills[x] = random.choice([-1, 1, 2, 5])
     return all_skills
-
-print makeRandomSkills()
-sys.exit(-1)
 
 def insertUser(cursor, user):
     try:
-        SQL = """INSERT INTO users(userid, first_name, last_name, country, city, latlng,
+        SQL = """INSERT INTO users(userid, first_name, last_name, email, country, city, latlng,
             org, org_type, title, skills, langs, account_type)   
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, -1);"""
-        data = (user['userid'], user['first_name'], user['last_name'], user['country'], user['city'], user['latlng'],
+        data = (user['userid'], user['first_name'], user['last_name'], user['email'], user['country'], user['city'], user['latlng'],
             user['org'], user['org_type'], user['title'],
             Json(user['skills']), Json(user['langs']), )
         print cursor.mogrify(SQL, data)
@@ -74,6 +71,11 @@ def mapSector(s):
 cursor = db.getCursor()
 #geolocator = Nominatim()
 geolocator = GoogleV3(api_key='AIzaSyCjJduX95CXz3LtiX5sfw19GhqcicVYs6c', timeout=5)
+
+print geolocator.geocode('United Kingdom')
+print 'done'
+import code
+code.interact(local=locals())
 
 GEOCODE = True
 DRYRUN = False
