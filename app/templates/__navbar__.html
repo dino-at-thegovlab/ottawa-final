@@ -8,18 +8,28 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/"><img src="../static/img/govlab-logo-white.png" alt="">Network of Innovators <em>beta</em></a>
+      <a class="navbar-brand" href="/">Network of Innovators <em>(beta)</em></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="/about">About</a></li>
+        <li><a href="/search">Find Innovators</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Explore the Network&nbsp;<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/match">Those who know what I do not</a></li>
+            <li><a href="/match-knn">Those most like me</a></li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             {% if 'social-login' in session %}
             <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/>
             {% else %}
-            <i class="fa fa-street-view fa-lg"></i>
+            My Profile
             {% endif %}
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -35,17 +45,7 @@
             {% endif %}
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-exchange fa-lg"></i>
-&nbsp;<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="/search">Search for Innovators</a></li>
-            <li><a href="/match">Those who know what I do not</a></li>
-            <li><a href="/match-knn">Those most like me</a></li>
-          </ul>
-        </li>
-        <li><a href="/dashboard"><i class="fa fa-line-chart fa-lg"></i></a></li>
-        <li><a href="/about"><i class="fa fa-info-circle fa-lg"></i></a></li>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

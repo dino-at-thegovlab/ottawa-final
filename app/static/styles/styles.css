@@ -1,74 +1,108 @@
 body {
-  background-color: #fafafa;
-  font-family: "proxima-nova", sans-serif;
-  font-size: 16px; }
+  font-family: 'proxima-nova', sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
+  color: #333;
+  background-color: #fafafa; }
 
-.b-navigation {
+a {
+  color: #472b74; }
+
+.btn {
   border-radius: 0;
-  border-color: #472b74;
-  box-shadow: none; }
-  .b-navigation .navbar-header {
-    background-color: #472b74;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4); }
-  .b-navigation .navbar-brand {
-    color: white;
-    font-weight: 200;
-    letter-spacing: .5px; }
-    .b-navigation .navbar-brand:hover {
-      background-color: rgba(255, 255, 255, 0.2) !important;
-      color: white; }
-    .b-navigation .navbar-brand img {
-      max-height: 40px;
-      display: inline-block;
-      margin-right: 10px;
-      margin-top: -10px;
-      vertical-align: top; }
-  .b-navigation button {
-    border: 0;
-    background-color: transparent !important; }
-    .b-navigation button .icon-bar {
-      background-color: white !important; }
-  .b-navigation .navbar-collapse {
-    border-color: #472b74; }
-    .b-navigation .navbar-collapse a {
-      color: #472b74 !important;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
-      font-size: 1.6rem;
-      font-weight: 200;
-      letter-spacing: .5px; }
-      .b-navigation .navbar-collapse a:hover {
-        background-color: rgba(255, 255, 255, 0.2) !important; }
-    .b-navigation .navbar-collapse li:last-child a {
-      border-bottom-color: transparent;
-      box-shadow: none; }
-  .b-navigation .navbar-collapse.in a,
-  .b-navigation .navbar-collapse.collapsing a {
-    padding: 27px;
-    text-transform: uppercase;
-    font-weight: 600; }
+  border: 1px solid transparent;
+  letter-spacing: .5px; }
 
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-  .b-navigation {
-    background-color: #472b74;
-    border-color: #472b74;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4); }
-    .b-navigation .navbar-header {
-      box-shadow: none;
-      background-color: transparent; }
-    .b-navigation .navbar-collapse a {
-      border-bottom-color: transparent;
-      color: white !important; } }
+.btn-primary {
+  background-color: #472b74; }
+
+.navbar-default {
+  background-color: #472b74;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  border: 0;
+  border-radius: 0; }
+
+.navbar {
+  margin: 0 0 50px 0; }
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+  font-weight: 200;
+  letter-spacing: .5px; }
+.navbar-default .navbar-nav > li:hover > a {
+  background-color: rgba(255, 255, 255, 0.2); }
+.navbar-default .navbar-nav > li:hover > a:hover {
+  color: white; }
+.navbar-default .navbar-nav > li.dropdown.open > a {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white; }
+
+.navbar-default .navbar-nav .dropdown-menu {
+  border-radius: 0;
+  border: 0; }
+  .navbar-default .navbar-nav .dropdown-menu li a {
+    font-size: 16px;
+    padding: 8px 22px; }
+
+.navbar-default .navbar-brand {
+  font-weight: 200;
+  font-size: 2.3rem;
+  letter-spacing: .5px;
+  padding-left: 80px;
+  vertical-align: bottom;
+  min-height: 50px;
+  margin-top: 5px;
+  margin-left: 20px;
+  color: white; }
+  .navbar-default .navbar-brand:hover {
+    color: white; }
+  .navbar-default .navbar-brand:before {
+    content: "";
+    background: url(../img/govlab-icon-white.png) no-repeat;
+    background-size: contain;
+    display: inline-block;
+    width: 140px;
+    height: 50px;
+    position: absolute;
+    left: 20px;
+    top: 8px; }
+
+.panel-primary {
+  border-color: #472b74; }
+
+.panel-primary .panel-heading,
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:focus,
+.nav-pills > li.active > a:hover,
+.list-group-item.active,
+.list-group-item.active:focus,
+.list-group-item.active:hover {
+  background-color: #472b74; }
+
+.pagination > li > a,
+.pagination > li > span {
+  color: #472b74; }
+
+.pagination > li > a,
+.nav-pills > li.active > a {
+  border-radius: 0 !important; }
+
+@media screen and (min-width: 768px) {
+  .navbar-nav {
+    float: right; }
+    .navbar-nav > li > a {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      color: white;
+      font-weight: 200;
+      letter-spacing: .5px; } }
 html {
   height: 100%;
   box-sizing: border-box; }
 
 body {
   min-height: 100%;
-  position: relative;
-  padding-bottom: 100px; }
+  position: relative; }
 
 .b-content-header h1 {
   font-size: 22px;
@@ -162,6 +196,9 @@ body {
   .b-article a:hover {
     text-decoration: underline; }
 
+body {
+  padding-bottom: 200px; }
+
 .b-footer {
   position: absolute;
   bottom: 0;
@@ -177,22 +214,65 @@ body {
   .b-footer a {
     color: white; }
   .b-footer .e-license {
-    border-bottom: 1px solid #555;
-    padding-bottom: 10px;
-    margin-bottom: 20px; }
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+    padding-bottom: 20px; }
     .b-footer .e-license p {
       margin: 10px; }
 
-@media (min-width: 992px) {
-  .b-footer {
-    text-align: left; }
-    .b-footer .e-license {
-      border-bottom: 0;
-      padding-bottom: 0;
-      margin-bottom: 0; }
-      .b-footer .e-license .e-ccimage {
-        float: left;
-        margin-right: 20px; } }
+.b-welcome-message p {
+  font-size: 38px;
+  font-weight: 200;
+  margin-bottom: 0;
+  text-align: center; }
+.b-welcome-message .e-image-container {
+  text-align: center; }
+
+.b-instructions h2 {
+  font-weight: 600;
+  text-align: center; }
+.b-instructions h3 {
+  text-align: center; }
+
+.b-instructions-box {
+  padding: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  margin-top: 40px;
+  padding-top: 30px; }
+  .b-instructions-box p {
+    font-size: 2.8rem;
+    text-align: center; }
+  .b-instructions-box:before {
+    content: attr(data-step);
+    position: absolute;
+    top: -30px;
+    left: calc(50% - 30px);
+    font-size: 4rem;
+    font-weight: 400;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #472b74;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    color: #472b74;
+    text-align: center;
+    line-height: 6rem; }
+
+.b-instructions-box.m-unlocked {
+  background-color: rgba(106, 162, 118, 0.1);
+  border-color: #6aa276; }
+  .b-instructions-box.m-unlocked:before {
+    border-color: #6aa276;
+    color: white;
+    background-color: #6aa276;
+    font-family: fontawesome;
+    content: "\f00c";
+    font-size: 3rem;
+    line-height: 5.5rem; }
+
 #about-page {
   max-width: 700px;
   margin: 0 auto; }
