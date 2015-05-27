@@ -262,6 +262,9 @@ def search():
 
 @app.route('/match')
 def match():
+    if 'user-expertise' not in session:
+        flash('Before we can match you with people, you need to enter your expertise first.', 'error')
+        return redirect(url_for('main_page'))
     social_login = session['social-login']
     userid = social_login['userid']
     query = {'location': '', 'langs': [], 'skills': [], 'fulltext': ''}
@@ -280,6 +283,9 @@ def match():
 
 @app.route('/match-knn')
 def knn():
+    if 'user-expertise' not in session:
+        flash('Before we can find people like you, you need to enter your expertise first.', 'error')
+        return redirect(url_for('main_page'))
     query = {}
     if 'user-expertise' not in session:
         print "User expertise not in session"

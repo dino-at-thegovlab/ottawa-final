@@ -32,6 +32,9 @@
 
     .dropdown-menu>li>a { font-size: 30px;}
     </style> -->
+    <style>
+    .profile-img-nav { width: 40px; height: 40px; border-radius: 20px; vertical-align: initial;}
+    </style>
     {% block page_style_post %}{% endblock %}
     {% endblock %}
 </head>
@@ -66,8 +69,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="container">
 
         <!-- Display the Flash alerts. -->
-        {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning">
+        {% for message in get_flashed_messages(category_filter=["message"]) %}
+        <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+        </div>
+        {% endfor %}
+
+        {% for message in get_flashed_messages(category_filter=["error"]) %}
+        <div class="alert alert-danger">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
         </div>
