@@ -90,6 +90,7 @@ app.jinja_env.filters['email_recipients'] = email_recipients
 app.jinja_env.filters['make_question'] = make_question
 app.jinja_env.filters['skills_by_area'] = skills_by_area
 app.jinja_env.filters['expertise_level_icon'] = expertise_level_icon
+app.jinja_env.filters['noop'] = lambda x: ''
 
 
 # Constant that should be available for all templates.
@@ -102,6 +103,7 @@ app.jinja_env.globals['HOST'] = HOST
 app.jinja_env.globals['CONSTANTS'] = CONSTANTS
 app.jinja_env.globals['LEVELS'] = LEVELS
 app.jinja_env.globals['DEBUG'] = DEBUG
+
 
 
 
