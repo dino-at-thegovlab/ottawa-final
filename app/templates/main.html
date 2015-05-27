@@ -74,7 +74,7 @@
         <div class="col-md-offset-3 col-md-6">
             <div class="b-instructions-box {{ 'm-unlocked' if session['has_created_profile'] else 'm-locked'}}" data-step="2">
             {#<div class="b-instructions-box m-unlocked" data-step="2">#}
-                <p>Create your profile</p>
+                <p><a href="/me">Create your profile</a></p>
                 {% if session['social-login'] %}
                 <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + Contact Info
                 {% endif %}
@@ -85,7 +85,7 @@
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <div class="b-instructions-box {{ 'm-unlocked' if session['has_filled_expertise'] else 'm-locked'}}" data-step="3">
-                <p>Tell us what you know</p>
+                <p><a href="/my-expertise">Tell us what you know</a></p>
                 {% if session['social-login'] %}
                 <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + My Expertise
                 {% endif %}
@@ -96,7 +96,7 @@
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <div class="b-instructions-box {{ 'm-unlocked' if session['has_done_search'] else 'm-locked'}}" data-step="4">
-                <p>Find innovators to answer your questions</p>
+                <p><a href="/search">Find innovators to answer your questions</a></p>
                 <p>Explore the network</p>
             </div>
         </div>
