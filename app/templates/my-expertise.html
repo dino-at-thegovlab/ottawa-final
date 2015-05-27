@@ -75,7 +75,7 @@ span.noi-expertise-icon-name { font-size: 10px;}
 
 <ul class="nav nav-tabs nav-justified" id="expertise-tab">
 
-  {% for area in AREAS %}
+  {% for area in AREAS[0:3] %}
     <li role="presentation" class="{{'noi-expertise-not-yet' if not area.topics}}"><a href="#{{area.id}}-tab">
       <img alt="{{area.name}}" class="noi-expertise-icon" src="/static/img/expertise-icons/{{area.icon}}">
       <br/><span class="noi-expertise-icon-name">{{area['name']}}</span>
