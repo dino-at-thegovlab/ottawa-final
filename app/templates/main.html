@@ -49,7 +49,6 @@
         <div class="col-md-12">
             <div class="b-welcome-message">
                 <p>Welcome to the <br/><b>Network of Innovators</b>, a GovLab experiment</p>
-                <br/>
                 <p>Find collaborators. Create alliances. Learn from others.</p>
             </div>
             <div class="b-instructions">
@@ -71,7 +70,7 @@
         <div class="col-md-offset-3 col-md-6">
             <div class="b-instructions-box {{ 'm-unlocked' if session['has_created_profile'] else 'm-locked'}}" data-step="2">
             {#<div class="b-instructions-box m-unlocked" data-step="2">#}
-                <p><a href="/me">Create your profile</a></p>
+                <p><a href="/me">Update your profile</a></p>
 {#                
                 {% if session['social-login'] %}
                 <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + Edit My Profile
