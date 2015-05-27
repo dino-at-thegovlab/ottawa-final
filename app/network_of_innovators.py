@@ -15,6 +15,7 @@ from flask import render_template
 from flask import session
 from flask import jsonify
 from flask import g
+from flask.ext.mobility import Mobility
 
 import yaml
 import db
@@ -84,6 +85,7 @@ else:
 print "Running service on %s." % HOST
 
 app = Flask(__name__)
+Mobility(app)
 app.jinja_env.filters['slug'] = noi_slug
 app.jinja_env.filters['avatar'] = avatar
 app.jinja_env.filters['email_recipients'] = email_recipients
@@ -143,7 +145,7 @@ def test_hello():
 def login():
     print session
     if request.method == 'GET':
-        return render_template('login-page.html', **{'SKIP_NAV_BAR': True})
+        return render_template('login-page.html', **{'SKIP_NAV_BAR': False})
     if request.method == 'POST':
         social_login = json.loads(request.form.get('social-login'))
         session['social-login'] = social_login
@@ -198,6 +200,9 @@ def my_profile():
 
 @app.route('/my-expertise', methods=['GET', 'POST'])
 def my_expertise():
+        if 'social-login' not in session:
+            flash('You need to be authenticated in order to fill your expertise.', 'error')
+            return redirect(url_for('login'))
         social_login = session['social-login']
         userid = social_login['userid']
         if request.method == 'GET':
@@ -268,7 +273,7 @@ def search():
 @app.route('/match')
 def match():
     if 'user-expertise' not in session:
-        flash('Before we can match you with people, you need to <a href="/my-expertise">enter your expertise</a> first.', 'error')
+        flash('Before we can match you with fellow innovators, you need to <a href="/my-expertise">enter your expertise</a> first.', 'error')
         return redirect(url_for('main_page'))
     social_login = session['social-login']
     userid = social_login['userid']
@@ -289,7 +294,7 @@ def match():
 @app.route('/match-knn')
 def knn():
     if 'user-expertise' not in session:
-        flash('Before we can find people like you, you need to enter your expertise first.', 'error')
+        flash('Before we can find innovators like you, you need to <a href="/my-expertise">fill your expertise</a> first.', 'error')
         return redirect(url_for('main_page'))
     query = {}
     if 'user-expertise' not in session:
