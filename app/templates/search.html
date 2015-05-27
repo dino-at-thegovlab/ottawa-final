@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="/static/chosen_v1.4.2/docsupport/style.css">
   <link rel="stylesheet" href="/static/chosen_v1.4.2/docsupport/prism.css">
   <link rel="stylesheet" href="/static/chosen_v1.4.2/chosen.css">
-  <style>
+  <!--<style>
   .noi-button { margin-top: 20px; margin-left: 20px;}
 	.selector { margin-top: 20px; margin-left: 20px;}
 	ol ul li, ul ul li {
@@ -18,70 +18,68 @@ ul li {
   margin-left: initial;
   margin-bottom: initial;
 }
-	</style>
+	</style>-->
 {% endblock %}
 
 {% block content %}
-
+<div id="search-ui-page">
 <div class="container-fluid">
+  <div class="b-content-header">
+    <h1>Find an expert</h1>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+    	<form class="b-form" action="/search" method="POST">
+    		<div class="selector">
+    			<select name="country" data-placeholder="Choose a Country..." class="chosen-select" tabindex="2">
+    	      <option value=""></option>
+    	      {% for country in COUNTRIES %}
+    	      <option value="{{country}}">{{country}}</option>
+    	      {% endfor %}
+    			</select>
+    		</div>
 
-<div class="alert alert-info" role="alert">Find an expert</div>
+    		<div class="selector">
+    			<select name="langs" data-placeholder="Choose a language..."
+    							multiple class="chosen-select"
+    							tabindex="2">
+    		    <option value=""></option>
+    		    {% for item in LANGS %}
+          		<option value="{{item}}">{{item}}</option>
+          	{% endfor %}
+    			</select>
+    		</div>
 
-<div class="row">
-
-<div class="col-md-6">
-
-	<form action="/search" method="POST">
-
-		<div class="selector">
-			<select name="country" data-placeholder="Choose a Country..." class="chosen-select" style="width:350px;" tabindex="2">
-	      <option value=""></option>
-	      {% for country in COUNTRIES %}
-	      <option value="{{country}}">{{country}}</option>
-	      {% endfor %}
-			</select>
-		</div>
-
-		<div class="selector">
-			<select name="langs" data-placeholder="Choose a language..."
-							multiple class="chosen-select"
-							style="width:350px;" tabindex="2">
-		    <option value=""></option>
-		    {% for item in LANGS %}
-      		<option value="{{item}}">{{item}}</option>
-      	{% endfor %}
-			</select>
-		</div>
-
-		<div class="selector">
-			<select name="skills" data-placeholder="Choose a skills..."
-						multiple class="chosen-select"
-						style="width:350px;" tabindex="2">
-		  	<option value=""></option>
-		  		{% for area in AREAS %}
-		  		<optgroup label="{{area['name']}}">
-		  			{% for topic in area['topics'] %}
-		  				{% for question in topic['questions'] %}
-					  		<option value="{{question|make_question(area,topic)}}">{{question['label']}}</option>
-							{% endfor %}
-						{% endfor %}
-					</optgroup>
-		  		{% endfor %}
-			</select>
-		</div>
+    		<div class="selector">
+    			<select name="skills" data-placeholder="Choose a skills..."
+    						  multiple class="chosen-select"
+    						  tabindex="2">
+    		  	<option value=""></option>
+  		  		{% for area in AREAS %}
+  		  		<optgroup label="{{area['name']}}">
+  		  			{% for topic in area['topics'] %}
+  		  				{% for question in topic['questions'] %}
+  					  		<option value="{{question|make_question(area,topic)}}">{{question['label']}}</option>
+  							{% endfor %}
+  						{% endfor %}
+  					</optgroup>
+  		  		{% endfor %}
+    			</select>
+    		</div>
 
 		<div class="selector">
-		<input placeholder="Type anything ..." type="text" id="fulltext" name="fulltext">
+		  <input placeholder="Type anything ..." type="text" id="fulltext" name="fulltext">
 		</div>
 
-		<div class="noi-button">
+		<div>
 			<input type="submit" value="Find experts">
 		</div>
 
 	</form>
 
 </div> <!-- row -->
-
+</div>
 {% endblock %}
 
 {% block page_script %}

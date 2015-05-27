@@ -5,15 +5,23 @@
 
 
 {% block content %}
+<div id="login-page">
+<div class="b-content-header">
+  <h1>Please login using your favorite social network.</h1>
+</div>
 
-<h1>Please login using your favorite social network.</h1>
-
-<div class="row im-centered">
-	{% for item in [ 'facebook', 'google', 'instagram', 'linkedin', 'twitter', 'windows'] %}
-  		<div class="col-xs-2 col-md-2" data-login="{{item}}"><i class="fa fa-{{item}} fa-4x"></i></div>
-	{% endfor %}
+<div class="row">
+	<div class="b-login-items">
+		{% for item in [ 'facebook', 'google', 'instagram', 'linkedin', 'twitter', 'windows'] %}
+  		<div class="col-md-4" data-login="{{item}}">
+  			<div class="b-login-item">
+	  			<i class="fa fa-{{item}} fa-3x"></i>
+  			</div>
+  		</div>
+		{% endfor %}
+		</div>
 	</div>
-
+</div>
 {% endblock %}
 
 

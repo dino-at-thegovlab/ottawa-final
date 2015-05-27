@@ -1,20 +1,5 @@
 {% extends "__base__.html" %}
 
-{% block page_style_post %}
-	<style>
-	.icon-div { right-margin: 50px; }
-	.icon { width: 50px; height: 50px; border-radius: 25px;}
-	#new-search { float: right; margin-right: 100px;}
-	li.noi { margin-top: 10px;}
-	.noi-index { float:right; font-size: 10px; margin-right: 0px; margin-top:-10px; }
-
-/* @Claudio */
-.b-result-item .e-info { margin-left: 75px;}
-
-	</style>
-{% endblock %}
-
-
 {% block content %}
 
 <div id="new-search">
@@ -29,13 +14,12 @@
 		<ol>
 			{% for r in results %}
 			<li class="noi b-result-item">
-				<div style="" class="noi-index">{{loop.index}}
-					{% if DEBUG %}<br/><a href="edit/{{r.userid}}">edit</a>{% endif %}</div>
+				<!-- <div style="" class="noi-index">{{loop.index}}{% if DEBUG %}<br/><a href="edit/{{r.userid}}">edit</a>{% endif %}</div> -->
 				<img class="icon" src="{{r|avatar}}">
 				<div class="e-info">
 					<a class="e-name" href="user/{{r.userid}}">{{r.first_name|title}} {{r.last_name|title}}</a>
-					<div class="e-job">{{r.title}}, {{r.org}}</div>
-					<div class="e-place">{% if r.city != ''%}{{r.city}}, {% endif %}{{r.country}}</div>
+					<div class="e-job">{{r.title}}, {{r.org}}</div> <!-- This should be limited to 76char -->
+					<div class="e-place"><i class="fa fa-map-marker"></i>{% if r.city != ''%}{{r.city}}, {% endif %}{{r.country}}</div>
 					<div class="e-bottom-info">
 						<div class="e-score">
 							<i class="fa fa-star"></i>{{r.score}}

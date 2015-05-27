@@ -1,7 +1,7 @@
 {% extends '__base__.html' %}
 
-
-{% block page_style_post %}
+{% block title %}Network of Innovators{% endblock %}
+{# {% block page_style_post %}
 <style>
 .row { margin-top: 30px}
 .numberCircle {
@@ -39,64 +39,70 @@
 .noi-red { color: red;}
 
 </style>
-{% endblock %}
+{% endblock %} #}
 
 {% block content %}
 
+<div id="homepage">
 <div class="container">
-
     <div class="row">
-        <div class="noi-onboarding col-md-offset-3 col-md-6">
-            <div class="noi-achievement-unlocked"><i class="fa fa-check-circle-o noi-green"></i></div>
-            Thank you for visiting<br/>The Network of Innovators beta,<br/>a GovLab Experiment<br/>
-            Learn more <i class="fa fa-info-circle"></i>
+        <div class="col-md-12">
+            <div class="b-welcome-message">
+                <div class="e-image-container">
+                    <img src="../static/img/noi-welcome-image.png" alt="">
+                </div>
+                <p>Thank you for visiting</p>
+                <p>This is a GovLab Experiment</p>
+            </div>
+            <div class="b-instructions">
+                <h2>Join Us</h2>
+                <h3>Follow the Steps</h3>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="noi-onboarding col-md-offset-3 col-md-6">
-            <div class="noi-achievement-unlocked"><i class="fa {{ 'fa-check-circle-o noi-green' if session['social-login'] else 'fa-circle-o noi-red'}}"></i></div>
-            <div class="numberCircle center-block">1</div>
-            <div class="noi-oboarding-call-to-action">Sign-up using your favorite service <i class="fa fa-street-view"></i></div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="noi-onboarding col-md-offset-3 col-md-6">
-            <div class="noi-achievement-unlocked"><i class="fa {{ 'fa-check-circle-o noi-green' if session['has_created_profile'] else 'fa-circle-o noi-red'}}"></i></div>
-            <div class="numberCircle center-block">2</div>
-            <div class="noi-oboarding-call-to-action">Create your profile<br/>
-            {% if session['social-login'] %}
-            <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + Contact Info
-            {% endif %}
+    <div class="row b-signup">
+        <div class="col-md-offset-3 col-md-6">
+            <!-- <div class="b-instructions-box {{ 'm-unlocked' if session['social-login'] else 'm-locked'}}" data-step="1"> -->
+            <div class="b-instructions-box m-unlocked" data-step="1">
+                <p>Sign-up using your favorite service</p>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="noi-onboarding col-md-offset-3 col-md-6">
-            <div class="noi-achievement-unlocked"><i class="fa {{ 'fa-check-circle-o noi-green' if session['has_filled_expertise'] else 'fa-circle-o noi-red'}}"></i></div>
-            <div class="numberCircle center-block">3</div>
-            <div class="noi-oboarding-call-to-action">Tell us what you know<br/>
-            {% if session['social-login'] %}
-            <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + My Expertise
-            {% endif %}
+        <div class="col-md-offset-3 col-md-6">
+            <!-- <div class="b-instructions-box {{ 'm-unlocked' if session['has_created_profile'] else 'm-locked'}}" data-step="2"> -->
+            <div class="b-instructions-box m-unlocked" data-step="2">
+                <p>Create your profile</p>
+                {% if session['social-login'] %}
+                <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + Contact Info
+                {% endif %}
             </div>
-
         </div>
     </div>
 
     <div class="row">
-        <div class="noi-onboarding col-md-offset-3 col-md-6">
-            <div class="noi-achievement-unlocked"><i class="fa {{ 'fa-check-circle-o noi-green' if session['has_done_search'] else 'fa-circle-o noi-red'}}"></i></div>
-            <div class="numberCircle center-block">4</div>
-            <div class="noi-oboarding-call-to-action">Find innovators to answer your questions <i class="fa fa-exchange"></i></div>
-            <div class="noi-oboarding-call-to-action">Explore the network <i class="fa fa-line-chart"></i></div>
+        <div class="col-md-offset-3 col-md-6">
+            <div class="b-instructions-box {{ 'm-unlocked' if session['has_filled_expertise'] else 'm-locked'}}" data-step="3">
+                <p>Tell us what you know</p>
+                {% if session['social-login'] %}
+                <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + My Expertise
+                {% endif %}
+            </div>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="b-instructions-box {{ 'm-unlocked' if session['has_done_search'] else 'm-locked'}}" data-step="4">
+                <p>Find innovators to answer your questions</p>
+                <p>Explore the network</p>
+            </div>
+        </div>
+    </div>
 </div>
-
+</div>
 {% endblock %}
 
 
