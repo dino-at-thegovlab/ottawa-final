@@ -24,7 +24,12 @@ div.btn-group {
 .noi-question { margin: 10px;}
 .noi-q-even { background-color: #FCF8E3;}
 .noi-q-odd { background-color: #D9EDF7;}
-span.noi-expertise-icon-name { font-size: 10px;}
+
+span.noi-expertise-icon-name {
+font-size: 10px; }
+
+.q { line-height: 1;}
+
 .noi-topic-name { font-size: 24px;}
 
 </style>
@@ -39,12 +44,12 @@ span.noi-expertise-icon-name { font-size: 10px;}
 {% macro noi_buttons(question, area, topic, index) -%}
 	<div class="btn-group-wrap b-question-answers">
       <span class="noi-and-i-can">and</span> 
-		<div id="q-{{question|make_question(area, topic)}}" class="text-center btn-group btn-group-vertical" data-toggle="buttons-radio">
-		  <button type="button" class="q e-answer noi-btn-can-explain" data-value="{{LEVELS['LEVEL_I_CAN_EXPLAIN']['score']}}">{{LEVELS['LEVEL_I_CAN_EXPLAIN']['icon']|safe}}&nbsp; {{LEVELS['LEVEL_I_CAN_EXPLAIN']['label']|noop}}</button>
-	  	<button type="button" class="q e-answer noi-btn-can-do-it" data-value="{{LEVELS['LEVEL_I_CAN_DO_IT']['score']}}">{{LEVELS['LEVEL_I_CAN_DO_IT']['icon']|safe}}&nbsp;{{LEVELS['LEVEL_I_CAN_DO_IT']['label']|noop}}</button>
-	  	<button type="button" class="q e-answer noi-btn-can-refer" data-value="{{LEVELS['LEVEL_I_CAN_REFER']['score']}}">{{LEVELS['LEVEL_I_CAN_REFER']['icon']|safe}}&nbsp;{{LEVELS['LEVEL_I_CAN_REFER']['label']|noop}}</button>
+		<div id="q-{{question|make_question(area, topic)}}" class="btn-group btn-group-vertical">
+		  <button type="button" class="q e-answer2 noi-btn-can-explain" data-value="{{LEVELS['LEVEL_I_CAN_EXPLAIN']['score']}}">{{LEVELS['LEVEL_I_CAN_EXPLAIN']['icon']|safe}}&nbsp; {{LEVELS['LEVEL_I_CAN_EXPLAIN']['label']}}</button>
+	  	<button type="button" class="q e-answer2 noi-btn-can-do-it" data-value="{{LEVELS['LEVEL_I_CAN_DO_IT']['score']}}">{{LEVELS['LEVEL_I_CAN_DO_IT']['icon']|safe}}&nbsp;{{LEVELS['LEVEL_I_CAN_DO_IT']['label']}}</button>
+	  	<button type="button" class="q e-answer2 noi-btn-can-refer" data-value="{{LEVELS['LEVEL_I_CAN_REFER']['score']}}">{{LEVELS['LEVEL_I_CAN_REFER']['icon']|safe}}{{LEVELS['LEVEL_I_CAN_REFER']['label']}}</button>
       <span style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	  	<button type="button" class="q e-answer noi-btn-learn-more"    data-value="{{LEVELS['LEVEL_I_WANT_TO_LEARN']['score']}}">{{LEVELS['LEVEL_I_WANT_TO_LEARN']['icon']|safe}}&nbsp;{{LEVELS['LEVEL_I_WANT_TO_LEARN']['label']|  noop}}</button>
+	  	<button type="button" class="q e-answer2 noi-btn-learn-more"    data-value="{{LEVELS['LEVEL_I_WANT_TO_LEARN']['score']}}">{{LEVELS['LEVEL_I_WANT_TO_LEARN']['icon']|safe}}&nbsp;{{LEVELS['LEVEL_I_WANT_TO_LEARN']['label']}}</button>
     </div>
 		</div>
 {%- endmacro %}
@@ -70,7 +75,7 @@ span.noi-expertise-icon-name { font-size: 10px;}
 
 <p>For each question, you can choose from
   {% for k,v in LEVELS.iteritems() %}
-  <button style="font-size: 14px;" type="button" class="q e-answer">{{v['icon']|safe}}&nbsp;{{v['label']}}</button>
+  <button style="font-size: 14px;" type="button" class="e-answer">{{v['icon']|safe}}&nbsp;{{v['label']}}</button>
   {% endfor %}
 </p>
 </div>

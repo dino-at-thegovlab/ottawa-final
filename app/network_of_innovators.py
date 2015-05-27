@@ -48,7 +48,7 @@ def skills_by_area(skills, area):
 
 LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa-fw fa fa-book"></i>', 'label': 'I can explain'},
           'LEVEL_I_CAN_DO_IT': {'score': 5, 'icon': '<i class="fa-fw fa fa-cogs"></i>', 'label': 'I can do it'},
-          'LEVEL_I_CAN_REFER': {'score': 1, 'icon': '<i class="fa-fw fa fa-mail-forward"></i>', 'label': 'I can refer someone'},
+          'LEVEL_I_CAN_REFER': {'score': 1, 'icon': '<i class="fa-fw fa fa-mail-forward"></i>', 'label': 'I can refer you'},
           'LEVEL_I_WANT_TO_LEARN': {'score': -1, 'icon': '<i class="fa-fw fa fa-question"></i>', 'label': 'I want to learn'}}
 # ASSERT THAT all scores are different.
 
