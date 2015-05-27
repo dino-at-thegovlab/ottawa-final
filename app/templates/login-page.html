@@ -8,6 +8,7 @@
 <div id="login-page">
 <div class="b-content-header">
   <h1>Please login using your favorite social network.</h1>
+  <p>We are using your social information to populate your first name, last name and profile picture.</p>
 </div>
 
 <div class="row">
@@ -16,6 +17,7 @@
   		<div class="col-md-4" data-login="{{item}}">
   			<div class="b-login-item">
 	  			<i class="fa fa-{{item}} fa-3x"></i>
+	  			<br/>{{item}}
   			</div>
   		</div>
 		{% endfor %}

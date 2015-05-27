@@ -46,10 +46,10 @@ def skills_by_area(skills, area):
     return [i for i in skills.keys() if i.startswith(area['id'])]
 
 
-LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa fa-graduation-cap"></i>'},
-          'LEVEL_I_CAN_DO_IT': {'score': 5, 'icon': '<i class="fa fa-cubes"></i>'},
-          'LEVEL_I_CAN_REFER': {'score': 1, 'icon': '<i class="fa fa-user-plus"></i>'},
-          'LEVEL_I_WANT_TO_LEARN': {'score': -1, 'icon': '<i class="fa fa-heart"></i>'}}
+LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa fa-book"></i>', 'label': 'I can explain'},
+          'LEVEL_I_CAN_DO_IT': {'score': 5, 'icon': '<i class="fa fa-cogs"></i>', 'label': 'I can do it'},
+          'LEVEL_I_CAN_REFER': {'score': 1, 'icon': '<i class="fa fa-mail-forward"></i>', 'label': 'I can refer someone'},
+          'LEVEL_I_WANT_TO_LEARN': {'score': -1, 'icon': '<i class="fa fa-question"></i>', 'label': 'I want to learn'}}
 # ASSERT THAT all scores are different.
 
 CONSTANTS = {}
@@ -71,7 +71,8 @@ ORG_TYPES = { 'edu': 'Academia', 'com': 'Private Sector', 'org': 'Non Profit', '
 
 CONTENT = yaml.load(open('content.yaml'))
 
-NOI_COLORS =  'red,blue,green,orange,purple,yellow,gray'.split(',')
+#NOI_COLORS =  'red,blue,green,orange,purple,yellow,gray'.split(',')
+NOI_COLORS =  '#D44330,#D6DB63,#BFD19F,#83C8E7,#634662,yellow,gray'.split(',')
 
 #REDIRECT_PAGE = 'http://noi.thegovlab.org/'
 if platform.linux_distribution()[0] == 'Ubuntu':
@@ -207,7 +208,7 @@ def my_expertise():
             userExpertise = json.loads(request.form.get('my-expertise-as-json'))
             session['user-expertise'] = userExpertise
             db.updateExpertise(userid, userExpertise)
-            flash('Your expertise has been saved.')
+            flash('Your expertise has been saved.<br/><a href="/search">Search for innovators.</a>')
             session['has_filled_expertise'] = True
             return render_template('my-expertise.html', **{'userExpertise': userExpertise, 'AREAS': CONTENT['areas']})
  

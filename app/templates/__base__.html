@@ -34,6 +34,7 @@
     </style> -->
     <style>
 .caret { vertical-align: top;}
+.noi-expertise-icon { height: 50px; }
 .noi-expertise-not-yet {
     opacity: 0.4;
     filter: alpha(opacity=40); /* msie */
@@ -77,7 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {% for message in get_flashed_messages(category_filter=["message"]) %}
         <div class="alert alert-info">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
+        {{ message|safe}}
         </div>
         {% endfor %}
 

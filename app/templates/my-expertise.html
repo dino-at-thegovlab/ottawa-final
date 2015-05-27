@@ -38,11 +38,11 @@ span.noi-expertise-icon-name { font-size: 10px;}
 	<div class="btn-group-wrap b-question-answers">
 		<div id="q-{{question|make_question(area, topic)}}" class="text-center btn-group" data-toggle="buttons-radio">
       <span class="noi-and-i-can">and</span> 
-		  <button type="button" class="q e-answer noi-btn-can-explain" data-value="{{LEVELS['LEVEL_I_CAN_EXPLAIN']['score']}}">I can explain it</button>
-	  	<button type="button" class="q e-answer noi-btn-can-do-it" data-value="{{LEVELS['LEVEL_I_CAN_DO_IT']['score']}}">I can do it</button>
-	  	<button type="button" class="q e-answer noi-btn-can-refer" data-value="{{LEVELS['LEVEL_I_CAN_REFER']['score']}}">I can refer someone</button>
+		  <button type="button" class="q e-answer noi-btn-can-explain" data-value="{{LEVELS['LEVEL_I_CAN_EXPLAIN']['score']}}">{{LEVELS['LEVEL_I_CAN_EXPLAIN']['icon']|safe}}&nbsp; I can explain it</button>
+	  	<button type="button" class="q e-answer noi-btn-can-do-it" data-value="{{LEVELS['LEVEL_I_CAN_DO_IT']['score']}}">{{LEVELS['LEVEL_I_CAN_DO_IT']['icon']|safe}}&nbsp;I can do it</button>
+	  	<button type="button" class="q e-answer noi-btn-can-refer" data-value="{{LEVELS['LEVEL_I_CAN_REFER']['score']}}">{{LEVELS['LEVEL_I_CAN_REFER']['icon']|safe}}&nbsp;I can refer someone</button>
       <span style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	  	<button type="button" class="q e-answer noi-btn-learn-more"    data-value="{{LEVELS['LEVEL_I_WANT_TO_LEARN']['score']}}">I want to learn more</button>
+	  	<button type="button" class="q e-answer noi-btn-learn-more"    data-value="{{LEVELS['LEVEL_I_WANT_TO_LEARN']['score']}}">{{LEVELS['LEVEL_I_WANT_TO_LEARN']['icon']|safe}}&nbsp;I want to learn more</button>
     </div>
 		</div>
 {%- endmacro %}
