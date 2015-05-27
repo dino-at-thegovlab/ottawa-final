@@ -76,8 +76,10 @@ NOI_COLORS =  'red,blue,green,orange,purple,yellow,gray'.split(',')
 #REDIRECT_PAGE = 'http://noi.thegovlab.org/'
 if platform.linux_distribution()[0] == 'Ubuntu':
     HOST = 'noi.thegovlab.org'
+    DEBUG = False
 else:
     HOST = 'localhost'
+    DEBUG = True
 print "Running service on %s." % HOST
 
 app = Flask(__name__)
@@ -98,7 +100,7 @@ app.jinja_env.globals['NOI_COLORS'] = NOI_COLORS
 app.jinja_env.globals['HOST'] = HOST
 app.jinja_env.globals['CONSTANTS'] = CONSTANTS
 app.jinja_env.globals['LEVELS'] = LEVELS
-app.jinja_env.globals['DEBUG'] = False
+app.jinja_env.globals['DEBUG'] = DEBUG
 
 
 
