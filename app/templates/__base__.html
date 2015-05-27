@@ -3,6 +3,8 @@
 <head>
     {% block head %}
     {% block page_style_pre %}{% endblock %}
+    <!--Mobile specific meta goodness :)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/static/styles/styles.css">
@@ -57,7 +59,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script> <!-- GA script -->
 
     {% if SKIP_NAV_BAR %}
-    {% else %}
+    {% else %} 
     {% include "__navbar__.html" %}
     {% endif %}
 

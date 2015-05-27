@@ -3,31 +3,15 @@
 {% block page_style_post %}
 
 <!-- Charts -->
-<link rel="stylesheet" type="text/css" href="/static/normalize.css">
+<!-- <link rel="stylesheet" type="text/css" href="/static/normalize.css"> -->
 <link rel="stylesheet" type="text/css" href="/static/main.css">
 
 <style>
-#map-container {
-        padding: 6px 6px 6px 6px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: #ccc #ccc #999 #ccc;
-        -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
-        -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
-        box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
-        width: 600px;
-      }
 
-#map {
-  width: 600px;
-  height: 400px;
-  }
 
 {% for item in NOI_COLORS %}
 .noi-color{{loop.index}}:before { background-color: {{item}}; }
 {% endfor %}
-
-.top-buffer { margin-top:20px; }
 
 </style>
 {% endblock %}
@@ -43,17 +27,19 @@
 
   <div class="row">
 
-    <div class="col-md-8">
-      <h2></h2>
+    <div class="col-md-12">
 
       <div id="map-container">
         <div id="map"></div>
       </div>
     </div>
 
-  <div class="col-md-4">
-    <h2>Attendees Occupation</h2>
-    <div style="margin-top: 100px;"></div>
+<div class="b-content-header">
+  <h1>Attendees Occupation</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
     <div id="container-attendees-occupation">
       <canvas id="attendees-occupation"></canvas>
       <div class="chart-legend">
@@ -65,23 +51,21 @@
       </div>
     </div>
   </div>
-  <script>
-  var userOccupations = {{OCCUPATIONS|tojson}};  
-  var attendeesOccupationData = [
-    {% for item in OCCUPATIONS %}
-      { 'value': {{item['cnt']}}, 'color': '{{NOI_COLORS[loop.index-1]}}' },
-    {% endfor %}
-      ];
-  function showAttendeesOccupation() {
-    var canvas = document.getElementById('attendees-occupation');
-    var ctx = canvas.getContext('2d');
-    new Chart(ctx).Doughnut(attendeesOccupationData);
-  }
-  </script>
-
-  </div>
-
 </div>
+
+<script>
+var userOccupations = {{OCCUPATIONS|tojson}};  
+var attendeesOccupationData = [
+  {% for item in OCCUPATIONS %}
+    { 'value': {{item['cnt']}}, 'color': '{{NOI_COLORS[loop.index-1]}}' },
+  {% endfor %}
+    ];
+function showAttendeesOccupation() {
+  var canvas = document.getElementById('attendees-occupation');
+  var ctx = canvas.getContext('2d');
+  new Chart(ctx).Doughnut(attendeesOccupationData);
+}
+</script>
 
 {% endblock %}
 
