@@ -78,7 +78,7 @@ if platform.linux_distribution()[0] == 'Ubuntu':
     HOST = 'noi.thegovlab.org'
     DEBUG = False
 else:
-    HOST = 'localhost'
+    HOST = '127.0.0.1'
     DEBUG = True
 print "Running service on %s." % HOST
 
