@@ -14,7 +14,7 @@ div.btn-group {
     text-align: center;
 }
 .btn { font-size: 12px; opacity:0.6; }
-.q { margin-left: 20px;}
+.q { margin-left: 20px; line-height: 2;}
 
 .noi-expertise-progress { font-size: 10px ;}
 .noi-expertise-progress-topic { font-size: 10px ;}
@@ -45,11 +45,9 @@ font-size: 10px; }
 	<div class="btn-group-wrap b-question-answers">
       <span class="noi-and-i-can">and</span> 
 		<div id="q-{{question|make_question(area, topic)}}" class="btn-group btn-group-vertical">
-		  <button type="button" class="q e-answer2 noi-btn-can-explain" data-value="{{LEVELS['LEVEL_I_CAN_EXPLAIN']['score']}}">{{LEVELS['LEVEL_I_CAN_EXPLAIN']['icon']|safe}}&nbsp; {{LEVELS['LEVEL_I_CAN_EXPLAIN']['label']}}</button>
-	  	<button type="button" class="q e-answer2 noi-btn-can-do-it" data-value="{{LEVELS['LEVEL_I_CAN_DO_IT']['score']}}">{{LEVELS['LEVEL_I_CAN_DO_IT']['icon']|safe}}&nbsp;{{LEVELS['LEVEL_I_CAN_DO_IT']['label']}}</button>
-	  	<button type="button" class="q e-answer2 noi-btn-can-refer" data-value="{{LEVELS['LEVEL_I_CAN_REFER']['score']}}">{{LEVELS['LEVEL_I_CAN_REFER']['icon']|safe}}{{LEVELS['LEVEL_I_CAN_REFER']['label']}}</button>
-      <span style="width: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	  	<button type="button" class="q e-answer2 noi-btn-learn-more"    data-value="{{LEVELS['LEVEL_I_WANT_TO_LEARN']['score']}}">{{LEVELS['LEVEL_I_WANT_TO_LEARN']['icon']|safe}}&nbsp;{{LEVELS['LEVEL_I_WANT_TO_LEARN']['label']}}</button>
+      {% for k, v in LEVELS|dictsort %}
+      <button type="button" class="q e-answer" data-value="{{v['score']}}">{{v['icon']|safe}}&nbsp;{{v['label']}}</button>
+      {% endfor %}
     </div>
 		</div>
 {%- endmacro %}
@@ -74,7 +72,7 @@ font-size: 10px; }
 <p>Tell us what you know about various key topics by answering some of the following questions.</p>
 
 <p>For each question, you can choose from
-  {% for k,v in LEVELS.iteritems() %}
+  {% for k,v in LEVELS|dictsort %}
   <button style="font-size: 14px;" type="button" class="e-answer">{{v['icon']|safe}}&nbsp;{{v['label']}}</button>
   {% endfor %}
 </p>

@@ -84,7 +84,7 @@
             <div class="b-instructions-box {{ 'm-unlocked' if session['has_filled_expertise'] else 'm-locked'}}" data-step="3">
                 <p><a href="/my-expertise">Tell us what you know</a></p>
                 <p>
-                    {% for k,v in LEVELS.iteritems() %}
+                    {% for k,v in LEVELS|dictsort %}
                     <button style="font-size: 14px;" type="button" class="q e-answer">{{v['icon']|safe}}&nbsp;{{v['label']}}</button>
                     {% endfor %}
                 </p>
