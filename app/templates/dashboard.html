@@ -136,7 +136,7 @@ function displayMap() {
     markers.push(marker);
   }
   var markerImage = new google.maps.MarkerImage(imageUrl, new google.maps.Size(24, 32));
-  var options = {maxZoom: null, gridSize: null, styles: null, imagePath: '/static/img/m'};
+  var options = {maxZoom: null, gridSize: null, styles: null, /* imagePath: '/static/img/m' */};
   markerClusterer = new MarkerClusterer(map, markers, options);
 }
 
