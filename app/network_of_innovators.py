@@ -46,10 +46,10 @@ def skills_by_area(skills, area):
     return [i for i in skills.keys() if i.startswith(area['id'])]
 
 
-LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa fa-book"></i>', 'label': 'I can explain'},
-          'LEVEL_I_CAN_DO_IT': {'score': 5, 'icon': '<i class="fa fa-cogs"></i>', 'label': 'I can do it'},
-          'LEVEL_I_CAN_REFER': {'score': 1, 'icon': '<i class="fa fa-mail-forward"></i>', 'label': 'I can refer someone'},
-          'LEVEL_I_WANT_TO_LEARN': {'score': -1, 'icon': '<i class="fa fa-question"></i>', 'label': 'I want to learn'}}
+LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa-fw fa fa-book"></i>', 'label': 'I can explain'},
+          'LEVEL_I_CAN_DO_IT': {'score': 5, 'icon': '<i class="fa-fw fa fa-cogs"></i>', 'label': 'I can do it'},
+          'LEVEL_I_CAN_REFER': {'score': 1, 'icon': '<i class="fa-fw fa fa-mail-forward"></i>', 'label': 'I can refer someone'},
+          'LEVEL_I_WANT_TO_LEARN': {'score': -1, 'icon': '<i class="fa-fw fa fa-question"></i>', 'label': 'I want to learn'}}
 # ASSERT THAT all scores are different.
 
 CONSTANTS = {}
@@ -189,7 +189,7 @@ def my_profile():
         userProfile = json.loads(request.form.get('me'))
         session['user-profile'] = userProfile
         db.updateCoreProfile(userProfile)
-        flash('Your profile has been saved.')
+        flash('Your profile has been saved. <br/>You may also want to <a href="/my-expertise">tell us what you know</a>.')
         session['has_created_profile'] = True
         return render_template('my-profile.html', **{'userProfile': userProfile})
 
@@ -208,7 +208,7 @@ def my_expertise():
             userExpertise = json.loads(request.form.get('my-expertise-as-json'))
             session['user-expertise'] = userExpertise
             db.updateExpertise(userid, userExpertise)
-            flash('Your expertise has been saved.<br/><a href="/search">Search for innovators.</a>')
+            flash('Your expertise has been updated.<br/><a href="/search">Search for innovators.</a>')
             session['has_filled_expertise'] = True
             return render_template('my-expertise.html', **{'userExpertise': userExpertise, 'AREAS': CONTENT['areas']})
  
@@ -266,7 +266,7 @@ def search():
 @app.route('/match')
 def match():
     if 'user-expertise' not in session:
-        flash('Before we can match you with people, you need to enter your expertise first.', 'error')
+        flash('Before we can match you with people, you need to <a href="/my-expertise">enter your expertise</a> first.', 'error')
         return redirect(url_for('main_page'))
     social_login = session['social-login']
     userid = social_login['userid']

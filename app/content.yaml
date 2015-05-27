@@ -3,6 +3,7 @@ areas:
   - name: Open Data
     id: opendata
     icon: opendata.svg
+    icon-color: "#E86B5F"
     description: > 
      There is no single, universally accepted definition of open data. 
      Generally speaking, open data is publicly available data structured for usability and computability 
@@ -72,6 +73,7 @@ areas:
   - name: Prizes
     id: prizes
     icon: prizes.svg
+    icon-color: "#44A9A2"
     description: >
      Governments — and other entities — are increasing seeking to solve big 
      problems using new technologies and innovative approaches. One of the most 

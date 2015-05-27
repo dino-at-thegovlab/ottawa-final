@@ -11,16 +11,22 @@
 
 .row { margin-bottom: 20px;}
 
-.noi-expertise-tag-profile { border: solid black 1px; padding:
-	2px; border-radius: 5px;
-	background-color: linen;
+.noi-expertise-tag-profile { border: solid grey 1px;
+	padding: 1px 2px 1px 2px;
+	border-radius2: 5px;
 	list-style-type: none;
+	font-size: 12px;
+	opacity: 0.8;
 }
 
 .noi-expertise-list-profile {
-	line-height: 2em;
+	line-height: 1.5em;
 	list-style-type: none;
 }
+
+{% for area in CONTENT['areas'] %}
+.noi-color-{{area['id']}} { background-color: {{area['icon-color']}}; }
+{% endfor %}
 
 </style>
 
@@ -113,7 +119,7 @@
 <div class="col-md-4">
 <ul class="noi-expertise-list-profile">
 {% for skill in user['skills']|skills_by_area(area) %}
-<li><span class="noi-expertise-level-profile">{{user['skills'][skill]|expertise_level_icon|safe}}</span>&nbsp;&nbsp;<span class="noi-expertise-tag-profile">{{skill.split('/')[-1]}}</span>
+<li><span class="noi-expertise-level-profile">{{user['skills'][skill]|expertise_level_icon|safe}}</span>&nbsp;&nbsp;<span class="noi-expertise-tag-profile noi-color-{{area['id']}}">{{skill.split('/')[-1]|replace('-', ' ')}}</span>
 </li>
 {% endfor %}
 </ul>
