@@ -1,7 +1,7 @@
 {% extends "__base__.html" %}
 
 {% block title %}My Profile{% endblock %}
-<!-- {% block page_style_post %}
+{% block page_style_post %}
 <style>
 .profile-img { width: 60px; height: 60px; border-radius: 30px;}
 div.btn-group {
@@ -14,26 +14,30 @@ div.btn-group {
     text-align: center;
 }
 .btn { font-size: 12px; opacity:0.6; }
-.q { margin-left: 20px; line-height: 2;}
+.q { margin: 10px; line-height: 2em;}
 
 .noi-expertise-progress { font-size: 10px ;}
 .noi-expertise-progress-topic { font-size: 10px ;}
 
 .noi-i-know { text-align: center; font-size: 20px; text-transform: uppercase;}
-.noi-and-i-can { font-size: 20px;}
-.noi-question { margin: 10px;}
+
+.noi-and-i-can { font-size: 20px;
+  text-transform: uppercase;
+  }
+
+.noi-question { margin: 10px;
+    font-style: italic;
+}
 .noi-q-even { background-color: #FCF8E3;}
 .noi-q-odd { background-color: #D9EDF7;}
 
 span.noi-expertise-icon-name {
 font-size: 10px; }
 
-.q { line-height: 1;}
-
 .noi-topic-name { font-size: 24px;}
 
 </style>
-{% endblock %} -->
+{% endblock %}
 
 {% block content %}
 
