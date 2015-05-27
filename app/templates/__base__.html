@@ -102,6 +102,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script src="/static/jquery.querystring.js"></script>
     <script src="/static/hello.min.js"></script>
     <script src="//use.typekit.net/zez3buj.js"></script>
+    <script>
+    if(window.innerHeight > window.innerWidth){
+    alert("For a better user experience, please rotate your phone to landscape mode.");
+    }
+    </script>
     <script>try{Typekit.load();}catch(e){}</script>
     {% if DEBUG %}
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
