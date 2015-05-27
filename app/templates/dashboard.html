@@ -3,7 +3,7 @@
 {% block page_style_post %}
 
 <!-- Charts -->
-<!-- <link rel="stylesheet" type="text/css" href="/static/normalize.css"> -->
+<link rel="stylesheet" type="text/css" href2="/static/normalize.css">
 <link rel="stylesheet" type="text/css" href="/static/main.css">
 
 <style>
@@ -12,6 +12,31 @@
 {% for item in NOI_COLORS %}
 .noi-color{{loop.index}}:before { background-color: {{item}}; }
 {% endfor %}
+
+.chart-legend ul {
+    list-style: none;
+    width: 100%;
+    margin: 30px auto 0;
+}
+.chart-legend li {
+    text-indent: 16px;
+    line-height: 24px;
+    position: relative;
+    font-weight: 200;
+    display: block;
+    float: left;
+    width: 50%;
+    font-size: 0.8em;
+}
+.chart-legend  li:before {
+    display: block;
+    width: 10px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+    content: "";
+}
 
 </style>
 {% endblock %}
