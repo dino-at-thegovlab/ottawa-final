@@ -119,7 +119,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext):
 
 
 def getUser(userid):
-    SQL = """SELECT row_to_json(users) FROM all_users WHERE userid = %s"""
+    SQL = """SELECT row_to_json(all_users) FROM all_users WHERE userid = %s"""
     data = (userid,)
     records = runQuery(SQL, data)
     if records and records[0]:
