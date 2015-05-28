@@ -488,6 +488,42 @@ ul li {
     height: 200px;
     padding-top: 70px; }
 
+
+.b-instructions-box:before {
+    content: attr(data-step);
+    position: absolute;
+    top: -30px;
+    left: calc(50% - 30px);
+    font-size: 4rem;
+    font-weight: 400;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #472b74;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    color: #472b74;
+    text-align: center;
+    line-height: 6rem; }
+
+@media screen and (min-width: 1025px) {
+    .b-instructions-box:before {
+      content: attr(data-step);
+      position: absolute;
+      top: 10px;
+      left: calc(50% - 30px);
+      font-size: 4rem;
+      font-weight: 400;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid #472b74;
+      width: 60px;
+      height: 60px;
+      background-color: white;
+      color: #472b74;
+      text-align: center;
+      line-height: 6rem; } }
+
 /* Small devices (tablets, 768px and up) */
 /* Medium devices (desktops, 992px and up) */
 /* Large devices (large desktops, 1200px and up) */
