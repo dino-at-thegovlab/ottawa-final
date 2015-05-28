@@ -215,7 +215,9 @@ def my_profile():
         db.updateCoreProfile(userProfile)
         flash('Your profile has been saved. <br/>You may also want to <a href="/my-expertise">tell us what you know</a>.')
         session['has_created_profile'] = True
-        return render_template('my-profile.html', **{'userProfile': userProfile})
+        #return render_template('my-profile.html', **{'userProfile': userProfile})
+        return redirect(url_for('main_page'))
+
 
 
 @app.route('/my-expertise', methods=['GET', 'POST'])
@@ -238,12 +240,14 @@ def my_expertise():
             flash("""Your expertise has been updated.<br/>
             What you can do next:
             <ul>
-            <li><a href="/search">Search for innovators.</a></li>
-            <li>Fill another expertise questionnaire</li>
+            <li><a href="/search">Search for innovators</a></li>
+            <li>Fill another expertise questionnaire below</li>
             <li>View your <a href="/user/%s">public profile</a></li>
             """ % social_login['userid'])
             session['has_filled_expertise'] = True
-            return render_template('my-expertise.html', **{'userExpertise': userExpertise, 'AREAS': CONTENT['areas']})
+            #return render_template('my-expertise.html', **{'userExpertise': userExpertise, 'AREAS': CONTENT['areas']})
+            return redirect(url_for('main_page'))
+
  
 
 @app.route('/dashboard')
@@ -267,7 +271,7 @@ def vcard(userid):
         return Response(card, mimetype='text/vcard')
     else:
         flash('This is does not correspond to a valid user.')
-        return redirect(url_for('main'))
+        return redirect(url_for('main_page'))
 
 
 @app.route('/user/<userid>')

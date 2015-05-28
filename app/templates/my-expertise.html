@@ -50,6 +50,9 @@ font-size: 10px; }
       <span class="noi-and-i-can">and</span> 
 		<div id="q-{{question|make_question(area, topic)}}" class="btn-group btn-group-vertical">
       {% for k, v in LEVELS|dictsort %}
+      {% if k == 'LEVEL_I_WANT_TO_LEARN' %}
+      OR
+      {% endif %}
       <button type="button" class="q e-answer" data-value="{{v['score']}}">{{v['icon']|safe}}&nbsp;{{v['label']}}</button>
       {% endfor %}
     </div>

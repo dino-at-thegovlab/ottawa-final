@@ -9,8 +9,8 @@ areas:
      outside of institutions to use the same data to create useful policies, tools, visualizations, maps, and apps. 
      Open data can provide the raw material to convene informed conversations about what’s broken and the 
      empirical foundation for developing solutions.</p>
-     <p>These twenty questions help you identify what you know and can share about open data and what you want to learn from others. 
-     Click on a link below to create an expertise profile.</p>
+     <p><b>These twenty questions help you describe what you know and can share about open data and what you want to learn from others. 
+     Click on a link below to create an expertise profile.</b></p>
     topics:
 
       - topic: Open Data Policy
@@ -54,7 +54,7 @@ areas:
         questions:
           - question: how to create incentives for users or the public to make productive use of the data
             label: incentives
-          - question: how to identity and combine other sources of open data to achieve a goal
+          - question: how to identify and combine other sources of open data to achieve a goal
             label: mashing-up open data
           - question: how to design a data collaborative
             label: data collaborative
