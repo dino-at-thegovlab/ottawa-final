@@ -106,7 +106,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext, domains):
         WHERE ( (country=%s) OR (%s='') ) AND
         ( (langs::jsonb ?| %s) OR (%s='{}') ) AND
         ( (domains::jsonb ?| %s) OR (%s='{}') ) AND
-        ( to_tsvector(first_name || ' ' || last_name || ' ' || org || ' ' || title) @@ plainto_tsquery(%s) )
+        to_tsvector(ARRAY_TO_STRING(ARRAY[first_name, last_name, org, title], ' ')) @@ plainto_tsquery(%s)
         ) AS T1 WHERE score >= 0
         ORDER BY score DESC LIMIT 20"""
         data = (skills, location, location, langs, langs, domains, domains, fulltext)
