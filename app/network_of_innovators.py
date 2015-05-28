@@ -66,15 +66,16 @@ def expertise_level_icon(level_score):
 
 import json
 
-DOMAINS = """Academia
-Business Licensing and Regulation
+DOMAINS = """Business Licensing and Regulation
 Civil Society
 Corporate Social Responsibility
 Defense and Security
+Economic Development
 Education
 Emergency Services
 Environment
 Extractives Industries
+Governance
 Health
 Human Rights
 Immigration and Citizenship Services
@@ -83,6 +84,7 @@ Labor
 Legislature
 Media and Telecommunications
 Public Safety
+Research
 Sanitation
 Social Care
 Sub-National Governance
