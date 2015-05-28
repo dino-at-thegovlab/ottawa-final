@@ -92,7 +92,8 @@ font-size: 10px; }
       <br/><span class="noi-expertise-icon-name">{{area['name']}}</span>
       <br/><span id="{{area.id}}" class="noi-expertise-progress"></span></a>
     </li>
-  {% endfor %} 
+  {% endfor %}
+  <li role="presentation" style="vertical-align: bottom;">More to come</li> 
 </ul>
 
 <div id="expertise-tab-content" class="tab-content">
@@ -112,7 +113,8 @@ font-size: 10px; }
 
     <div class="accordion-group">
       <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area.id}}" href="#collapse-{{topic.topic|slug}}">
+        <a id="collapse-btn-{{topic['topic']|slug}}"class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-{{area.id}}" href="#collapse-{{topic.topic|slug}}">
+          <i class="fa fa-plus-square-o"></i>
           <span class="noi-topic-name">{{topic['topic']}}</span></a>&nbsp;<span class="noi-expertise-progress-topic" id="{{topic.topic|slug}}"></span>
           <div style="margin-bottom: 20px;">What you can share about {{topic['description']}}.</div>
         </div>
@@ -183,7 +185,6 @@ function computeExpertiseProgressByTopic() {
 // Essential to make the tab work.
 $('#expertise-tab a').click(function (e) {
   e.preventDefault();
-  console.log(e);
   $(this).tab('show');
 });
 

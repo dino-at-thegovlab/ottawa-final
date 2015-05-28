@@ -74,13 +74,14 @@ areas:
     icon: prizes.svg
     icon-color: "#44A9A2"
     description: >
-     Governments — and other entities — are increasing seeking to solve big 
+     <p>Governments — and other entities — are increasing seeking to solve big 
      problems using new technologies and innovative approaches. One of the most 
      common approaches involves prize-backed contests as well as challenges and 
      grand challenges. These competitions offer a range of advantages for 
-     government agencies, especially in an era of tightening budgets. 
-     These twenty questions help you identify what you know and can share 
-     about prize-backed challenges and what you want to learn from others.
+     government agencies, especially in an era of tightening budgets.</p>
+     <p><b>These twenty questions help you describe what you know and can share about prize-backed challenges
+      and what you want to learn from others. 
+     Click on a link below to create an expertise profile.</b></p>
     topics:
 
       - topic: Scoping the Problem
