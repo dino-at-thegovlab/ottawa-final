@@ -127,7 +127,7 @@
 // The user asked to be logged out; we log him/her out.
 var idp = $.querystring(window.location.search)['logout'];
 if (idp) {
-    hello.logout(idp);
+    hello.logout(idp, { 'force': true });
     console.log('Logged out from ' + idp);    
 }
 </script>
