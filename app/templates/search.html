@@ -56,23 +56,18 @@ ul li {
     			</select>
     		</div>
 
-        <label class="col-md-4 control-label" for="textarea">By skill(s)</label>
-    		<div class="selector">
-    			<select name="skills" data-placeholder="Choose a skills..."
-    						  multiple class="chosen-select"
-    						  tabindex="2">
-    		  	<option value=""></option>
-  		  		{% for area in AREAS %}
-  		  		<optgroup label="{{area['name']}}">
-  		  			{% for topic in area['topics'] %}
-  		  				{% for question in topic['questions'] %}
-  					  		<option value="{{question|make_question(area,topic)}}">{{question['label']}}</option>
-  							{% endfor %}
-  						{% endfor %}
-  					</optgroup>
-  		  		{% endfor %}
-    			</select>
-    		</div>
+        
+<label class="col-md-4 control-label" for="textarea">By domain(s)</label>
+        <div class="selector">
+          <select name="domains" data-placeholder="Choose a domain..."
+                  multiple class="chosen-select"
+                  tabindex="2">
+            <option value=""></option>
+            {% for d in DOMAINS %}
+                <option value="{{d}}">{{d|slug}}</option>
+                {% endfor %}
+          </select>
+        </div>
 
     <label class="col-md-4 control-label" for="textarea">By keyword(s)</label>
 		<div class="selector">

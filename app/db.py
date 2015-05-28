@@ -88,7 +88,7 @@ def findMatchKnnAsJSON(my_skills):
     return map(lambda x: x[0], records)
 
 
-def findExpertsAsJSON(location, langs, skills, fulltext):
+def findExpertsAsJSON(location, langs, skills, fulltext, domains):
     cursor = getCursor()
     if fulltext != "":
         SQL = """SELECT row_to_json(T1) FROM
@@ -97,20 +97,22 @@ def findExpertsAsJSON(location, langs, skills, fulltext):
         FROM all_users
         WHERE ( (country=%s) OR (%s='') ) AND
         ( (langs::jsonb ?| %s) OR (%s='{}') ) AND
+        ( (domains::jsonb ?| %s) OR (%s='{}') ) AND
         ( to_tsvector(first_name || ' ' || last_name || ' ' || org || ' ' || title) @@ to_tsquery(%s) )
         ) AS T1 WHERE score >= 0
         ORDER BY score DESC LIMIT 20"""
-        data = (skills, location, location, langs, langs, fulltext)
+        data = (skills, location, location, langs, langs, domains, domains, fulltext)
     else:        
         SQL = """SELECT row_to_json(T1) FROM
             (
             SELECT *, plv8_score(skills, %s) AS score
             FROM all_users
             WHERE ( (country=%s) OR (%s='') ) AND
-            ( (langs::jsonb ?| %s) OR (%s='{}') )
+            ( (langs::jsonb ?| %s) OR (%s='{}') ) AND
+            ( (domains::jsonb ?| %s) OR (%s='{}') )
             ) AS T1 WHERE score >= 0
         ORDER BY score DESC LIMIT 20"""
-        data = (skills, location, location, langs, langs)
+        data = (skills, location, location, langs, langs, domains, domains)
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)
     records = cursor.fetchall()
@@ -152,10 +154,10 @@ def updateCoreProfile(user):
     cursor = getCursor()
     data = (user['first_name'], user['last_name'], user['email'], user['picture'],
         user['country'], user['country_code'], user['city'],
-        user['org'], user['title'], Json(user['langs']), user['latlng'], user['org_type'], user['domain_expertise'], user['userid'])
+        user['org'], user['title'], Json(user['langs']), user['latlng'], user['org_type'], Json(user['domains']), user['userid'])
     try:
-        SQL = """INSERT INTO users(first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domain_expertise, userid)
-                        VALUES    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        SQL = """INSERT INTO users(first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domains, userid)
+                        VALUES    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         print cursor.mogrify(SQL, data)
         cursor.execute(SQL, data)
         cursor.connection.commit()
@@ -163,7 +165,7 @@ def updateCoreProfile(user):
     except Exception, e:
         print e
         cursor.connection.rollback()
-    SQL = """UPDATE users SET (first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domain_expertise) =
+    SQL = """UPDATE users SET (first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domains) =
     (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) WHERE userid = %s"""
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)

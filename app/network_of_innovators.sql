@@ -13,6 +13,7 @@ CREATE TABLE  users ( userid varchar(50) PRIMARY KEY,
   picture text,
   title text,
   langs json,
+  domains as json,
   skills json,
   domain_expertise text,
   timestamp timestamp default current_timestamp,
@@ -24,6 +25,7 @@ ALTER TABLE users ADD COLUMN domain text;
 ALTER TABLE users ADD COLUMN timestamp timestamp default current_timestamp;
 ALTER TABLE users ADD COLUMN account_type smallint default 0;
 ALTER TABLE users ADD COLUMN country_code text;
+ALTER TABLE users ADD COLUMN domains json;
 
 CREATE OR REPLACE VIEW all_users AS SELECT * FROM users;
 CREATE OR REPLACE VIEW all_users AS SELECT * FROM users WHERE account_type = 0;

@@ -74,7 +74,6 @@ ul li {
   <label class="col-md-4 control-label" for="textinput">Organization</label>  
   <div class="col-md-4">
   <input id="q-org" name="org" type="text" placeholder="placeholder" class="form-control input-md">
-  <span class="help-block">help</span>  
   </div>
 </div>
 
@@ -117,15 +116,19 @@ ul li {
 </div>
 
 
-<!-- Domain Expertise -->
+<!-- Domains -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textarea">Domain Expertise</label>
-  <div class="col-md-4">                     
-    <textarea class="form-control" id="q-domain_expertise" name="domain-expertise">default text</textarea>
+  <label class="col-md-4 control-label" for="selectmultiple">Domains of expertise</label>
+  <div class="col-md-4 selector">
+    <select id="q-domains" name="domains" multiple class=" chosen-select form-control">
+      {% for item in DOMAINS %}
+      <option value="{{item}}">{{item}}</option>
+      {% endfor %}
+    </select>
   </div>
 </div>
 
-<!-- Languages -->
+<!-- Langs -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="selectmultiple">Language(s)</label>
   <div class="col-md-4 selector">
@@ -134,9 +137,7 @@ ul li {
       <option value="{{item}}">{{item}}</option>
       {% endfor %}
     </select>
-    <span class="help-block">The languages you speak.</span>  
   </div>
-</div>
 </div>
 
 <center>
@@ -145,8 +146,6 @@ ul li {
   <input id="me-as-json" type="hidden" name="me"/>
   </form>  
 </center>
-
-
 
 {% endblock %}
 
@@ -287,6 +286,18 @@ if (userProfile == null) {
   });
   $('#q-langs').trigger("chosen:updated");  // We need to update the UI.
 
+// <select domains>
+  $('select[id="q-domains"]').children('option').map(function() {
+    if ($.inArray($(this).attr('value'), userProfile.domains) > -1) {
+      console.log('Match for ' + $(this).attr('value'));
+      $(this).prop('selected', 'true');
+  } else {
+    $(this).removeAttr('selected');
+  }
+  });
+  $('#q-domains').trigger("chosen:updated");  // We need to update the UI.
+
+
 }
 
 $('#save-profile').click(function() {
@@ -307,6 +318,8 @@ $('#save-profile').click(function() {
   profileData['org_type'] = $('select[id="q-org_type"]').children(':checked').val();  
   // langs
   profileData['langs'] = $('select[id="q-langs"]').children(':checked').toArray().map(function(v, i) { return v['value']; });
+
+  profileData['domains'] = $('select[id="q-domains"]').children(':checked').toArray().map(function(v, i) { return v['value']; });
 
   console.log(profileData);
   $('#me-as-json').attr('value', JSON.stringify(profileData));
