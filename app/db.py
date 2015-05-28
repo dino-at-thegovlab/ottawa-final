@@ -65,7 +65,7 @@ def findMatchAsJSON(my_needs):
     SQL = """SELECT row_to_json(T1) FROM
                 (SELECT *, plv8_match_my_needs(%s, skills::json) AS score
                 FROM all_users WHERE skills IS NOT NULL) AS T1
-            ORDER BY score DESC LIMIT 10;"""
+            ORDER BY score DESC LIMIT 20;"""
     data = (my_needs, )
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)
@@ -79,7 +79,7 @@ def findMatchKnnAsJSON(my_skills):
     SQL = """SELECT row_to_json(T1) FROM
                 (SELECT *, plv8_knn_skills(%s, skills::json) AS score
                 FROM all_users WHERE skills IS NOT NULL) AS T1
-            ORDER BY score ASC LIMIT 10;"""
+            ORDER BY score ASC LIMIT 20;"""
     data = (Json(my_skills), )
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)
@@ -99,7 +99,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext):
         ( (langs::jsonb ?| %s) OR (%s='{}') ) AND
         ( to_tsvector(first_name || ' ' || last_name || ' ' || org || ' ' || title) @@ to_tsquery(%s) )
         ) AS T1 WHERE score >= 0
-        ORDER BY score DESC LIMIT 10"""
+        ORDER BY score DESC LIMIT 20"""
         data = (skills, location, location, langs, langs, fulltext)
     else:        
         SQL = """SELECT row_to_json(T1) FROM
@@ -109,7 +109,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext):
             WHERE ( (country=%s) OR (%s='') ) AND
             ( (langs::jsonb ?| %s) OR (%s='{}') )
             ) AS T1 WHERE score >= 0
-        ORDER BY score DESC LIMIT 10"""
+        ORDER BY score DESC LIMIT 20"""
         data = (skills, location, location, langs, langs)
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)

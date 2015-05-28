@@ -88,7 +88,7 @@ areas:
         questions:
           - question: how to define and express the problem addressed by the prize.
             label: problem definition
-          - question: how to do rapid research to test the assumptions behing my problem definition
+          - question: how to do rapid research to test the assumptions behind my problem definition
             label: research
           - question: how to develop metrics to use to measure progress
             label: progress metrics
