@@ -82,10 +82,9 @@ font-size: 10px; }
 </p>
 </div>
 
-<ul class="nav nav-tabs nav-justified" id="expertise-tab">
-
+<ul class="nav nav-tabs __nav-justified__" id="expertise-tab">
   {% for area in AREAS[0:3] %}
-    <li role="presentation" class="{{'noi-expertise-not-yet' if not area.topics}}"><a href="#{{area.id}}-tab">
+    <li role="presentation" class="text-center {{'noi-expertise-not-yet' if not area.topics}}"><a href="#{{area.id}}-tab">
       <img alt="{{area.name}}" class="noi-expertise-icon" src="/static/img/expertise-icons/{{area.icon}}">
       <br/><span class="noi-expertise-icon-name">{{area['name']}}</span>
       <br/><span id="{{area.id}}" class="noi-expertise-progress"></span></a>
