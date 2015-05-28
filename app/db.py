@@ -34,7 +34,7 @@ def getUserOccupations():
     cursor = getCursor()
     SQL = """SELECT row_to_json(T) FROM
             ( SELECT COUNT(*) AS cnt, org_type
-              FROM users WHERE org_type != '' GROUP BY org_type
+              FROM all_users WHERE org_type != '' GROUP BY org_type
             ) AS T"""
     data = ()
     print cursor.mogrify(SQL, data)
@@ -50,7 +50,7 @@ def getAllUsers():
                 (SELECT userid AS userid,
                     first_name AS first_name,
                      last_name AS last_name,
-                        latlng AS latlng FROM users WHERE latlng != ''
+                        latlng AS latlng FROM all_users WHERE latlng != ''
                 ) AS T"""
     data = ()
     print cursor.mogrify(SQL, data)
@@ -64,7 +64,7 @@ def findMatchAsJSON(my_needs):
     cursor = getCursor()
     SQL = """SELECT row_to_json(T1) FROM
                 (SELECT *, plv8_match_my_needs(%s, skills::json) AS score
-                FROM users WHERE skills IS NOT NULL) AS T1
+                FROM all_users WHERE skills IS NOT NULL) AS T1
             ORDER BY score DESC LIMIT 10;"""
     data = (my_needs, )
     print cursor.mogrify(SQL, data)
@@ -78,7 +78,7 @@ def findMatchKnnAsJSON(my_skills):
     cursor = getCursor()
     SQL = """SELECT row_to_json(T1) FROM
                 (SELECT *, plv8_knn_skills(%s, skills::json) AS score
-                FROM users WHERE skills IS NOT NULL) AS T1
+                FROM all_users WHERE skills IS NOT NULL) AS T1
             ORDER BY score ASC LIMIT 10;"""
     data = (Json(my_skills), )
     print cursor.mogrify(SQL, data)
@@ -94,7 +94,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext):
         SQL = """SELECT row_to_json(T1) FROM
         (
         SELECT *, plv8_score(skills, %s) AS score
-        FROM users
+        FROM all_users
         WHERE ( (country=%s) OR (%s='') ) AND
         ( (langs::jsonb ?| %s) OR (%s='{}') ) AND
         ( to_tsvector(first_name || ' ' || last_name || ' ' || org || ' ' || title) @@ to_tsquery(%s) )
@@ -105,7 +105,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext):
         SQL = """SELECT row_to_json(T1) FROM
             (
             SELECT *, plv8_score(skills, %s) AS score
-            FROM users
+            FROM all_users
             WHERE ( (country=%s) OR (%s='') ) AND
             ( (langs::jsonb ?| %s) OR (%s='{}') )
             ) AS T1 WHERE score >= 0
@@ -119,7 +119,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext):
 
 
 def getUser(userid):
-    SQL = """SELECT row_to_json(users) FROM users WHERE userid = %s"""
+    SQL = """SELECT row_to_json(users) FROM all_users WHERE userid = %s"""
     data = (userid,)
     records = runQuery(SQL, data)
     if records and records[0]:
@@ -175,7 +175,7 @@ def updateCoreProfile(user):
 
 def top_countries():
     SQL = """SELECT country, COUNT(*) AS cnt
-    FROM users WHERE country != '' GROUP BY country ORDER BY cnt DESC;"""
+    FROM all_users WHERE country != '' GROUP BY country ORDER BY cnt DESC;"""
     data = ()
     records = runQuery(SQL, data)
     return records

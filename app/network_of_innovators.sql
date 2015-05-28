@@ -25,6 +25,7 @@ ALTER TABLE users ADD COLUMN timestamp timestamp default current_timestamp;
 ALTER TABLE users ADD COLUMN account_type smallint default 0;
 ALTER TABLE users ADD COLUMN country_code text;
 
+CREATE OR REPLACE VIEW all_users AS SELECT * FROM users;
 
 CREATE OR REPLACE FUNCTION plv8_score(skills json, tags text[])
 RETURNS integer AS $$

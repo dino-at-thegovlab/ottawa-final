@@ -66,39 +66,25 @@
         </div>
     </div>
 
+
+<div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="b-instructions-box {{ 'm-unlocked' if session['has_filled_expertise'] else 'm-locked'}}" data-step="2">
+                <p><a href="/my-expertise">Tell us what you know</a></p>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
-            <div class="b-instructions-box {{ 'm-unlocked' if session['has_created_profile'] else 'm-locked'}}" data-step="2">
+            <div class="b-instructions-box {{ 'm-unlocked' if session['has_created_profile'] else 'm-locked'}}" data-step="3">
             {#<div class="b-instructions-box m-unlocked" data-step="2">#}
                 <p><a href="/me">Update your profile</a></p>
-{#                
-                {% if session['social-login'] %}
-                <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + Edit My Profile
-                {% endif %}
-#}
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-            <div class="b-instructions-box {{ 'm-unlocked' if session['has_filled_expertise'] else 'm-locked'}}" data-step="3">
-                <p><a href="/my-expertise">Tell us what you know</a></p>
-
-{#
-                <p>
-                    {% for k,v in LEVELS|dictsort %}
-                    <button style="font-size: 14px;" type="button" class="q e-answer">{{v['icon']|safe}}&nbsp;{{v['label']}}</button>
-                    {% endfor %}
-                </p>
-                {% if session['social-login'] %}
-                <img class="profile-img-nav" src="{{session['social-login']['picture']}}"/> + Edit My Expertise
-                {% endif %}
-#}
-            </div>
-        </div>
-    </div>
-
+    
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <div class="b-instructions-box {{ 'm-unlocked' if session['has_done_search'] else 'm-locked'}}" data-step="4">
