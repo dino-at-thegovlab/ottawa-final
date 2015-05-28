@@ -103,6 +103,7 @@ font-size: 10px; }
     <div class="accordion" id="accordion-{{area.id}}">
 
       <!-- Area description -->
+      <h3>{{area['name']}}</h3>
     <div class="noi-area-description">{{area['description']|safe}}</div>
 
   {% for topic in area['topics'] %}

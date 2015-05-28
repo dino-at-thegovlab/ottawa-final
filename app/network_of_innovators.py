@@ -215,7 +215,13 @@ def my_expertise():
             userExpertise = json.loads(request.form.get('my-expertise-as-json'))
             session['user-expertise'] = userExpertise
             db.updateExpertise(userid, userExpertise)
-            flash('Your expertise has been updated.<br/><a href="/search">Search for innovators.</a>')
+            flash("""Your expertise has been updated.<br/>
+            What you can do next:
+            <ul>
+            <li><a href="/search">Search for innovators.</a></li>
+            <li>Fill another expertise questionnaire</li>
+            <li>View your <a href="/user/%s">public profile</a></li>
+            """ % social_login['userid'])
             session['has_filled_expertise'] = True
             return render_template('my-expertise.html', **{'userExpertise': userExpertise, 'AREAS': CONTENT['areas']})
  
