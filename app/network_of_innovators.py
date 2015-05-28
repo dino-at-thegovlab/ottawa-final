@@ -20,6 +20,7 @@ from flask.ext.mobility import Mobility
 import yaml
 import db
 import platform
+import copy
 
 from vcard import make_vCard
 
@@ -279,8 +280,13 @@ def vcard(userid):
 @app.route('/user/<userid>')
 def get_user(userid):
     user = db.getUser(userid)
-    print user
     if user:
+        if 'social-login' in session:
+            my_userid = session['social-login']['userid']
+        else:
+            my_userid = 'anonymous'
+        query_info = {'user-agent': request.headers.get('User-Agent'), 'type': '/user', 'userid': my_userid}
+        db.logQuery(my_userid, query_info)
         return render_template('user-profile.html', **{'user': user, 'userid': userid, 'SKILLS': []})
     else:
         flash('This is does not correspond to a valid user.')
@@ -299,6 +305,14 @@ def search():
         fulltext = request.values.get('fulltext', '')
         query = {'location': country, 'langs': langs, 'skills': skills, 'fulltext': fulltext, 'domains': domains}
         print query
+        if 'social-login' in session:
+            my_userid = session['social-login']['userid']
+        else:
+            my_userid = 'anonymous'
+        query_info = copy.deepcopy(query)
+        query_info['type'] = '/search'
+        query_info['user-agent'] = request.headers.get('User-Agent')
+        db.logQuery(my_userid, query_info)
         experts = db.findExpertsAsJSON(**query)
         session['has_done_search'] = True
         return render_template('search-results.html', **{'title': 'Expertise search', 'results': experts, 'query': query})

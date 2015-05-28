@@ -30,6 +30,14 @@ def runQuery(sql, data):
     return records
 
 
+def logQuery(userid, query_info):
+    cursor = getCursor()
+    SQL = """INSERT INTO query_logs(userid, query_info) VALUES (%s, %s)"""
+    data = (userid, Json(query_info))
+    cursor.execute(SQL, data)
+    cursor.connection.commit()
+
+
 def getUserOccupations():
     cursor = getCursor()
     SQL = """SELECT row_to_json(T) FROM

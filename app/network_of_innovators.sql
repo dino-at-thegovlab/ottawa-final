@@ -30,6 +30,11 @@ ALTER TABLE users ADD COLUMN domains json;
 CREATE OR REPLACE VIEW all_users AS SELECT * FROM users;
 CREATE OR REPLACE VIEW all_users AS SELECT * FROM users WHERE account_type = 0;
 
+CREATE TABLE query_logs (
+	userid varchar(50),
+	timestamp timestamp default current_timestamp,
+	query_info json)
+
 CREATE OR REPLACE FUNCTION plv8_score(skills json, tags text[])
 RETURNS integer AS $$
 	var count = 0;
