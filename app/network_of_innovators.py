@@ -314,6 +314,11 @@ def knn():
     return render_template('search-results.html', **{'title': 'People most like me', 'results': experts, 'query': query})
 
 
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html', **{})
+
+
 @app.route('/match-test')
 def match_test():
     print session

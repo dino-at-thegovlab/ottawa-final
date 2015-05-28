@@ -1,7 +1,7 @@
 {% extends '__base__.html' %}
 
 {% block title %}Network of Innovators{% endblock %}
-{# {% block page_style_post %}
+{% block page_style_post %}
 <style>
 .row { margin-top: 30px}
 .numberCircle {
@@ -37,9 +37,11 @@
 
 .noi-green { color: green;}
 .noi-red { color: red;}
+.noi-mainpage-icon { width: 75px; }
+.noi-mainpage-icon-small { width: 40px;}
 
 </style>
-{% endblock %} #}
+{% endblock %}
 
 {% block content %}
 
@@ -47,9 +49,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+              <div class="text-center">
+{% for area in CONTENT['areas'] %}
+    <img class="noi-mainpage-icon" src="/static/img/expertise-icons/{{area['icon']}}"/>
+{% endfor %}
+</div>
             <div class="b-welcome-message">
                 <p>Welcome to the <br/><b>Network of Innovators</b>, a GovLab experiment</p>
-                <p>Find collaborators. Create alliances. Learn from others.</p>
+
+                <p>Find other governance innovators. <br/>Create alliances. Learn from others.</p>
             </div>
             <div class="b-instructions">
                 <h2>Follow the steps to join the network</h2>
@@ -71,6 +79,10 @@
         <div class="col-md-offset-3 col-md-6">
             <div class="b-instructions-box {{ 'm-unlocked' if session['has_filled_expertise'] else 'm-locked'}}" data-step="2">
                 <p><a href="/my-expertise">Tell us what you know</a></p>
+                <div class="text-center">
+                {% for area in CONTENT['areas'] %}
+    <img class="noi-mainpage-icon-small" src="/static/img/expertise-icons/{{area['icon']}}"/>
+{% endfor %}</div>
             </div>
         </div>
     </div>
