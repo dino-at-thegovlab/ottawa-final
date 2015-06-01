@@ -121,7 +121,6 @@ app.jinja_env.filters['skills_by_area'] = skills_by_area
 app.jinja_env.filters['expertise_level_icon'] = expertise_level_icon
 app.jinja_env.filters['noop'] = lambda x: ''
 
-
 # Constant that should be available for all templates.
 app.jinja_env.globals['ORG_TYPES'] = ORG_TYPES
 app.jinja_env.globals['CONTENT'] = CONTENT
@@ -355,6 +354,12 @@ def knn():
     experts = db.findMatchKnnAsJSON(skills)
     session['has_done_search'] = True
     return render_template('search-results.html', **{'title': 'People most like me', 'results': experts, 'query': query})
+
+
+@app.route('/users/recent')
+def recent_users():
+    users = db.getRecentUsers()
+    return render_template('search-results.html', **{'title': 'Our Ten most recent members', 'results': users, 'query': ''})
 
 
 @app.route('/feedback')

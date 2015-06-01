@@ -68,6 +68,18 @@ def getAllUsers():
     return map(lambda x: x[0], records)
 
 
+def getRecentUsers(limit=10):
+    cursor = getCursor()
+    SQL = """SELECT row_to_json(T) FROM
+                (SELECT * FROM users ORDER BY timestamp DESC limit %s) AS T"""
+    data = (limit,)
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    records = cursor.fetchall()
+    cursor.close()
+    return map(lambda x: x[0], records)    
+
+
 def findMatchAsJSON(my_needs):
     cursor = getCursor()
     SQL = """SELECT row_to_json(T1) FROM

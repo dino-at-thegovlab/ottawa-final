@@ -54,7 +54,7 @@
 		<h2>{{user['first_name']}} {{user['last_name']}}</h2>
 	</div>
 	<div class="debug col-md-12 text-center">
-		{{user['org']}} | {{user['title']}}
+		{{user['org'] or ''}} | {{user['title'] or ''}}
 	</div>
 </div>
 
