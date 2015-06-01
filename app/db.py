@@ -58,7 +58,7 @@ def getAllUsers():
                 (SELECT userid AS userid,
                     first_name AS first_name,
                      last_name AS last_name,
-                        latlng AS latlng FROM all_users WHERE latlng != ''
+                        latlng AS latlng FROM all_users
                 ) AS T"""
     data = ()
     print cursor.mogrify(SQL, data)

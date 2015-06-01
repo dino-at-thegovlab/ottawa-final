@@ -132,6 +132,7 @@ function displayMap() {
   var imageUrl = 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&chco=FFFFFF,008CFF,000000&ext=.png';
   var markers = [];
   for (var i = 0; i < data.length; i++) {
+    if (data[i].latlng == null) { continue; }
     var markerData = { position: latLngFromString(data[i].latlng),
                        title: data[i].first_name + ' ' + data[i].last_name };
     var marker = new google.maps.Marker(markerData);
