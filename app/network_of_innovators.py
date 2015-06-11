@@ -3,6 +3,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
+import os
 
 from flask import Flask
 from flask import abort
@@ -16,18 +17,27 @@ from flask import session
 from flask import jsonify
 from flask import g
 from flask.ext.mobility import Mobility
+from werkzeug import secure_filename
 
 import yaml
 import db
 import platform
 import copy
 
+UPLOAD_FOLDER = 'files/'
+ALLOWED_EXTENSIONS = set(['png', 'PNG','JPG', 'jpg', 'jpeg', 'gif'])
+
 from vcard import make_vCard
 
 from slugify import slugify
 
+
+
 noi_slug = lambda x: slugify(x, to_lower=True)
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 def avatar(user):
     if user['picture']:
@@ -137,6 +147,7 @@ app.debug = True
 app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
 SSL = False
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/test')
 def test():
@@ -222,6 +233,16 @@ def my_profile():
         #return render_template('my-profile.html', **{'userProfile': userProfile})
         return redirect(url_for('main_page'))
 
+@app.route('/image-profile', methods=['GET', 'POST'])
+def image_profile():
+    if request.method == 'GET':
+       return render_template('image-profile.html')
+    if request.method == 'POST':
+         file = request.files['image']
+         if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return redirect(url_for('main_page'))
 
 
 @app.route('/my-expertise', methods=['GET', 'POST'])
@@ -384,4 +405,4 @@ if __name__ == "__main__":
         context = ('server.crt', 'server.key')
         app.run(host='0.0.0.0', port=443, ssl_context=context)
     else:
-        app.run(host='0.0.0.0', port=80)
+        app.run(host='0.0.0.0', port=8080)
