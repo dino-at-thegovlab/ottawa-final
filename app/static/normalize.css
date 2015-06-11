@@ -485,7 +485,7 @@ header .button {
     position: relative;
 }
 .widget {
-    position: relative;
+    position: relative; 
     margin-bottom: 80px;
     background: #efefef;
     padding: 12px;
