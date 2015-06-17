@@ -30,117 +30,23 @@ ul li {
 
 <div class="form-horizontal">
 
+<input id="q-userid" name="userid" type="hidden" value="{{session['social-login']['userid']}}">
+<input id="q-picture" name="picture" type="hidden" value="{{session['social-login']['picture']}}">
+
 
 <fieldset>
+
+<center>
+   <label class="col-md-4 control-label" for="textinput">Current Image</label> 
+<div class="col-md-4">
+  <img src="data:image/JPG;base64,{{image}}" alt="profile image" width="304" height="228"/></center><br>
+</div>
+  
 
 <!-- Form Name -->
 <legend></legend>
 
-<!-- Given Name -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">First Name</label>  
-  <div class="col-md-4">
-  <input id="q-first_name" name="first_name" type="text" placeholder="placeholder" class="form-control input-md">
-  </div>
-</div>
 
-<!-- Family Name -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Last Name</label>  
-  <div class="col-md-4">
-  <input id="q-last_name" name="last_name" type="text" placeholder="placeholder" class="form-control input-md">
-  </div>
-</div>
-
-<!-- Email-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Email</label>  
-  <div class="col-md-4">
-  <input id="q-email" name="email" type="text" placeholder="placeholder" class="form-control input-md">
-  </div>
-</div>
-
-
-</fieldset>
-
-<!-- Position -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Position</label>  
-  <div class="col-md-4">
-  <input id="q-title" name="title" type="text" placeholder="placeholder" class="form-control input-md">
-  </div>
-</div>
-
-<!-- Org -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Organization</label>  
-  <div class="col-md-4">
-  <input id="q-org" name="org" type="text" placeholder="placeholder" class="form-control input-md">
-  </div>
-</div>
-
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Type of Organization</label>  
-  <div class="col-md-4">
-  <select id="q-org_type" name="org_type" type="text" placeholder="The type of organization your work for" class="form-control input-md">
-  {% for item in  ORG_TYPES %}
-        <option value="{{item}}">{{ORG_TYPES[item]}}</option>
-  {% endfor %}
-</select>
-  </div>
-</div>
-
-
-<!-- Location -->
-<div class="form-group">
-<label class="col-md-4 control-label" for="textinput">Location</label>  
-<div id="locationField" class="col-md-4">
-      <input id="autocomplete" size="50" placeholder="Enter your location" class="form-control input-md" type="text" autocomplete="off">
-      <input id="q-latlng" name="latlng" type="hidden">
-    </div>
-</div>
-
-<!-- Location > City -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">City</label>  
-  <div class="col-md-4">
-  <input id="q-city" name="city" type="text" placeholder="placeholder" disabled class="form-control input-md">
-  </div>
-</div>
-
-<!-- Location > Country -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Country</label>  
-  <div class="col-md-4">
-  <input id="q-country" name="country" type="text" placeholder="placeholder" disabled class="form-control input-md">
-  <input id="q-country_code" name="country_code" type="hidden">
-  </div>
-</div>
-
-
-<!-- Domains -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="selectmultiple">Domains of expertise</label>
-  <div class="col-md-4 selector">
-    <select id="q-domains" name="domains" multiple class=" chosen-select form-control">
-      {% for item in DOMAINS %}
-      <option value="{{item}}">{{item}}</option>
-      {% endfor %}
-    </select>
-  </div>
-</div>
-
-<!-- Langs -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="selectmultiple">Language(s)</label>
-  <div class="col-md-4 selector">
-    <select id="q-langs" name="langs" multiple class=" chosen-select form-control">
-      {% for item in LANGS %}
-      <option value="{{item}}">{{item}}</option>
-      {% endfor %}
-    </select>
-  </div>
-</div>
 
 <center>
   <form id="me-form" class="form-horizontal" method="POST" action="/image-profile">
@@ -149,7 +55,7 @@ ul li {
   <label class="col-md-4 control-label" for="textinput">Profile Image</label>  
   <div class="col-md-4">
   
-  <input id="image" type="file" name="image" >
+  <input id="image" type="file" name="image">
 
   </div>
 </div>
