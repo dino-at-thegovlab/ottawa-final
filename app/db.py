@@ -193,6 +193,29 @@ def updateCoreProfile(user):
     cursor.close()
     return
 
+def updateProfilePicture(filename, image, userid):
+    cursor = getCursor()
+    binary = psycopg2.Binary(image)
+    data = ( filename, binary, userid)
+    SQL = """INSERT INTO ProfilePicture(id, image, userid)
+                        VALUES    (%s, %s, %s)"""
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    cursor.connection.commit()
+    cursor.close()
+    return
+
+def getProfilePicture(userid):
+
+    SQL = """SELECT image, id FROM ProfilePicture WHERE userid = %s"""
+    data = (userid,)
+    records = runQuery(SQL, data)
+    if records and records[0]:
+        img = records [0][0]
+        img3 = base64.b64encode(img)
+        return img3
+    else:
+        records
 
 
 def top_countries():
