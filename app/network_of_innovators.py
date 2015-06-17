@@ -236,11 +236,19 @@ def my_profile():
 @app.route('/image-profile', methods=['GET', 'POST'])
 def image_profile():
     if request.method == 'GET':
-       return render_template('image-profile.html')
+        social_login = session['social-login']
+        print "Looking up %s" % social_login['userid']
+        userProfile = db.getUser(social_login['userid'])  # We get some stuff from the DB.
+        img = db.getProfilePicture(social_login['userid'])
+        return render_template('image-profile.html', **{'userProfile': userProfile , 'image': img})
     if request.method == 'POST':
-         file = request.files['image']
-         if file and allowed_file(file.filename):
+        social_login = session['social-login']
+        print "Looking up %s" % social_login['userid']
+        file = request.files['image']
+        if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            mypic = file.read()
+            db.updateProfilePicture(filename,mypic,social_login['userid'])
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return redirect(url_for('main_page'))
 
