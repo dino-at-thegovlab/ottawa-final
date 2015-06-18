@@ -194,16 +194,29 @@ def updateCoreProfile(user):
     return
 
 def updateProfilePicture(filename, image, userid):
-    cursor = getCursor()
-    binary = psycopg2.Binary(image)
-    data = ( filename, binary, userid)
-    SQL = """INSERT INTO ProfilePicture(id, image, userid)
+    data = (userid,)
+    SQL ="""SELECT 1 FROM ProfilePicture WHERE userid = %s""" 
+    records = runQuery(SQL, data)
+    if records and records[0]:
+        cursor = getCursor()
+        binary = psycopg2.Binary(image)
+        SQL1 ="""UPDATE ProfilePicture SET id = %s, image = %s WHERE userid = %s"""
+        data1 = (filename, binary, userid)
+        print cursor.mogrify(SQL1, data1)
+        cursor.execute(SQL1, data1)
+        cursor.connection.commit()
+        cursor.close()
+    else: 
+        cursor = getCursor()
+        binary = psycopg2.Binary(image)
+        SQL1 = """INSERT INTO ProfilePicture(id, image, userid)
                         VALUES    (%s, %s, %s)"""
-    print cursor.mogrify(SQL, data)
-    cursor.execute(SQL, data)
-    cursor.connection.commit()
-    cursor.close()
-    return
+        data1 = (filename, binary, userid)
+        print cursor.mogrify(SQL1, data1)
+        cursor.execute(SQL1, data1)
+        cursor.connection.commit()
+        cursor.close()
+        return
 
 def getProfilePicture(userid):
 
