@@ -210,10 +210,13 @@ def getProfilePicture(userid):
     SQL = """SELECT image, id FROM ProfilePicture WHERE userid = %s"""
     data = (userid,)
     records = runQuery(SQL, data)
+    results = []
     if records and records[0]:
         img = records [0][0]
-        img3 = base64.b64encode(img)
-        return img3
+        results.append(base64.b64encode(img))
+        results.append(records [0][1].rsplit('.', 1)[1])
+        print results[1]
+        return results
     else:
         records
 
