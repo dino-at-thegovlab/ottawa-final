@@ -24,7 +24,7 @@ import db
 import platform
 import copy
 
-UPLOAD_FOLDER = 'files/'
+#UPLOAD_FOLDER = 'files/'
 ALLOWED_EXTENSIONS = set(['png', 'PNG','JPG', 'jpg', 'jpeg', 'gif'])
 
 from vcard import make_vCard
@@ -147,7 +147,7 @@ app.debug = True
 app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
 SSL = False
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+#app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/test')
 def test():
@@ -249,7 +249,7 @@ def image_profile():
             filename = secure_filename(file.filename)
             mypic = file.read()
             db.updateProfilePicture(filename,mypic,social_login['userid'])
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return redirect(url_for('main_page'))
 
 
