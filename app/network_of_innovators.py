@@ -18,6 +18,10 @@ from flask import jsonify
 from flask import g
 from flask.ext.mobility import Mobility
 from werkzeug import secure_filename
+from itsdangerous import URLSafeTimedSerializer
+from flask.ext.login import (LoginManager, current_user, login_required,
+                            login_user, logout_user, UserMixin,
+                            confirm_login, fresh_login_required)
 
 import yaml
 import db
@@ -121,6 +125,27 @@ else:
     DEBUG = True
 print "Running service on %s." % HOST
 
+class User(UserMixin):
+    def __init__(self, email, id, active=True):
+        self.email = email
+        self.id = id
+        #self.active = active
+
+    #@staticmethod
+    def get_id(self):
+        return self.id
+
+    def is_active(self):
+        # Here you should write whatever the code is
+        # that checks the database if your user is active
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
 app = Flask(__name__)
 Mobility(app)
 app.jinja_env.filters['slug'] = noi_slug
@@ -147,8 +172,19 @@ app.debug = True
 app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
 SSL = False
 
+login_manager = LoginManager()
+login_manager.init_app(app)
 #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+@login_manager.user_loader
+def load_user(userid):
+    try:
+        #: Flask Peewee used here to return the user object
+        print 'this gets executed:----------', userid
+        return User.get(User.id==userid)
+    except User.DoesNotExist:
+        return None
+        
 @app.route('/test')
 def test():
     return 'hello' + session
@@ -405,6 +441,58 @@ def match_test():
     experts = db.findMatchAsJSON(session['user-expertise'])
     return render_template('test.html', **{'title': 'Matching search', 'results': experts, 'query': query})
 
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
+    print session
+    if request.method == 'GET':
+        return render_template('signin.html', **{'SKIP_NAV_BAR': False})
+    if request.method == 'POST':
+        email = request.values.get('email')
+        token = generate_confirmation_token(email)
+        confirm_url = url_for('confirm_email', token=token, _external=True)
+        return render_template('signin.html', **{'url': confirm_url})
+        
+##### New email based login method #####
+
+@app.route('/signout', methods=['POST'])
+#@login_required
+def signout():
+    session.clear()
+    logout_user()
+    flash("Logged out.")
+    return redirect(url_for('main_page'))
+
+
+@app.route('/confirm/<token>', methods=['GET', 'POST'])
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+        print email
+    except:
+        flash('The confirmation link is invalid or has expired.', 'danger')
+        #user = User.query.filter_by(email=email).first_or_404()
+    userExists = db.userExists(email)
+    print userExists
+    if userExists:
+        #load_user(email)
+        flash('Account already confirmed. Please login.', 'success')
+        print userExists
+        login_user(userExists, force=True, remember=True)
+    else:
+        #load_user(email)
+        flash('You have confirmed your account. Thanks!', 'success')
+        confirm_login()
+        login_user(userExists, force=True, remember=True)
+    return redirect(url_for('Hello'))
+
+
+
+
+@app.route('/Hello', methods=['GET'])
+def Hello():
+    if request.method == 'GET':
+        #userProfile = db.getUser(userid)  # We get some stuff from the DB.
+        return render_template('hello.html')
 
 #################### MAIN ####################
 
