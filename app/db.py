@@ -233,6 +233,23 @@ def getProfilePicture(userid):
     else:
         records
 
+def userExists(email):
+    SQL = """SELECT * FROM all_users WHERE email = %s"""
+    data = (email,)
+    records = runQuery(SQL, data)
+    if records and records[0]:
+        return records[0][0]
+    else:
+        records
+
+def getUserEmail(userid):
+    SQL = """SELECT email FROM all_users WHERE userid = %s"""
+    data = (userid,)
+    records = runQuery(SQL, data)
+    if records and records[0]:
+        return records[0][0]
+    else:
+        records
 
 def top_countries():
     SQL = """SELECT country, COUNT(*) AS cnt
