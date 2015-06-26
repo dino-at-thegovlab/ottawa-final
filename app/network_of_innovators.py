@@ -178,12 +178,12 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(userid):
-    try:
-        #: Flask Peewee used here to return the user object
-        print 'this gets executed:----------', userid
-        return User.get(User.id==userid)
-    except User.DoesNotExist:
-        return None
+    email = db.getUserEmail(userid)
+        print email, userid
+        if email:
+            return User(email, userid)
+        else:
+            return None
         
 @app.route('/test')
 def test():
@@ -470,22 +470,22 @@ def confirm_email(token):
         print email
     except:
         flash('The confirmation link is invalid or has expired.', 'danger')
-        #user = User.query.filter_by(email=email).first_or_404()
     userExists = db.userExists(email)
     print userExists
     if userExists:
-        #load_user(email)
         flash('Account already confirmed. Please login.', 'success')
-        print userExists
-        login_user(userExists, force=True, remember=True)
+        user_id = db.userExists(email) # Get the User's id somehow
+        print user_id, 'testing'
+        user = User(email, user_id)
+        login_user(user, force=True, remember=True)
     else:
-        #load_user(email)
+        user_id = db.getUserId(email) # Get the User's id somehow
+        print user_id, 'testing'
+        user = User(email, user_id)
+        login_user(user, force=True, remember=True)
         flash('You have confirmed your account. Thanks!', 'success')
-        confirm_login()
-        login_user(userExists, force=True, remember=True)
+
     return redirect(url_for('Hello'))
-
-
 
 
 @app.route('/Hello', methods=['GET'])
