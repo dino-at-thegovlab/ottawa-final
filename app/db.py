@@ -118,7 +118,7 @@ def findExpertsAsJSON(location, langs, skills, fulltext, domains):
         WHERE ( (country=%s) OR (%s='') ) AND
         ( (langs::jsonb ?| %s) OR (%s='{}') ) AND
         ( (domains::jsonb ?| %s) OR (%s='{}') ) AND
-        to_tsvector(ARRAY_TO_STRING(ARRAY[first_name, last_name, org, title], ' ')) @@ plainto_tsquery(%s)
+        to_tsvector(ARRAY_TO_STRING(ARRAY[first_name, last_name, org, title, projects], ' ')) @@ plainto_tsquery(%s)
         ) AS T1
         ORDER BY score DESC LIMIT 20"""
         data = (skills, location, location, langs, langs, domains, domains, fulltext)
@@ -170,14 +170,15 @@ def createNewUser(userid, first_name='', last_name='', picture=''):
     cursor.execute(SQL, data)
     cursor.connection.commit()
 
+
 def updateCoreProfile(user):
     cursor = getCursor()
     data = (user['first_name'], user['last_name'], user['email'], user['picture'],
         user['country'], user['country_code'], user['city'],
-        user['org'], user['title'], Json(user['langs']), user['latlng'], user['org_type'], Json(user['domains']), user['userid'])
+        user['org'], user['title'], Json(user['langs']), user['latlng'], user['org_type'], Json(user['domains']), user['projects'], user['userid'])
     try:
-        SQL = """INSERT INTO users(first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domains, userid)
-                        VALUES    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        SQL = """INSERT INTO users(first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domains, projects, userid)
+                        VALUES    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         print cursor.mogrify(SQL, data)
         cursor.execute(SQL, data)
         cursor.connection.commit()
@@ -185,13 +186,14 @@ def updateCoreProfile(user):
     except Exception, e:
         print e
         cursor.connection.rollback()
-    SQL = """UPDATE users SET (first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domains) =
-    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) WHERE userid = %s"""
+    SQL = """UPDATE users SET (first_name, last_name, email, picture, country, country_code, city, org, title, langs, latlng, org_type, domains, projects) =
+    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) WHERE userid = %s"""
     print cursor.mogrify(SQL, data)
     cursor.execute(SQL, data)
     cursor.connection.commit()
     cursor.close()
     return
+
 
 
 
