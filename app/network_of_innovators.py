@@ -19,6 +19,8 @@ from flask import g
 from flask.ext.mobility import Mobility
 from werkzeug import secure_filename
 from itsdangerous import URLSafeTimedSerializer
+from flask_mail import Mail
+from flask.ext.mail import Message
 from flask.ext.login import (LoginManager, current_user, login_required,
                             login_user, logout_user, UserMixin,
                             confirm_login, fresh_login_required)
@@ -27,9 +29,22 @@ import yaml
 import db
 import platform
 import copy
+import uuid
+
+# mail settings
+MAIL_SERVER = 'smtp.googlemail.com'
+MAIL_PORT = 465
+MAIL_USE_TLS = False
+MAIL_USE_SSL = True
+
+# gmail authentication
+MAIL_USERNAME = ''
+MAIL_PASSWORD = ''
 
 #UPLOAD_FOLDER = 'files/'
-ALLOWED_EXTENSIONS = set(['png', 'PNG','JPG', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'PNG','JPG', 'jpg', 'jpeg','JPEG','GIF', 'gif'])
+SECURITY_PASSWORD_SALT = 'my_precious_minnion'
+SECRET_KEY = 'my_precious'
 
 from vcard import make_vCard
 
@@ -60,6 +75,60 @@ def make_question(question, area, topic):
 
 def skills_by_area(skills, area):
     return [i for i in skills.keys() if i.startswith(area['id'])]
+
+
+###### anu #########
+
+class User(UserMixin):
+    def __init__(self,id, active=True):
+        #self.email =email
+        self.id = id
+        #self.active = active
+
+    #@staticmethod
+    def get_id(self):
+        return self.id
+
+    def get_email(self):
+        return self.email
+
+    def is_active(self):
+        # Here you should write whatever the code is
+        # that checks the database if your user is active
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
+
+def generate_confirmation_token(email):
+    serializer = URLSafeTimedSerializer(SECRET_KEY)
+    return serializer.dumps(email, salt=SECURITY_PASSWORD_SALT)
+
+
+def confirm_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(SECRET_KEY)
+    try:
+        email = serializer.loads(
+            token,
+            salt=SECURITY_PASSWORD_SALT,
+            max_age=expiration
+        )
+    except:
+        return False
+    return email
+
+def send_email(to, subject, template):
+    msg = Message(
+        subject,
+        recipients=[to],
+        html=template,
+        sender='noi-app-feedback@thegovlab.org'
+    )
+    mail.send(msg)
 
 
 LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa-fw fa fa-book"></i>', 'label': 'I can explain'},
@@ -125,27 +194,6 @@ else:
     DEBUG = True
 print "Running service on %s." % HOST
 
-class User(UserMixin):
-    def __init__(self, email, id, active=True):
-        self.email = email
-        self.id = id
-        #self.active = active
-
-    #@staticmethod
-    def get_id(self):
-        return self.id
-
-    def is_active(self):
-        # Here you should write whatever the code is
-        # that checks the database if your user is active
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def is_authenticated(self):
-        return True
-
 app = Flask(__name__)
 Mobility(app)
 app.jinja_env.filters['slug'] = noi_slug
@@ -168,23 +216,31 @@ app.jinja_env.globals['LEVELS'] = LEVELS
 app.jinja_env.globals['DEBUG'] = DEBUG
 app.jinja_env.globals['DOMAINS'] = DOMAINS
 
+# needed to send mail - anu
+app.config.from_object(__name__)
+mail = Mail(app)
+
 app.debug = True
 app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
 SSL = False
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @login_manager.user_loader
 def load_user(userid):
-    email = db.getUserEmail(userid)
-        print email, userid
-        if email:
-            return User(email, userid)
+    
+        #email = db.getUserEmail(userid)
+        #print email, userid
+        userid = session['userid']
+        if userid:
+            return User(userid)
         else:
             return None
-        
+
+
 @app.route('/test')
 def test():
     return 'hello' + session
@@ -240,6 +296,7 @@ def logout():
     return redirect(url_for('main_page', **{'logout': idp}))
 
 
+
 @app.route('/edit/<userid>', methods=['GET', 'POST'])
 def edit_user(userid):
     if request.method == 'GET':
@@ -268,25 +325,6 @@ def my_profile():
         session['has_created_profile'] = True
         #return render_template('my-profile.html', **{'userProfile': userProfile})
         return redirect(url_for('main_page'))
-
-@app.route('/image-profile', methods=['GET', 'POST'])
-def image_profile():
-    if request.method == 'GET':
-        social_login = session['social-login']
-        print "Looking up %s" % social_login['userid']
-        userProfile = db.getUser(social_login['userid'])  # We get some stuff from the DB.
-        img = db.getProfilePicture(social_login['userid'])
-        return render_template('image-profile.html', **{'userProfile': userProfile , 'image': img})
-    if request.method == 'POST':
-        social_login = session['social-login']
-        print "Looking up %s" % social_login['userid']
-        file = request.files['image']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            mypic = file.read()
-            db.updateProfilePicture(filename,mypic,social_login['userid'])
-            #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    return redirect(url_for('main_page'))
 
 
 @app.route('/my-expertise', methods=['GET', 'POST'])
@@ -327,10 +365,6 @@ def dashboard():
     return render_template('dashboard.html', **{'top_countries': top_countries,
                                                 'ALL_USERS': ALL_USERS, 'OCCUPATIONS': OCCUPATIONS})
 
-@app.route('/dashboard-2')
-def dashboard2():
-    top_countries = db.top_countries()
-    return render_template('dashboard-2.html', **{'top_countries': top_countries})
 
 @app.route('/vcard/<userid>')
 def vcard(userid):
@@ -441,6 +475,10 @@ def match_test():
     experts = db.findMatchAsJSON(session['user-expertise'])
     return render_template('test.html', **{'title': 'Matching search', 'results': experts, 'query': query})
 
+
+
+#################### new additions by anu for image uplaod and email login ####################
+
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     print session
@@ -450,9 +488,11 @@ def signin():
         email = request.values.get('email')
         token = generate_confirmation_token(email)
         confirm_url = url_for('confirm_email', token=token, _external=True)
+        html = render_template('login-email.html', url=confirm_url)
+        subject = "Please use this link to login"
+        send_email(email, subject, html)
+        flash('A login email has been sent via email.', 'success')
         return render_template('signin.html', **{'url': confirm_url})
-        
-##### New email based login method #####
 
 @app.route('/signout', methods=['POST'])
 #@login_required
@@ -461,7 +501,6 @@ def signout():
     logout_user()
     flash("Logged out.")
     return redirect(url_for('main_page'))
-
 
 @app.route('/confirm/<token>', methods=['GET', 'POST'])
 def confirm_email(token):
@@ -475,17 +514,39 @@ def confirm_email(token):
     if userExists:
         flash('Account already confirmed. Please login.', 'success')
         user_id = db.userExists(email) # Get the User's id somehow
-        print user_id, 'testing'
-        user = User(email, user_id)
+        print user_id
+        session['userid'] = user_id
+        user = User(user_id)
         login_user(user, force=True, remember=True)
+        return redirect(url_for('main_page'))
     else:
-        user_id = db.getUserId(email) # Get the User's id somehow
-        print user_id, 'testing'
-        user = User(email, user_id)
+        user_id = str(uuid.uuid4().get_hex().upper()[0:16])
+        session['userid'] = user_id
+        user = User(user_id)
+        db.createNewUserEL(user_id)
         login_user(user, force=True, remember=True)
         flash('You have confirmed your account. Thanks!', 'success')
-
-    return redirect(url_for('Hello'))
+        return redirect(url_for('my_profile_el'))
+    
+    
+@app.route('/me-el', methods=['GET', 'POST'])
+def my_profile_el():
+    if request.method == 'GET':
+        userProfile = db.getUser(session['userid'])  # We get some stuff from the DB.
+        print userProfile
+        return render_template('my-profile-el.html', **{'userProfile': userProfile })
+    if request.method == 'POST':
+        userProfile = json.loads(request.form.get('me'))
+        session['user-profile'] = userProfile
+        userProfile['userid'] = str(uuid.uuid4().get_hex().upper()[0:16])
+        userProfile['picture'] =''
+        userProfile['projects'] = ''
+        userProfile['email'] = user.get_email()
+        print userProfile
+        db.updateCoreProfile(userProfile)
+        flash('Your profile has been saved. <br/>You may also want to <a href="/my-expertise">tell us what you know</a>.')
+        session['has_created_profile'] = True
+        return redirect(url_for('main_page'))
 
 
 @app.route('/Hello', methods=['GET'])
@@ -494,6 +555,27 @@ def Hello():
         #userProfile = db.getUser(userid)  # We get some stuff from the DB.
         return render_template('hello.html')
 
+@app.route('/image-profile', methods=['GET', 'POST'])
+def image_profile():
+    if request.method == 'GET':
+        social_login = session['social-login']
+        print "Looking up %s" % social_login['userid']
+        userProfile = db.getUser(social_login['userid'])  # We get some stuff from the DB.
+        img = db.getProfilePicture(social_login['userid'])
+        return render_template('image-profile.html', **{'userProfile': userProfile , 'image': img})
+    if request.method == 'POST':
+        social_login = session['social-login']
+        print "Looking up %s" % social_login['userid']
+        file = request.files['image']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            mypic = file.read()
+            db.updateProfilePicture(filename,mypic,social_login['userid'])
+            #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return redirect(url_for('main_page'))
+
+
+
 #################### MAIN ####################
 
 if __name__ == "__main__":
@@ -501,4 +583,4 @@ if __name__ == "__main__":
         context = ('server.crt', 'server.key')
         app.run(host='0.0.0.0', port=443, ssl_context=context)
     else:
-        app.run(host='0.0.0.0', port=8080)
+        app.run(host='0.0.0.0', port=80)
