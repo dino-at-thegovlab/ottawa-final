@@ -250,7 +250,14 @@ def getUserEmail(userid):
         return records[0][0]
     else:
         records
-
+def createNewUserEL(userid, email):
+    cursor = getCursor()
+    SQL = """INSERT INTO users(userid, email) VALUES (%s, %s)"""
+    data = (userid, email)
+    print cursor.mogrify(SQL, data)
+    cursor.execute(SQL, data)
+    cursor.connection.commit()
+    
 def top_countries():
     SQL = """SELECT country, COUNT(*) AS cnt
     FROM all_users WHERE country != '' GROUP BY country ORDER BY cnt DESC;"""
