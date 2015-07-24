@@ -23,6 +23,7 @@ import platform
 import copy
 
 from vcard import make_vCard
+from settings import PORT
 
 from slugify import slugify
 
@@ -384,4 +385,4 @@ if __name__ == "__main__":
         context = ('server.crt', 'server.key')
         app.run(host='0.0.0.0', port=443, ssl_context=context)
     else:
-        app.run(host='0.0.0.0', port=80)
+        app.run(host='0.0.0.0', port=PORT)

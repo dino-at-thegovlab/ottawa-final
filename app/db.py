@@ -4,11 +4,11 @@ import psycopg2
 import sys
 from psycopg2.extras import Json
 
-HOST = 'localhost'
+HOST = 'db'
 DBNAME = 'noi2'
 DBUSER = 'postgres'
 PASSWORD = 'ottawa6491'
-PORT = 5433
+PORT = 5432
 
 CONN_STR = """host='%(HOST)s' dbname='%(DBNAME)s' 
     user='%(DBUSER)s' password='%(PASSWORD)s' port=%(PORT)s""" % { 'HOST': HOST, 'PORT': PORT, 'DBNAME': DBNAME, 'DBUSER': DBUSER, 'PASSWORD': PASSWORD, 'PORT': PORT}
