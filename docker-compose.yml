@@ -1,0 +1,15 @@
+web:
+    build: .
+    command: ./scripts/run-noi.sh
+    links:
+        - db
+    ports:
+        - "80:8080"
+    volumes:
+        - ./:/noi
+    environment:
+        NOI_PORT: 8080
+    ports:
+        - "80:8080"
+db:
+    build: dockerfiles/db

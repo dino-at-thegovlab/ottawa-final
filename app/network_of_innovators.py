@@ -5,7 +5,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 from flask import Flask
-from flask import abort
+#from flask import abort
 from flask import request
 from flask import Response
 from flask import flash
@@ -21,8 +21,10 @@ import yaml
 import db
 import platform
 import copy
+import json
 
 from vcard import make_vCard
+from settings import PORT, SECRET_KEY
 
 from slugify import slugify
 
@@ -55,7 +57,7 @@ LEVELS = {'LEVEL_I_CAN_EXPLAIN': {'score': 2, 'icon': '<i class="fa-fw fa fa-boo
 # ASSERT THAT all scores are different.
 
 CONSTANTS = {}
-CONSTANTS['EMAIL_FEEDBACK'] ='noi-app-feedback@thegovlab.org'
+CONSTANTS['EMAIL_FEEDBACK'] = 'noi-app-feedback@thegovlab.org'
 
 def expertise_level_icon(level_score):
     level = [l for l in LEVELS.keys() if LEVELS[l]['score'] == int(level_score)]
@@ -64,7 +66,6 @@ def expertise_level_icon(level_score):
     else:
         return '<i class="fa fa-question"></i>'
 
-import json
 
 DOMAINS = """Business Licensing and Regulation
 Civil Society
@@ -134,7 +135,7 @@ app.jinja_env.globals['DEBUG'] = DEBUG
 app.jinja_env.globals['DOMAINS'] = DOMAINS
 
 app.debug = True
-app.secret_key = 'M\xb5\xc1\xa39t\x97\x88\x13A\xe8\t\x90\xc2\x04@\xe4\xdeM\xc8?\x05}j'
+app.secret_key = SECRET_KEY
 SSL = False
 
 
@@ -205,6 +206,7 @@ def edit_user(userid):
         flash('Your profile has been saved.')
         return render_template('my-profile.html', **{'userProfile': userProfile})
 
+
 @app.route('/me', methods=['GET', 'POST'])
 def my_profile():
     if request.method == 'GET':
@@ -252,7 +254,6 @@ def my_expertise():
             #return render_template('my-expertise.html', **{'userExpertise': userExpertise, 'AREAS': CONTENT['areas']})
             return redirect(url_for('main_page'))
 
- 
 
 @app.route('/dashboard')
 def dashboard():
@@ -293,10 +294,11 @@ def get_user(userid):
         flash('This is does not correspond to a valid user.')
         return redirect(url_for('search'))
 
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'GET':
-        return render_template('search.html', **{ 'LANGS': LANGS, 'COUNTRIES': COUNTRIES, 'AREAS': CONTENT['areas']})
+        return render_template('search.html', **{'LANGS': LANGS, 'COUNTRIES': COUNTRIES, 'AREAS': CONTENT['areas']})
     if request.method == 'POST':
         print request
         country = request.values.get('country', '')
@@ -317,6 +319,7 @@ def search():
         experts = db.findExpertsAsJSON(**query)
         session['has_done_search'] = True
         return render_template('search-results.html', **{'title': 'Expertise search', 'results': experts, 'query': query})
+
 
 @app.route('/match')
 def match():
@@ -347,7 +350,7 @@ def knn():
     query = {}
     if 'user-expertise' not in session:
         print "User expertise not in session"
-        my_needs = []
+        #my_needs = []
     else:
         skills = session['user-expertise']
     print skills
@@ -384,4 +387,4 @@ if __name__ == "__main__":
         context = ('server.crt', 'server.key')
         app.run(host='0.0.0.0', port=443, ssl_context=context)
     else:
-        app.run(host='0.0.0.0', port=80)
+        app.run(host='0.0.0.0', port=PORT)

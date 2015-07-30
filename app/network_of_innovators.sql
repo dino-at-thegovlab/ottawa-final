@@ -1,6 +1,9 @@
 CREATE DATABASE noi2;
 \c noi2;
-CREATE TABLE  users ( userid varchar(50) PRIMARY KEY,
+
+CREATE EXTENSION plv8;
+
+CREATE TABLE IF NOT EXISTS users ( userid varchar(50) PRIMARY KEY,
   first_name text,
   last_name text,
   email text,
@@ -13,7 +16,7 @@ CREATE TABLE  users ( userid varchar(50) PRIMARY KEY,
   picture text,
   title text,
   langs json,
-  domains as json,
+  domains json,
   skills json,
   domain_expertise text,
   projects text,
@@ -29,13 +32,13 @@ ALTER TABLE users ADD COLUMN country_code text;
 ALTER TABLE users ADD COLUMN domains json;
 ALTER TABLE users ADD COLUMN projects text;
 
-CREATE OR REPLACE VIEW all_users AS SELECT * FROM users;
+-- CREATE OR REPLACE VIEW all_users AS SELECT * FROM users;
 CREATE OR REPLACE VIEW all_users AS SELECT * FROM users WHERE account_type = 0;
 
-CREATE TABLE query_logs (
+CREATE TABLE IF NOT EXISTS query_logs (
 	userid varchar(50),
 	timestamp timestamp default current_timestamp,
-	query_info json)
+	query_info json);
 
 CREATE OR REPLACE FUNCTION plv8_score(skills json, tags text[])
 RETURNS integer AS $$
@@ -95,6 +98,7 @@ $$ LANGUAGE plv8 IMMUTABLE CALLED ON NULL INPUT;
 
 /* We intersect the two sets and only count positive expertise. */
 
+/*
 
 noi2=# select count(*), split_part(userid, ':', 1) AS social from all_users GROUP BY social;
  count |  social   
@@ -114,4 +118,4 @@ SELECT skill_number, COUNT(*) FROM
 		AS T WHERE skill LIKE 'opendata%' GROUP BY userid)
 	AS T2 GROUP by skill_number ORDER BY skill_number DESC;
 
-
+*/
