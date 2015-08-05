@@ -79,8 +79,8 @@ areas:
      common approaches involves prize-backed contests as well as challenges and 
      grand challenges. These competitions offer a range of advantages for 
      government agencies, especially in an era of tightening budgets.</p>
-     <p><b>These twenty questions help you describe what you know and can share about prize-backed challenges
-      and what you want to learn from others. 
+     <p><b>These twenty questions help you describe what you know and can share about prize-backed challenges 
+     and what you want to learn from others.  
      Click on a link below to create an expertise profile.</b></p>
     topics:
 
@@ -155,8 +155,137 @@ areas:
   - name: Crowdsourcing
     id: crowdsourcing
     icon: crowdsourcing.svg
-    description: Coming soon
+    icon-color: "#0099FF"
+    description: >
+     <p>Crowdsourcing uses communications technologies to enable institutions to leverage the wisdom of the crowd. 
+     With crowdsourcing, organizations can get help, for example, with performing tasks, obtaining ideas and opinions, 
+     gathering data, soliciting funds, or administering programs. By enabling institutions to get more distributed and 
+     diverse collaboration in ways never before possible, they can improve a project’s efficiency, legitimacy and diversity. </p>
+     <p><b>These thirty questions help you describe what you know and can share about crowdsourcing and what you want 
+     to learn from others.  
+     Click on a link below to create an expertise profile.</b></p>
+    topics:
 
+      - topic: Determining the Crowd
+        description: identifying, enrolling, and developing a crowd 
+        questions:
+          - question: How to identify the crowd I want to participate e.g. general public, informed experts, participants with a particular skill
+            label: cs-core crowd
+          - question: How to transition the crowd into a participant e.g. profiles, roles, supporting materials
+            label: cs-transition
+          - question: How to encourage ongoing participation 
+            label: cs-encourage
+          - question: How to encourage increasingly sophisticated levels of participation e.g. tutorials, feedback, gamification 
+            label: cs-levels of participation
+
+      - topic: Determining the Activity
+        description: the following set of activities the crowd could perform
+        questions:
+          - question: How to ask the crowd to perform a specific task e.g. design a product, tag photos, classify information, analyze information, report a pothole
+            label: cs-task
+          - question: How to ask the crowd to collect and share data e.g. report a water leak, a case of corruption, quality of the air at their city
+            label: cs-data
+          - question: How to ask the crowd for their opinion e.g. vote on a design contest, opine on a policy recommendation
+            label: cs-opinion
+          - question: How to ask the crowd for new ideas e.g. solve a public problem, a scientific problem, generate ideas to reduce unnecessary government spending
+            label: cs-ideas
+          - question: How to ask the crowd for funds e.g. donate money to help film a documentary, open a fair trade restaurant
+            label: cs-funds
+          - question: How to ask the crowd for referrals e.g. share with their personal or professional networks, provide recommendations of other members of the crowd to include
+            label: cs-referrals
+
+      - topic: Designing a Successful Crowdsourcing Strategy
+        description: defining if crowdsourcing is the right process
+        questions:
+          - question: How to decide when to use crowdsourcing rather than other options like the conventional top-down process of decision-making
+            label: cs-why
+          - question: How to identify the gaps in expertise that can be minimised through the participation of the crowd
+            label: cs-gaps
+          - question: How to design a crowdsourcing strategy that provides value to the participants either through the outcome or the participation itself 
+            label: cs-value
+          - question: How to connect the efforts of the crowd to enable them to aggregate and build off the work of each other
+            label: cs-aggregation
+          - question: How to assess the potential costs involved in the crowd participation
+            label: cs-cost
+          - question: How to assess the effectiveness of using crowdsourcing 
+            label: cs-effectiveness
+
+      - topic: Providing the Right Incentives
+        description: providing the right incentives for participation
+        questions:
+          - question: How to define the scope of the crowds participation
+            label: cs-scope
+          - question: How to provide feedback for participation 
+            label: cs-feedback  
+          - question: How to decide whether to use financial or non-financial incentives or a mix of them
+            label: cs-financial
+          - question: How to determine whether the use of a competition is beneficial 
+            label: cs-competition 
+          - question: How to determine whether the use of reputation systems is beneficial 
+            label: cs-reputation
+          - question: How to use altruistic or community building incentives
+            label: cs-altruistic             
+          - question: How to design recreational incentives i.e. gamification
+            label: cs-gamification
+          - question: How to identify which particular incentive is working and why
+            label: cs-what works             
+          - question: How to monitor and adapt the incentives at the individual or crowd levels 
+            label: cs-adaptation        
+          - question: How to tackle the possible credibility/authenticity issues involved in the input I received from the crowd
+            label: cs-authenticity       
+
+      - topic: Implementation and Tools
+        description: setting-up, running and managing a crowdsourcing effort
+        questions:
+          - question: How to create a plan for running the crowdsourcing project with defined milestones
+            label: cs-milestones
+          - question: How to target the right audience to attract the desired crowd and participation
+            label: cs-right audience  
+          - question: How to choose a platform to do the crowdsourcing project
+            label: cs-platform
+          - question: How to access outside contractors and/or intermediaries to support the design and implementation of the desired crowdsourcing platform 
+            label: cs-intermediaries
+          - question: How to build a team within an institution that supports the use of the crowdsourcing project from initial idea through implementation 
+            label: cs-team building
+          - question: How to develop a communication strategy to target the right audience
+            label: cs-communications            
+          - question: How to connect members of the crowd to each other when appropriate
+            label: cs-connections
+          - question: How to prepare to utilize or implement the output of the crowd 
+            label: cs-implementation            
+          - question: How to obtain feedback from the crowd and use it to iterate your project 
+            label: cs-iteration       
+        
+      - topic: Quality Control Mechanisms
+        description: defining the right mechanism of quality control
+        questions:
+          - question: How to ensure a high quality and accurate participation from the crowd
+            label: cs-high quality
+          - question: How to use the crowd to evaluate the crowd contributions (through voting, rating or peer-review)
+            label: cs-crowd evaluation
+            
+      - topic: Ethical and Legal Concerns
+        description: overcoming legal concerns
+        questions:
+          - question: How to determine ownership and copyright of crowd contributions
+            label: cs-copyright
+          - question: How to navigate governmental endorsement and privacy concerns
+            label: cs-navigate
+            
+      - topic: Community and Cases
+        description: leaders and influential cases
+        questions:
+          - question: The person or group that has most influenced our efforts
+            label: cs-influence
+          - question: The person or group that others might not know about but should
+            label: cs-discovery
+          - question: An exemplary instance of crowdsourcing
+            label: cs-example
+          - question: An innovative instance of crowdsourcing
+            label: cs-innovative
+          - question: A potentially valuable use for crowdsourcing 
+            label: cs-valuable
+            
   - name: Agile
     id: agile
     icon: agile.svg
